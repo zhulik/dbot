@@ -8,6 +8,6 @@ module UsersHelper
   end
 
   def current_user
-    User.find_by(user_id: payload.from.id)
+    @current_user ||= User.find_by(user_id: payload.from.id)
   end
 end

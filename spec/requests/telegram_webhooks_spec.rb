@@ -5,9 +5,7 @@ describe TelegramWebhooksController, :telegram_bot do
     subject { dispatch_message '/start' }
 
     context 'with new user' do
-      it 'responds with valid message' do
-        expect { subject }.to respond_with_message 'Hi, my friend!'
-      end
+      include_examples 'responds with message', 'Hi, my friend!'
 
       include_examples 'creates new', User
     end
@@ -16,11 +14,14 @@ describe TelegramWebhooksController, :telegram_bot do
       context 'active user' do
         let!(:user) { create :user, user_id: 123 }
 
+        include_examples 'responds with message', 'We have already started!'
+
         include_examples 'does not create new', User
       end
 
       context 'inactive user' do
         let!(:user) { create :user, :inactive, user_id: 123 }
+        include_examples 'responds with message', 'Your subscription has been reactivated!'
 
         include_examples 'does not create new', User
       end

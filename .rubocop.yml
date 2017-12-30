@@ -1,0 +1,85 @@
+AllCops:
+  TargetRubyVersion: 2.4.1
+
+  Exclude:
+    - ./**/schema.rb
+    - Gemfile
+    - bin/*
+    - bundle/**/*
+    - vendor/**/*
+
+  DisplayCopNames: true
+
+Metrics/LineLength:
+  Max: 120
+  Exclude:
+    - spec/**/*.rb
+
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/*.rb
+    - app/api/**/*.rb
+    - lib/tasks/**/*.rake
+    - config/**/*.rb
+
+Style/BlockDelimiters:
+  Exclude:
+    - spec/**/*.rb
+
+Style/SignalException:
+  Exclude:
+    - app/services/**/*.rb
+
+Rails:
+  Enabled: true
+
+Rails/UnknownEnv:
+  Enabled: false
+
+Metrics/AbcSize:
+  Max: 20
+
+Metrics/CyclomaticComplexity:
+  Max: 7
+
+Metrics/ParameterLists:
+  Max: 10
+
+Metrics/MethodLength:
+  Max: 15
+
+Style/PercentLiteralDelimiters:
+  PreferredDelimiters:
+    default: ()
+    '%i': '[]'
+    '%I': '[]'
+    '%r': '{}'
+    '%w': '()'
+    '%W': '()'
+
+Style/RegexpLiteral:
+  Enabled: false
+
+Lint/AmbiguousBlockAssociation:
+  Enabled: false
+
+Bundler/OrderedGems:
+  Enabled: false
+
+Metrics/ClassLength:
+  Max: 200
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Rails/Date:
+  Enabled: false
+
+Rails/TimeZone:
+  Enabled: false
+
+Documentation:
+  Enabled: false
+
+Rails/SkipsModelValidations:
+  Enabled: false

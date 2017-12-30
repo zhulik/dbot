@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Rails.application.configure do
   # Make bots stubbed before processing routes.rb:
   Telegram::Bot::ClientStub.stub_all!

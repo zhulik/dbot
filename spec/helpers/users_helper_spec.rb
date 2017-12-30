@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe UsersHelper do
+describe ApplicationHelper do
   describe '#user_greeting' do
     subject { helper.user_greeting(user) }
 

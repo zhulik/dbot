@@ -2,14 +2,11 @@
 
 require 'simplecov'
 SimpleCov.start do
-  add_group 'API', 'app/api'
   add_group 'Models', 'app/models'
   add_group 'Queries', 'app/queries'
   add_group 'Services', 'app/services'
-  add_group 'Serializers', 'app/serializers'
-  add_group 'Uploaders', 'app/uploaders'
   add_group 'Validators', 'app/validators'
-  add_group 'Policies', 'app/policies'
+  add_group 'Helpers', 'app/helpers'
   add_group 'Libs', 'lib'
   add_filter 'app/models/legacy/temporary'
   add_filter 'spec'
@@ -26,11 +23,4 @@ RSpec.configure do |config|
   config.mock_with :rspec do |mocks|
     mocks.verify_partial_doubles = true
   end
-
-  config.filter_run_when_matching :focus
-
-  config.default_formatter = 'doc' if config.files_to_run.one?
-
-  config.order = :random
-  Kernel.srand config.seed
 end

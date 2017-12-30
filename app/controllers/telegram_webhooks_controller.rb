@@ -5,6 +5,10 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
   include UsersHelper
 
   def start
-    respond_with :message, text: t('.hi', name: user_greeting(payload.from))
+    if current_user.nil?
+      respond_with :message, text: t('.hi', name: user_greeting(payload.from))
+      return
+    end
+    return respond_with :message, text: t('.already_started') if current_user.active?
   end
 end

@@ -2,10 +2,17 @@
 
 require 'spec_helper'
 ENV['RAILS_ENV'] ||= 'test'
+
+require 'rails/all'
+require 'telegram/bot'
+require 'telegram/bot/railtie'
+require 'telegram/bot/types'
+
 require File.expand_path('../../config/environment', __FILE__)
 
 abort('The Rails environment is running in production mode!') if Rails.env.production?
 require 'rspec/rails'
+require 'telegram/bot/rspec/integration'
 
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| load(f) }
 
@@ -24,4 +31,5 @@ RSpec.configure do |config|
     DatabaseCleaner.strategy = :truncation
     DatabaseCleaner.clean!
   end
+  config.after { Telegram.bot.reset }
 end

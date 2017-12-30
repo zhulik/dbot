@@ -6,4 +6,8 @@ module UsersHelper
     return u.username if u.username.present?
     t('defaults.my_friend')
   end
+
+  def current_user
+    User.find_by(user_id: payload.from.id)
+  end
 end

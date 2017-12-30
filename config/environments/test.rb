@@ -2,6 +2,7 @@
 
 Rails.application.configure do
   # Make bots stubbed before processing routes.rb:
+
   Telegram::Bot::ClientStub.stub_all!
 
   # Settings specified here will take precedence over those in config/application.rb.
@@ -37,5 +38,5 @@ Rails.application.configure do
   config.active_support.deprecation = :stderr
 
   # Raises error for missing translations
-  # config.action_view.raise_on_missing_translations = true
+  config.action_view.raise_on_missing_translations = true
 end

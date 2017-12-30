@@ -1,4 +1,6 @@
 en:
   telegram_webhooks:
     start:
-      hi: Hi there!
+      hi: Hi, %{name}!
+  defaults:
+    my_friend: my friend

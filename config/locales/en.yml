@@ -12,6 +12,14 @@ en:
       language_accepted: 'Language changed: %{name}'
       unknown_language: 'Unknown language: %{slug}'
       unknown_action: 'Unknown action'
+    addword:
+      usage: 'Wrong arguments count. Usage: /addword <word> [translation]'
+      select_language: 'Language is not selected. Use /languages'
+      word_added: 'Word successfully added: %{word}'
+      is_it_right_translation: 'Is it right translation: %{translation}?'
+      send_valid: 'Send me the valid translation'
   common:
     my_friend: my friend
-    not_authorized: Sorry, you are not authorized, use /start
+    not_authorized: 'Sorry, you are not authorized, use /start'
+    choice_yes: 'Yes'
+    choice_no: 'No'

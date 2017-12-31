@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171230233647) do
+ActiveRecord::Schema.define(version: 20171231014429) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,5 +32,19 @@ ActiveRecord::Schema.define(version: 20171230233647) do
     t.index ["user_id"], name: "index_users_on_user_id", unique: true
   end
 
+  create_table "words", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "language_id"
+    t.string "word", null: false
+    t.string "translation", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["language_id"], name: "index_words_on_language_id"
+    t.index ["user_id", "language_id", "word"], name: "index_words_on_user_id_and_language_id_and_word", unique: true
+    t.index ["user_id"], name: "index_words_on_user_id"
+  end
+
   add_foreign_key "users", "languages", on_delete: :nullify
+  add_foreign_key "words", "languages", on_delete: :cascade
+  add_foreign_key "words", "users", on_delete: :cascade
 end

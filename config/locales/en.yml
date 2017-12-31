@@ -4,5 +4,11 @@ en:
       hi: Hi, %{name}!
       already_started: We have already started!
       reactivated: Your subscription has been reactivated!
-  defaults:
+    languages:
+      no_languages: Sorry, languages are not created yet!
+      choose_language: 'Choose the language you will work with:'
+    callback_query:
+      language_accepted: 'Language accepted: %{name}'
+  common:
     my_friend: my friend
+    not_authorized: Sorry, you are not authorized, use /start

@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 class TelegramWebhooksController < Telegram::Bot::UpdatesController
-  include ActiveSupport::Rescuable
   include Telegram::Bot::UpdatesController::TypedUpdate
+  include Telegram::Bot::UpdatesController::MessageContext
   include UsersHelper
   include KeyboardsHelper
+  self.session_store = :redis_store, { expires_in: 1.month }
 
-  rescue_from NotStartedError, with: :not_authorized
   around_action :rescue_not_authorized, except: :start
 
   before_action :authenticate!, except: :start
@@ -31,8 +31,9 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
     # TODO: handle existing words
     if args.count == 1
       translation = TRANSLATOR.translate args.first, from: current_user.language.slug, to: 'ru'
+      session[:translation] = translation
       respond_with :message, text: t('.is_it_right_translation', translation: translation),
-                             reply_markup: yes_no_inline_keyboard(args.first, translation)
+                             reply_markup: yes_no_inline_keyboard(args.first)
     else
       current_user.language.words.where(user: current_user).create!(word: args.first, translation: args.second)
       respond_with :message, text: t('.word_added', word: args.first)
@@ -46,6 +47,12 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
     send("handle_callback_query_action_#{query[:a]}", query)
   end
 
+  context_handler :addword do |*words|
+    word = session.delete(:word)
+    current_user.language.words.where(user: current_user).create!(word: word, translation: words.first)
+    respond_with :message, text: t('telegram_webhooks.addword.word_added', word: word)
+  end
+
   private
 
   def handle_callback_query_action_language(query)
@@ -56,14 +63,15 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
   end
 
   def handle_callback_query_action_word_confirmation(query)
+    translation = session.delete(:translation)
     if query[:c] == 'yes'
-      current_user.language.words.where(user: current_user).create!(word: query[:w], translation: query[:t])
-      answer_callback_query t('telegram_webhooks.addword.word_added', word: query[:w])
+      current_user.language.words.where(user: current_user).create!(word: query[:w], translation: translation)
+      edit_message :text, text: t('telegram_webhooks.addword.word_added', word: query[:w])
     else
-      # TODO: Ask for valid translation. Contexts, blah, blah...
-      answer_callback_query t('telegram_webhooks.addword.send_valid')
+      save_context :addword
+      session[:word] = query[:w]
+      edit_message :text, text: t('telegram_webhooks.addword.send_valid')
     end
-    # TODO: Hide inline keyboard
   end
 
   def authenticate!

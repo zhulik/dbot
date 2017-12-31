@@ -12,14 +12,14 @@ module KeyboardsHelper
     }
   end
 
-  def yes_no_inline_keyboard(word, translation)
+  def yes_no_inline_keyboard(word)
     yes = {
       text: t('common.choice_yes'),
-      callback_data: { a: :word_confirmation, c: 'yes', w: word, t: translation }.to_json
+      callback_data: { a: :word_confirmation, c: 'yes', w: word }.to_json
     }
     no = {
       text: t('common.choice_no'),
-      callback_data: { a: :word_confirmation, c: 'no', w: word, t: translation }.to_json
+      callback_data: { a: :word_confirmation, c: 'no', w: word }.to_json
     }
 
     {

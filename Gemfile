@@ -14,6 +14,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'opie', github: 'zhulik/opie'
 gem 'yandex-translator'
 gem 'rails_admin'
+gem 'redis-rails'
 
 group :development do
   gem 'listen', '>= 3.0.5', '< 3.2'

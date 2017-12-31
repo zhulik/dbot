@@ -15,7 +15,7 @@ en:
     addword:
       usage: 'Wrong arguments count. Usage: /addword <word> [translation]'
       select_language: 'Language is not selected. Use /languages'
-      word_added: 'Word successfully added: %{word}'
+      word_added: 'Word has been successfully added: %{word}'
       is_it_right_translation: 'Is it right translation: %{translation}?'
       send_valid: 'Send me the valid translation'
   common:

@@ -23,8 +23,10 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
     respond_with :message, text: t('.choose_language'), reply_markup: languages_keyboard
   end
 
-  def callback_query(data)
-    language = Language.find_by(slug: data)
+  def callback_query(slug)
+    language = Language.find_by(slug: slug)
+    return answer_callback_query t('.unknown_language', slug: slug) if language.nil?
+    current_user.update_attributes!(language: language)
     answer_callback_query t('.language_accepted', name: language.name)
   end
 
@@ -44,6 +46,7 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
   def rescue_not_authorized
     yield
   rescue NotStartedError
+    return answer_callback_query t('common.not_authorized') if payload.is_a? Telegram::Bot::Types::CallbackQuery
     return respond_with :message, text: t('common.not_authorized')
   end
 end

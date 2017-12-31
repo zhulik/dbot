@@ -64,4 +64,34 @@ describe TelegramWebhooksController, :telegram_bot do
       include_examples 'responds with message', 'Sorry, you are not authorized, use /start'
     end
   end
+
+  describe '#callback_query', :callback_query do
+    let(:data) { 'DEU' }
+    let(:payload) { { id: '11', from: from, message: message, data: data } }
+
+    context 'with existing user' do
+      let!(:user) { create :user, user_id: 123 }
+
+      context 'with valid language payload' do
+        let!(:lang) { create :language, name: 'Deutsch', slug: 'DEU' }
+
+        it 'answers with valid response and updates user\' lang' do
+          expect(subject).to answer_callback_query('Language changed: Deutsch')
+          expect(user.reload.language).to eq(lang)
+        end
+      end
+
+      context 'with invalid payload' do
+        it 'answers with error response' do
+          expect(subject).to answer_callback_query('Unknown language: DEU')
+        end
+      end
+    end
+
+    context 'with non-existing user' do
+      it 'answers with valid response' do
+        expect(subject).to answer_callback_query('Sorry, you are not authorized, use /start')
+      end
+    end
+  end
 end

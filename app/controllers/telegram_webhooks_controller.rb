@@ -20,12 +20,13 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
 
   def languages
     return respond_with :message, text: t('.no_languages') if Language.all.empty?
-    respond_with :message, text: t('.choose_language'), reply_markup: languages_keyboard
+    respond_with :message, text: t('.choose_language'), reply_markup: languages_inline_keyboard
   end
 
-  def callback_query(slug)
-    language = Language.find_by(slug: slug)
-    return answer_callback_query t('.unknown_language', slug: slug) if language.nil?
+  def callback_query(query)
+    query = JSON.parse(query, symbolize_names: true)
+    language = Language.find_by(slug: query[:slug])
+    return answer_callback_query t('.unknown_language', slug: query[:slug]) if language.nil?
     current_user.update_attributes!(language: language)
     answer_callback_query t('.language_accepted', name: language.name)
   end

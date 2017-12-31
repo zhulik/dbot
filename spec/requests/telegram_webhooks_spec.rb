@@ -52,8 +52,8 @@ describe TelegramWebhooksController, :telegram_bot do
                                                       'Choose the language you will work with:',
                                                       reply_markup: {
                                                         inline_keyboard: [[
-                                                          { text: 'Deutsch', callback_data: 'DEU' },
-                                                          { text: 'English', callback_data: 'ENG' }
+                                                          { text: 'Deutsch', callback_data: { action: :language, slug: 'DEU' }.to_json },
+                                                          { text: 'English', callback_data: { action: :language, slug: 'ENG' }.to_json }
                                                         ]]
                                                       })
         end
@@ -66,7 +66,7 @@ describe TelegramWebhooksController, :telegram_bot do
   end
 
   describe '#callback_query', :callback_query do
-    let(:data) { 'DEU' }
+    let(:data) { { action: 'language', slug: 'DEU' }.to_json }
     let(:payload) { { id: '11', from: from, message: message, data: data } }
 
     context 'with existing user' do

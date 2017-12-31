@@ -11,6 +11,7 @@ en:
     callback_query:
       language_accepted: 'Language changed: %{name}'
       unknown_language: 'Unknown language: %{slug}'
+      unknown_action: 'Unknown action'
   common:
     my_friend: my friend
     not_authorized: Sorry, you are not authorized, use /start

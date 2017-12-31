@@ -25,13 +25,18 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
 
   def callback_query(query)
     query = JSON.parse(query, symbolize_names: true)
+    return answer_callback_query t('.unknown_action') if query[:action].nil?
+    send("handle_callback_query_action_#{query[:action]}", query)
+  end
+
+  private
+
+  def handle_callback_query_action_language(query)
     language = Language.find_by(slug: query[:slug])
     return answer_callback_query t('.unknown_language', slug: query[:slug]) if language.nil?
     current_user.update_attributes!(language: language)
     answer_callback_query t('.language_accepted', name: language.name)
   end
-
-  private
 
   def authenticate!
     raise NotStartedError if current_user.nil?

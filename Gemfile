@@ -12,6 +12,8 @@ gem 'telegram-bot', require: false
 gem 'telegram-bot-types', require: false
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'opie', github: 'zhulik/opie'
+gem 'yandex-translator'
+gem 'rails_admin'
 
 group :development do
   gem 'listen', '>= 3.0.5', '< 3.2'

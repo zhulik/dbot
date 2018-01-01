@@ -104,7 +104,8 @@ describe TelegramWebhooksController, :telegram_bot do
                                                         reply_markup: {
                                                           inline_keyboard: [[
                                                             { text: 'Yes', callback_data: 'yes' },
-                                                            { text: 'No', callback_data: 'no' }
+                                                            { text: 'No', callback_data: 'no' },
+                                                            { text: 'Cancel', callback_data: 'cancel' }
                                                           ]]
                                                         })
           end
@@ -235,6 +236,14 @@ describe TelegramWebhooksController, :telegram_bot do
         include_examples 'does not create new', Word
         it 'edits the message' do
           expect { subject }.to edit_current_message(:text, text: 'Send me the valid translation')
+        end
+      end
+
+      context 'with cancel answer' do
+        let(:data) { 'cancel' }
+
+        it 'edits the message' do
+          expect { subject }.to edit_current_message(:text, text: 'Canceled')
         end
       end
     end

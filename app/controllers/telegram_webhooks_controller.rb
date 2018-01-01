@@ -58,12 +58,17 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
   end
 
   def handle_callback_query_action_word_confirmation(query)
-    if query == 'yes'
+    case query
+    when 'yes'
       current_user.current_words.create!(session.slice(:word, :translation))
       edit_message :text, text: t('telegram_webhooks.addword.word_added', session.slice(:word, :translation))
-    else
+    when 'no'
       save_context :addword
       edit_message :text, text: t('telegram_webhooks.addword.send_valid')
+    when 'cancel'
+      session.delete(:word)
+      session.delete(:translation)
+      edit_message :text, text: t('common.canceled')
     end
   end
 

@@ -9,7 +9,8 @@ module KeyboardsHelper
     [
       [
         { text: t('common.choice_yes'), callback_data: 'yes' },
-        { text: t('common.choice_no'), callback_data: 'no' }
+        { text: t('common.choice_no'), callback_data: 'no' },
+        { text: t('common.cancel'), callback_data: 'cancel' }
       ]
     ]
   end

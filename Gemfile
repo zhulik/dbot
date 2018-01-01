@@ -15,23 +15,26 @@ gem 'opie', github: 'zhulik/opie'
 gem 'yandex-translator'
 gem 'rails_admin'
 gem 'redis-rails'
+gem 'listen', '>= 3.0.5', '< 3.2'
 
 group :development do
-  gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'rubocop', require: false
+  gem 'capistrano', '~> 3.6'
+  gem 'capistrano-rails', '~> 1.3'
+  gem 'capistrano-rvm'
 end
 
 group :development, :test do
   gem 'rspec-rails'
   gem 'factory_bot_rails'
   gem 'faker'
-  gem 'rspec-its'
   gem 'awesome_print'
   gem 'hirb'
   gem 'pry'
   gem 'pry-rescue'
   gem 'pry-rails'
   gem 'simplecov', require: false
+  gem 'capistrano3-puma'
 end
 
 group :test do

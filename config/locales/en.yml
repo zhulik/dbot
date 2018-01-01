@@ -22,7 +22,7 @@ en:
   common:
     my_friend: my friend
     not_authorized: 'Sorry, you are not authorized, use /start'
-    choice_yes: 'Yes'
-    choice_no: 'No'
+    choice_yes: '👍 Yes'
+    choice_no: '👎 No'
     canceled: 'Canceled'
-    cancel: 'Cancel'
+    cancel: '❌ Cancel'

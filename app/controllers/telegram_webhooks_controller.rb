@@ -57,11 +57,13 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
     edit_message :text, text: t('.language_accepted', name: language.name)
   end
 
+  # rubocop:disable Metrics/AbcSize
   def handle_callback_query_action_word_confirmation(query)
     case query
     when 'yes'
-      current_user.current_words.create!(session.slice(:word, :translation))
-      edit_message :text, text: t('telegram_webhooks.addword.word_added', session.slice(:word, :translation))
+      current_user.current_words.create!(session.to_h.symbolize_keys.slice(:word, :translation))
+      edit_message :text, text: t('telegram_webhooks.addword.word_added',
+                                  session.to_h.symbolize_keys.slice(:word, :translation))
     when 'no'
       save_context :addword
       edit_message :text, text: t('telegram_webhooks.addword.send_valid')
@@ -71,6 +73,7 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
       edit_message :text, text: t('common.canceled')
     end
   end
+  # rubocop:enable Metrics/AbcSize
 
   def start_with_existing_user
     return respond_with :message, text: t('.already_started') if current_user.active?

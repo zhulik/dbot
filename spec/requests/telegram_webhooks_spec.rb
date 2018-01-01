@@ -103,9 +103,9 @@ describe TelegramWebhooksController, :telegram_bot do
                                                         'Is it right translation: один?',
                                                         reply_markup: {
                                                           inline_keyboard: [[
-                                                            { text: 'Yes', callback_data: 'yes' },
-                                                            { text: 'No', callback_data: 'no' },
-                                                            { text: 'Cancel', callback_data: 'cancel' }
+                                                            { text: '👍 Yes', callback_data: 'yes' },
+                                                            { text: '👎 No', callback_data: 'no' },
+                                                            { text: '❌ Cancel', callback_data: 'cancel' }
                                                           ]]
                                                         })
           end

@@ -13,6 +13,4 @@ module KeyboardsHelper
       ]
     ]
   end
-
-  def hide_inline_keyboard; end
 end

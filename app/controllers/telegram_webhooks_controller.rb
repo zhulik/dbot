@@ -21,16 +21,17 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
     return respond_with :message, text: t('.usage') if args.empty?
     return respond_with :message, text: t('.usage') if args.count > 2
     return respond_with :message, text: t('.select_language') if current_user.language.nil?
-    # TODO: handle existing words
+    return respond_with :message, text: t('.already_added', word: args.first) if current_user.word?(args.first).present?
     if args.count == 1
       translation = TRANSLATOR.translate args.first, from: current_user.language.slug, to: 'ru'
+      save_context :word_confirmation
       session[:translation] = translation
-      respond_with :message, text: t('.is_it_right_translation', translation: translation),
-                             reply_markup: { inline_keyboard: yes_no_inline_keyboard }
-    else
-      current_user.language.words.where(user: current_user).create!(word: args.first, translation: args.second)
-      respond_with :message, text: t('.word_added', word: args.first)
+      session[:word] = args.first
+      return respond_with :message, text: t('.is_it_right_translation', translation: translation),
+                                    reply_markup: { inline_keyboard: yes_no_inline_keyboard }
     end
+    current_user.current_words.create!(word: args.first, translation: args.second)
+    respond_with :message, text: t('.word_added', word: args.first, translation: args.second)
   end
   # rubocop:enable Metrics/AbcSize
 
@@ -42,8 +43,8 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
 
   context_handler :addword do |*words|
     word = session.delete(:word)
-    current_user.language.words.where(user: current_user).create!(word: word, translation: words.first)
-    respond_with :message, text: t('telegram_webhooks.addword.word_added', word: word)
+    current_user.current_words.create!(word: word, translation: words.first)
+    respond_with :message, text: t('telegram_webhooks.addword.word_added', word: word, translation: words.first)
   end
 
   private
@@ -56,13 +57,11 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
   end
 
   def handle_callback_query_action_word_confirmation(query)
-    translation = session.delete(:translation)
-    if query[:c] == 'yes'
-      current_user.language.words.where(user: current_user).create!(word: query[:w], translation: translation)
-      edit_message :text, text: t('telegram_webhooks.addword.word_added', word: query[:w])
+    if query == 'yes'
+      current_user.current_words.create!(session.slice(:word, :translation))
+      edit_message :text, text: t('telegram_webhooks.addword.word_added', session.slice(:word, :translation))
     else
       save_context :addword
-      session[:word] = query[:w]
       edit_message :text, text: t('telegram_webhooks.addword.send_valid')
     end
   end

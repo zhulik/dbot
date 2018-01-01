@@ -15,9 +15,10 @@ en:
     addword:
       usage: 'Wrong arguments count. Usage: /addword <word> [translation]'
       select_language: 'Language is not selected. Use /languages'
-      word_added: 'Word has been successfully added: %{word}'
+      word_added: 'Word has been successfully added: %{word} - %{translation}'
       is_it_right_translation: 'Is it right translation: %{translation}?'
       send_valid: 'Send me the valid translation'
+      already_added: 'Word %{word} is already added!'
   common:
     my_friend: my friend
     not_authorized: 'Sorry, you are not authorized, use /start'

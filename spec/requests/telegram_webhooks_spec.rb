@@ -46,7 +46,7 @@ describe TelegramWebhooksController, :telegram_bot do
       context 'with existing languages' do
         let!(:lang1) { create :language, name: 'Deutsch', slug: 'de' }
         let!(:lang2) { create :language, name: 'English', slug: 'en' }
-        let!(:session) { { test: 1 } }
+        let!(:session) { {} }
         before do
           override_session(session)
         end
@@ -62,7 +62,7 @@ describe TelegramWebhooksController, :telegram_bot do
                                                       })
         end
 
-        it 'updates context' do
+        it 'changes context' do
           subject
           expect(session[:context]).to eq(:languages)
         end
@@ -91,11 +91,21 @@ describe TelegramWebhooksController, :telegram_bot do
           expect { subject }.to edit_current_message(:text, text: 'Language changed: Deutsch')
           expect(user.reload.language).to eq(lang)
         end
+
+        it 'cleans context' do
+          subject
+          expect(session[:context]).to be_nil
+        end
       end
 
       context 'with invalid payload' do
         it 'answers with error response' do
           expect { subject }.to edit_current_message(:text, text: 'Unknown language: de')
+        end
+
+        it 'cleans context' do
+          subject
+          expect(session[:context]).to be_nil
         end
       end
     end

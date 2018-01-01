@@ -151,6 +151,24 @@ describe TelegramWebhooksController, :telegram_bot do
     end
   end
 
+  describe 'context_handler :addword' do
+    let!(:language) { create :language, name: 'Deutsch', slug: 'de' }
+    let!(:user) { create :user, user_id: 123, language: language }
+
+    let!(:session) { { context: :addword, word: 'eine', translation: 'wrong' } }
+    before { override_session(session) }
+
+    subject { dispatch_message 'one' }
+
+    include_examples 'creates new', Word
+    include_examples 'responds with message', 'Word has been successfully added: eine - one'
+
+    it 'cleans session' do
+      subject
+      expect(session).to be_empty
+    end
+  end
+
   describe '#callback_query', :callback_query do
     subject { dispatch callback_query: payload }
     let(:payload) { { id: '11', from: from, message: message, data: data } }

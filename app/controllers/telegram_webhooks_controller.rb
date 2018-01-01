@@ -43,6 +43,7 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
 
   context_handler :addword do |*words|
     word = session.delete(:word)
+    session.delete(:translation)
     current_user.current_words.create!(word: word, translation: words.first)
     respond_with :message, text: t('telegram_webhooks.addword.word_added', word: word, translation: words.first)
   end

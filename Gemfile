@@ -31,11 +31,12 @@ group :development, :test do
   gem 'pry'
   gem 'pry-rescue'
   gem 'pry-rails'
+  gem 'simplecov', require: false
 end
 
 group :test do
-  gem 'simplecov', require: false
   gem 'database_cleaner'
   gem 'rspec-mocks'
   gem 'webmock'
+  gem 'vcr'
 end

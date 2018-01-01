@@ -74,6 +74,83 @@ describe TelegramWebhooksController, :telegram_bot do
     end
   end
 
+  describe '#addword' do
+    let!(:session) { {} }
+    before do
+      override_session(session)
+    end
+
+    context 'with existing user' do
+      let!(:language) { create :language, name: 'Deutsch', slug: 'de' }
+      let!(:user) { create :user, user_id: 123, language: language }
+
+      context 'without arguments' do
+        subject { dispatch_message '/addword' }
+        include_examples 'responds with message', 'Wrong arguments count. Usage: /addword <word> [translation]'
+      end
+
+      context 'with one argument' do
+        subject { dispatch_message '/addword eine' }
+        around do |example|
+          VCR.use_cassette('translator') do
+            example.run
+          end
+        end
+
+        context 'with new word' do
+          it 'responds with valid message' do
+            expect { subject }.to send_telegram_message(bot,
+                                                        'Is it right translation: один?',
+                                                        reply_markup: {
+                                                          inline_keyboard: [[
+                                                            { text: 'Yes', callback_data: 'yes' },
+                                                            { text: 'No', callback_data: 'no' }
+                                                          ]]
+                                                        })
+          end
+
+          it 'changes session' do
+            subject
+            expect(session[:context]).to eq(:word_confirmation)
+            expect(session[:word]).to eq('eine')
+            expect(session[:translation]).to eq('один')
+          end
+        end
+
+        context 'with known word' do
+          let!(:word) { create :word, word: 'eine', translation: 'one', user: user, language: language }
+
+          include_examples 'responds with message', 'Word eine is already added!'
+        end
+      end
+
+      context 'with two arguments' do
+        subject { dispatch_message '/addword eine one' }
+
+        include_examples 'creates new', Word
+        include_examples 'responds with message', 'Word has been successfully added: eine - one'
+
+        it 'creates valid word' do
+          subject
+          word = Word.last
+          expect(word.word).to eq('eine')
+          expect(word.translation).to eq('one')
+        end
+      end
+
+      context 'with many arguments' do
+        subject { dispatch_message '/addword test test test' }
+        include_examples 'responds with message', 'Wrong arguments count. Usage: /addword <word> [translation]'
+      end
+    end
+
+    context 'with non-existing user' do
+      subject { dispatch_message '/addword eine' }
+
+      include_examples 'responds with message', 'Sorry, you are not authorized, use /start'
+    end
+  end
+
   describe '#callback_query', :callback_query do
     subject { dispatch callback_query: payload }
     let(:payload) { { id: '11', from: from, message: message, data: data } }

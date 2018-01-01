@@ -2,6 +2,7 @@
 
 FactoryBot.define do
   factory :word do
+    language
     word { Faker::Lorem.word }
     translation { Faker::Lorem.word }
   end

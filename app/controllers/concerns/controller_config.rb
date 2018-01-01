@@ -11,9 +11,7 @@ module ControllerConfig
     include KeyboardsHelper
 
     self.session_store = :redis_store, { expires_in: 1.month }
-
     around_action :rescue_not_authorized, except: :start
-
     before_action :authenticate!, except: :start
   end
 

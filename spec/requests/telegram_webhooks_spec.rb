@@ -88,14 +88,14 @@ describe TelegramWebhooksController, :telegram_bot do
         let!(:lang) { create :language, name: 'Deutsch', slug: 'de' }
 
         it 'answers with valid response and updates user\' lang' do
-          expect { subject }.to answer_callback_query('Language changed: Deutsch')
+          expect { subject }.to edit_current_message(:text, text: 'Language changed: Deutsch')
           expect(user.reload.language).to eq(lang)
         end
       end
 
       context 'with invalid payload' do
         it 'answers with error response' do
-          expect { subject }.to answer_callback_query('Unknown language: de')
+          expect { subject }.to edit_current_message(:text, text: 'Unknown language: de')
         end
       end
     end

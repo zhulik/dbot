@@ -50,9 +50,9 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
 
   def handle_callback_query_action_languages(query)
     language = Language.find_by(slug: query)
-    return answer_callback_query t('.unknown_language', slug: query) if language.nil?
+    return edit_message :text, text: t('.unknown_language', slug: query) if language.nil?
     current_user.update_attributes!(language: language)
-    answer_callback_query t('.language_accepted', name: language.name)
+    edit_message :text, text: t('.language_accepted', name: language.name)
   end
 
   def handle_callback_query_action_word_confirmation(query)

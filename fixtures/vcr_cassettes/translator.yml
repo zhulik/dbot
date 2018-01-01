@@ -5,7 +5,7 @@ http_interactions:
     uri: https://translate.yandex.net/api/v1.5/tr.json/translate
     body:
       encoding: UTF-8
-      string: text=eine&lang=de-ru&key=trnsl.1.1.20171231T012935Z.764bc9bffc01fa1c.6dd2cbb16105e28c3bbb7bbca7607bd90e757d90
+      string: text=eine&lang=de-ru&key=test_bot_token
     headers:
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3

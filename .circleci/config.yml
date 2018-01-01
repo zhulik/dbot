@@ -31,10 +31,17 @@ jobs:
           paths:
             - ./vendor/bundle
           key: v1-dependencies-{{ checksum "Gemfile.lock" }}
+      - run:
+          name: Preparing postgres
+          command: |
+            cd src
+            mv config/database.ci.yml config/database.yml
+            mv config/secrets.ci.yml config/secrets.yml
 
       # Database setup
       - run: bundle exec rake db:create
       - run: bundle exec rake db:schema:load
+      - run: 'bundle exec rubocop'
 
       # run tests!
       - run:

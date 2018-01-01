@@ -1,0 +1,13 @@
+test:
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  user: postgres
+  username: postgres
+  password:
+
+development:
+  <<: *default
+  database: dbot_development
+  database: dbot_test
+

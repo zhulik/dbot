@@ -8,6 +8,8 @@ jobs:
     docker:
       # specify the version you desire here
        - image: circleci/ruby:2.4.2-node-browsers
+         environment:
+           RAILS_ENV: test
        - image: circleci/postgres:10
        - image: redis:4.0
 

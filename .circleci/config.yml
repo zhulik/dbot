@@ -32,9 +32,8 @@ jobs:
             - ./vendor/bundle
           key: v1-dependencies-{{ checksum "Gemfile.lock" }}
       - run:
-          name: Preparing postgres
+          name: Preparing configs
           command: |
-            cd src
             mv config/database.ci.yml config/database.yml
             mv config/secrets.ci.yml config/secrets.yml
 

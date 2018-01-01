@@ -152,6 +152,16 @@ describe TelegramWebhooksController, :telegram_bot do
     end
   end
 
+  describe '#words' do
+    let!(:language) { create :language, name: 'Deutsch', slug: 'de' }
+    let!(:user) { create :user, user_id: 123, language: language }
+    let!(:word) { create :word, language: language, user: user, word: 'word', translation: 'translation' }
+
+    subject { dispatch_message '/words' }
+
+    include_examples 'responds with message', "Your saved words:\nword - translation"
+  end
+
   describe 'context_handler :addword' do
     let!(:language) { create :language, name: 'Deutsch', slug: 'de' }
     let!(:user) { create :user, user_id: 123, language: language }

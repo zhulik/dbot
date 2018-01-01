@@ -35,17 +35,24 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
   end
   # rubocop:enable Metrics/AbcSize
 
-  def callback_query(query)
-    context = session.delete(:context)
-    return answer_callback_query t('.unknown_action') if context.nil?
-    send("handle_callback_query_action_#{context}", query)
-  end
-
   context_handler :addword do |*words|
     word = session.delete(:word)
     session.delete(:translation)
     current_user.current_words.create!(word: word, translation: words.first)
     respond_with :message, text: t('telegram_webhooks.addword.word_added', word: word, translation: words.first)
+  end
+
+  def words
+    words = current_user.current_words.select(:word, :translation).order(:word)
+    return respond_with :message, text: t('.no_words_added') if words.empty?
+    msg = words.map { |w| "#{w.word} - #{w.translation}" }.join("\n")
+    respond_with :message, text: "#{t('.your_saved_words')}\n#{msg}"
+  end
+
+  def callback_query(query)
+    context = session.delete(:context)
+    return answer_callback_query t('.unknown_action') if context.nil?
+    send("handle_callback_query_action_#{context}", query)
   end
 
   private

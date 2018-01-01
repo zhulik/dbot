@@ -19,6 +19,9 @@ en:
       is_it_right_translation: 'Is it right translation: %{translation}?'
       send_valid: 'Send me the valid translation'
       already_added: 'Word %{word} is already added!'
+    words:
+      no_words_added: You haven't added any words. Use /addword <word>
+      your_saved_words: 'Your saved words:'
   common:
     my_friend: my friend
     not_authorized: 'Sorry, you are not authorized, use /start'

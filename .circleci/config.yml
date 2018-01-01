@@ -40,9 +40,7 @@ jobs:
             mv config/secrets.ci.yml config/secrets.yml
 
       # Database setup
-      - run: bundle exec rake db:create
-      - run: bundle exec rake db:schema:load
-      - run: bundle exec rake db:migrate
+      - run: bundle exec rake db:create db:schema:load
       - run: bundle exec rubocop
 
       # run tests!

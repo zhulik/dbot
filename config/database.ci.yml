@@ -5,4 +5,5 @@ test:
   pool: 5
   user: postgres
   username: postgres
+  database: circle_test
   password:

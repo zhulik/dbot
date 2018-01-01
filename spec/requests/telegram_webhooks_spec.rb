@@ -171,43 +171,71 @@ describe TelegramWebhooksController, :telegram_bot do
 
   describe '#callback_query', :callback_query do
     subject { dispatch callback_query: payload }
-    let(:payload) { { id: '11', from: from, message: message, data: data } }
+
     let(:message) { { message_id: 22, chat: chat, text: 'message text' } }
-    let(:data) { 'de' }
-    before { override_session(context: :languages) }
+    let(:payload) { { id: '11', from: from, message: message, data: data } }
 
-    context 'with existing user' do
-      let!(:user) { create :user, user_id: 123 }
+    context 'with languages context' do
+      let(:data) { 'de' }
+      before { override_session(context: :languages) }
 
-      context 'with valid language payload' do
-        let!(:lang) { create :language, name: 'Deutsch', slug: 'de' }
+      context 'with existing user' do
+        let!(:user) { create :user, user_id: 123 }
 
-        it 'answers with valid response and updates user\' lang' do
-          expect { subject }.to edit_current_message(:text, text: 'Language changed: Deutsch')
-          expect(user.reload.language).to eq(lang)
+        context 'with valid language payload' do
+          let!(:lang) { create :language, name: 'Deutsch', slug: 'de' }
+
+          it 'update message and updates user\' lang' do
+            expect { subject }.to edit_current_message(:text, text: 'Language changed: Deutsch')
+            expect(user.reload.language).to eq(lang)
+          end
+
+          it 'cleans context' do
+            subject
+            expect(session[:context]).to be_nil
+          end
         end
 
-        it 'cleans context' do
-          subject
-          expect(session[:context]).to be_nil
+        context 'with invalid payload' do
+          it 'update message with error' do
+            expect { subject }.to edit_current_message(:text, text: 'Unknown language: de')
+          end
+
+          it 'cleans context' do
+            subject
+            expect(session[:context]).to be_nil
+          end
         end
       end
 
-      context 'with invalid payload' do
-        it 'answers with error response' do
-          expect { subject }.to edit_current_message(:text, text: 'Unknown language: de')
-        end
-
-        it 'cleans context' do
-          subject
-          expect(session[:context]).to be_nil
+      context 'with non-existing user' do
+        it 'answers with valid response' do
+          expect { subject }.to answer_callback_query('Sorry, you are not authorized, use /start')
         end
       end
     end
 
-    context 'with non-existing user' do
-      it 'answers with valid response' do
-        expect { subject }.to answer_callback_query('Sorry, you are not authorized, use /start')
+    context 'with word_confirmation context' do
+      let!(:language) { create :language, name: 'Deutsch', slug: 'de' }
+      let!(:user) { create :user, user_id: 123, language: language }
+      before { override_session(context: :word_confirmation, word: 'eine', translation: 'one') }
+
+      context 'with yes answer' do
+        let(:data) { 'yes' }
+
+        include_examples 'creates new', Word
+        it 'edits the message' do
+          expect { subject }.to edit_current_message(:text, text: 'Word has been successfully added: eine - one')
+        end
+      end
+
+      context 'with no answer' do
+        let(:data) { 'no' }
+
+        include_examples 'does not create new', Word
+        it 'edits the message' do
+          expect { subject }.to edit_current_message(:text, text: 'Send me the valid translation')
+        end
       end
     end
   end

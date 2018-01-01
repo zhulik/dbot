@@ -1,15 +1,7 @@
 # frozen_string_literal: true
 
 class TelegramWebhooksController < Telegram::Bot::UpdatesController
-  include Telegram::Bot::UpdatesController::TypedUpdate
-  include Telegram::Bot::UpdatesController::MessageContext
-  include UsersHelper
-  include KeyboardsHelper
-  self.session_store = :redis_store, { expires_in: 1.month }
-
-  around_action :rescue_not_authorized, except: :start
-
-  before_action :authenticate!, except: :start
+  include ControllerConfig
 
   def start
     return start_with_existing_user if current_user.present?
@@ -20,7 +12,8 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
 
   def languages
     return respond_with :message, text: t('.no_languages') if Language.all.empty?
-    respond_with :message, text: t('.choose_language'), reply_markup: languages_inline_keyboard
+    save_context :languages
+    respond_with :message, text: t('.choose_language'), reply_markup: { inline_keyboard: languages_inline_keyboard }
   end
 
   # rubocop:disable Metrics/AbcSize
@@ -33,7 +26,7 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
       translation = TRANSLATOR.translate args.first, from: current_user.language.slug, to: 'ru'
       session[:translation] = translation
       respond_with :message, text: t('.is_it_right_translation', translation: translation),
-                             reply_markup: yes_no_inline_keyboard(args.first)
+                             reply_markup: { inline_keyboard: yes_no_inline_keyboard }
     else
       current_user.language.words.where(user: current_user).create!(word: args.first, translation: args.second)
       respond_with :message, text: t('.word_added', word: args.first)
@@ -42,9 +35,9 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
   # rubocop:enable Metrics/AbcSize
 
   def callback_query(query)
-    query = JSON.parse(query, symbolize_names: true)
-    return answer_callback_query t('.unknown_action') if query[:a].nil?
-    send("handle_callback_query_action_#{query[:a]}", query)
+    context = session.delete(:context)
+    return answer_callback_query t('.unknown_action') if context.nil?
+    send("handle_callback_query_action_#{context}", query)
   end
 
   context_handler :addword do |*words|
@@ -55,9 +48,9 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
 
   private
 
-  def handle_callback_query_action_language(query)
-    language = Language.find_by(slug: query[:s])
-    return answer_callback_query t('.unknown_language', slug: query[:s]) if language.nil?
+  def handle_callback_query_action_languages(query)
+    language = Language.find_by(slug: query)
+    return answer_callback_query t('.unknown_language', slug: query) if language.nil?
     current_user.update_attributes!(language: language)
     answer_callback_query t('.language_accepted', name: language.name)
   end
@@ -74,21 +67,10 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
     end
   end
 
-  def authenticate!
-    raise NotStartedError if current_user.nil?
-  end
-
   def start_with_existing_user
     return respond_with :message, text: t('.already_started') if current_user.active?
 
     current_user.update_attributes(active: true)
     respond_with :message, text: t('.reactivated')
-  end
-
-  def rescue_not_authorized
-    yield
-  rescue NotStartedError
-    return answer_callback_query t('common.not_authorized') if payload.is_a? Telegram::Bot::Types::CallbackQuery
-    return respond_with :message, text: t('common.not_authorized')
   end
 end

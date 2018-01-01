@@ -32,4 +32,5 @@ RSpec.configure do |config|
     DatabaseCleaner.clean!
   end
   config.after { Telegram.bot.reset }
+  config.include_context 'telegram/bot/session', :telegram_bot
 end

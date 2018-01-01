@@ -1,11 +1,14 @@
 # frozen_string_literal: true
 
 RailsAdmin.config do |config|
-  ### Popular gems integration
+  AUTH_HASH = 'a86cbc3d8a195be4e39bb4ef5493cae7587747f6f76848646817e19710d14719'
 
   config.authenticate_with do
-    authenticate_or_request_with_http_basic('Login required') do |_username, _password|
-      Struct.new(:email).new('zhulik.gleb@gmail.com')
+    authenticate_or_request_with_http_basic('Login required') do |username, password|
+      salt = Rails.application.secrets.rails_admin_salt
+      if Digest::SHA256.hexdigest("#{username}:#{password}:#{salt}") == AUTH_HASH
+        Struct.new(:email).new('zhulik.gleb@gmail.com')
+      end
     end
   end
 

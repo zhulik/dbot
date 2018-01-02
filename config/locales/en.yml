@@ -10,7 +10,7 @@ en:
 
     callback_query:
       language_accepted: 'Language changed: %{name}'
-      unknown_language: 'Unknown language: %{slug}'
+      unknown_language: 'Unknown language: %{code}'
       unknown_action: 'Unknown action'
     addword:
       usage: 'Wrong arguments count. Usage: /addword <word> [translation]'

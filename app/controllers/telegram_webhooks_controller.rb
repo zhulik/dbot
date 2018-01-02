@@ -23,7 +23,7 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
     return respond_with :message, text: t('.select_language') if current_user.language.nil?
     return respond_with :message, text: t('.already_added', word: args.first) if current_user.word?(args.first).present?
     if args.count == 1
-      translation = TRANSLATOR.translate args.first, from: current_user.language.slug, to: 'ru'
+      translation = TRANSLATOR.translate args.first, from: current_user.language.code, to: 'ru'
       save_context :word_confirmation
       session[:translation] = translation
       session[:word] = args.first
@@ -67,8 +67,8 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
   private
 
   def handle_callback_query_action_languages(query)
-    language = Language.find_by(slug: query)
-    return edit_message :text, text: t('.unknown_language', slug: query) if language.nil?
+    language = Language.find_by(code: query)
+    return edit_message :text, text: t('.unknown_language', code: query) if language.nil?
     current_user.update_attributes!(language: language)
     edit_message :text, text: t('.language_accepted', name: language.name)
   end

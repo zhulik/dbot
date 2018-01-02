@@ -3,6 +3,6 @@
 FactoryBot.define do
   factory :language do
     name { Faker::Address.country }
-    slug { Faker::Address.country_code }
+    code { Faker::Address.country_code }
   end
 end

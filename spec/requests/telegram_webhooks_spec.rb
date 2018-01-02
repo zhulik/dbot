@@ -44,8 +44,8 @@ describe TelegramWebhooksController, :telegram_bot do
       end
 
       context 'with existing languages' do
-        let!(:lang1) { create :language, name: 'Deutsch', slug: 'de' }
-        let!(:lang2) { create :language, name: 'English', slug: 'en' }
+        let!(:lang1) { create :language, name: 'Deutsch', code: 'de' }
+        let!(:lang2) { create :language, name: 'English', code: 'en' }
         let!(:session) { {} }
         before do
           override_session(session)
@@ -81,7 +81,7 @@ describe TelegramWebhooksController, :telegram_bot do
     end
 
     context 'with existing user' do
-      let!(:language) { create :language, name: 'Deutsch', slug: 'de' }
+      let!(:language) { create :language, name: 'Deutsch', code: 'de' }
       let!(:user) { create :user, user_id: 123, language: language }
 
       context 'without arguments' do
@@ -153,7 +153,7 @@ describe TelegramWebhooksController, :telegram_bot do
   end
 
   describe '#words' do
-    let!(:language) { create :language, name: 'Deutsch', slug: 'de' }
+    let!(:language) { create :language, name: 'Deutsch', code: 'de' }
     let!(:user) { create :user, user_id: 123, language: language }
     subject { dispatch_message '/words' }
 
@@ -169,7 +169,7 @@ describe TelegramWebhooksController, :telegram_bot do
   end
 
   describe '#delword' do
-    let!(:language) { create :language, name: 'Deutsch', slug: 'de' }
+    let!(:language) { create :language, name: 'Deutsch', code: 'de' }
     let!(:user) { create :user, user_id: 123, language: language }
 
     context 'with wrong parameter count' do
@@ -195,7 +195,7 @@ describe TelegramWebhooksController, :telegram_bot do
   end
 
   describe 'context_handler :addword' do
-    let!(:language) { create :language, name: 'Deutsch', slug: 'de' }
+    let!(:language) { create :language, name: 'Deutsch', code: 'de' }
     let!(:user) { create :user, user_id: 123, language: language }
 
     let!(:session) { { context: :addword, word: 'eine', translation: 'wrong' } }
@@ -226,7 +226,7 @@ describe TelegramWebhooksController, :telegram_bot do
         let!(:user) { create :user, user_id: 123 }
 
         context 'with valid language payload' do
-          let!(:lang) { create :language, name: 'Deutsch', slug: 'de' }
+          let!(:lang) { create :language, name: 'Deutsch', code: 'de' }
 
           it 'update message and updates user\' lang' do
             expect { subject }.to edit_current_message(:text, text: 'Language changed: Deutsch')
@@ -259,7 +259,7 @@ describe TelegramWebhooksController, :telegram_bot do
     end
 
     context 'with word_confirmation context' do
-      let!(:language) { create :language, name: 'Deutsch', slug: 'de' }
+      let!(:language) { create :language, name: 'Deutsch', code: 'de' }
       let!(:user) { create :user, user_id: 123, language: language }
       before { override_session(context: :word_confirmation, word: 'eine', translation: 'one') }
 

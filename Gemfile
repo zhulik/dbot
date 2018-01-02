@@ -16,6 +16,7 @@ gem 'yandex-translator'
 gem 'rails_admin'
 gem 'redis-rails'
 gem 'listen', '>= 3.0.5', '< 3.2'
+gem 'airbrake', '~> 5.0'
 
 group :development do
   gem 'rubocop', require: false

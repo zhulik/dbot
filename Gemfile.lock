@@ -73,13 +73,8 @@ GEM
     capistrano-rvm (0.1.2)
       capistrano (~> 3.0)
       sshkit (~> 1.2)
-    capistrano-sidekiq (0.20.0)
-      capistrano (>= 3.9.0)
-      sidekiq (>= 3.4)
-    capistrano3-puma (3.1.1)
-      capistrano (~> 3.7)
-      capistrano-bundler
-      puma (~> 3.4)
+    capistrano-systemd (0.1.1)
+      capistrano (~> 3.5)
     coderay (1.1.2)
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
@@ -347,8 +342,7 @@ DEPENDENCIES
   capistrano (~> 3.6)
   capistrano-rails (~> 1.3)
   capistrano-rvm
-  capistrano-sidekiq
-  capistrano3-puma
+  capistrano-systemd
   database_cleaner
   factory_bot_rails
   faker

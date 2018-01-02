@@ -6,8 +6,6 @@ require 'capistrano/scm/git'
 require 'capistrano/bundler'
 require 'capistrano/rails'
 require 'capistrano/rvm'
-require 'capistrano/puma'
-require 'capistrano/sidekiq'
+require 'capistrano/systemd'
 
 install_plugin Capistrano::SCM::Git
-install_plugin Capistrano::Puma

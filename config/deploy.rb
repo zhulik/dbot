@@ -25,3 +25,6 @@ set :ssh_options, forward_agent: true
 set :rvm_ruby_version, 'ruby-2.4.2@dbot --create'
 
 set :whenever_roles, %w(schedule)
+
+after 'deploy:publishing', 'systemd:restart dbot_rails'
+after 'deploy:publishing', 'systemd:restart dbot_sidekiq'

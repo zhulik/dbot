@@ -38,6 +38,5 @@ namespace :deploy do
   end
 end
 
-after 'deploy:publishing', 'systemd:restart'
-after 'deploy:publishing', 'systemd:restart'
+after 'deploy:publishing', 'deploy:restart'
 after 'deploy:restart', 'airbrake:deploy'

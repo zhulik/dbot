@@ -39,4 +39,3 @@ namespace :deploy do
 end
 
 after 'deploy:publishing', 'deploy:restart'
-after 'deploy:restart', 'airbrake:deploy'

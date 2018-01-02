@@ -18,12 +18,14 @@ gem 'redis-rails'
 gem 'listen', '>= 3.0.5', '< 3.2'
 gem 'airbrake', '~> 5.0'
 gem 'language_list'
+gem 'sidekiq'
 
 group :development do
   gem 'rubocop', require: false
   gem 'capistrano', '~> 3.6'
   gem 'capistrano-rails', '~> 1.3'
   gem 'capistrano-rvm'
+  gem 'capistrano-sidekiq'
 end
 
 group :development, :test do

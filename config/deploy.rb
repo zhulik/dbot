@@ -8,7 +8,7 @@ set :repo_url,    'git@github.com:zhulik/dbot'
 
 set :migration_servers, -> { primary(fetch(:migration_role)) }
 set :conditionally_migrate, true
-set :pty, true
+set :pty, false
 set :assets_roles, %i[web app]
 
 # If you need to touch public/images, public/javascripts, and public/stylesheets on each deploy

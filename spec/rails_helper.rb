@@ -14,6 +14,7 @@ abort('The Rails environment is running in production mode!') if Rails.env.produ
 require 'rspec/rails'
 require 'telegram/bot/rspec/integration'
 require 'vcr'
+require 'sidekiq/testing'
 
 VCR.configure do |config|
   config.cassette_library_dir = 'fixtures/vcr_cassettes'
@@ -23,6 +24,8 @@ end
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| load(f) }
 
 ActiveRecord::Migration.maintain_test_schema!
+
+Sidekiq::Testing.inline!
 
 RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods

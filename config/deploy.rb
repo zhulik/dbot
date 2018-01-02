@@ -38,5 +38,6 @@ namespace :deploy do
   end
 end
 
-# after 'deploy:publishing', 'systemd:restart dbot_rails'
-# after 'deploy:publishing', 'systemd:restart dbot_sidekiq'
+after 'deploy:publishing', 'systemd:restart'
+after 'deploy:publishing', 'systemd:restart'
+after 'deploy:restart', 'airbrake:deploy'

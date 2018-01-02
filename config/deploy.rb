@@ -40,4 +40,4 @@ end
 
 after 'deploy:publishing', 'systemd:restart'
 after 'deploy:publishing', 'systemd:restart'
-# after 'deploy:restart', 'airbrake:deploy'
+after 'deploy:restart', 'airbrake:deploy'

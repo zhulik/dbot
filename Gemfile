@@ -16,7 +16,7 @@ gem 'yandex-translator'
 gem 'rails_admin'
 gem 'redis-rails'
 gem 'listen', '>= 3.0.5', '< 3.2'
-gem 'airbrake'
+gem 'airbrake', '~> 7'
 gem 'language_list'
 gem 'sidekiq'
 

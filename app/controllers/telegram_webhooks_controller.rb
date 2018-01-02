@@ -3,14 +3,14 @@
 class TelegramWebhooksController < Telegram::Bot::UpdatesController
   include ControllerConfig
 
-  def start
+  def start(*)
     return start_with_existing_user if current_user.present?
 
     User.create!(user_id: from.id)
     respond_with :message, text: t('.hi', name: user_greeting(from))
   end
 
-  def languages
+  def languages(*)
     return respond_with :message, text: t('.no_languages') if Language.all.empty?
     save_context :languages
     respond_with :message, text: t('.choose_language'), reply_markup: { inline_keyboard: languages_inline_keyboard }
@@ -42,12 +42,20 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
     respond_with :message, text: t('telegram_webhooks.addword.word_added', word: word, translation: words.first)
   end
 
-  def words
+  def words(*)
     # TODO: add pagination
     words = current_user.current_words.select(:word, :translation).order(:word)
     return respond_with :message, text: t('.no_words_added') if words.empty?
     msg = words.map { |w| "#{w.word} - #{w.translation}" }.join("\n")
     respond_with :message, text: "#{t('.your_saved_words')}\n#{msg}"
+  end
+
+  def delword(*args)
+    return respond_with :message, text: t('.usage') if args.count != 1
+    word = current_user.current_words.find_by(word: args.first)
+    return respond_with :message, text: t('.unknown_word', word: args.first) if word.nil?
+    word.destroy
+    respond_with :message, text: t('.word_deleted', word: args.first)
   end
 
   def callback_query(query)

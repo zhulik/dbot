@@ -22,6 +22,10 @@ en:
     words:
       no_words_added: You haven't added any words. Use /addword <word>
       your_saved_words: 'Your saved words:'
+    delword:
+      usage: 'Wrong arguments count. Usage: /delword <word>'
+      unknown_word: 'Unknown word: %{word}!'
+      word_deleted: 'Word deleted: %{word}.'
   common:
     my_friend: my friend
     not_authorized: 'Sorry, you are not authorized, use /start'

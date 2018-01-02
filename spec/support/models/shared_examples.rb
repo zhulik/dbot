@@ -8,6 +8,14 @@ RSpec.shared_examples 'creates new' do |model, count = 1|
   end
 end
 
+RSpec.shared_examples 'destroys' do |model, count = 1|
+  it "destroys #{model.model_name.name}" do
+    expect {
+      subject
+    }.to change(model, :count).by(-count)
+  end
+end
+
 RSpec.shared_examples 'does not create new' do |model|
   it "does not create #{model.model_name.name}" do
     expect {

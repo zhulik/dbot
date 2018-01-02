@@ -155,11 +155,43 @@ describe TelegramWebhooksController, :telegram_bot do
   describe '#words' do
     let!(:language) { create :language, name: 'Deutsch', slug: 'de' }
     let!(:user) { create :user, user_id: 123, language: language }
-    let!(:word) { create :word, language: language, user: user, word: 'word', translation: 'translation' }
-
     subject { dispatch_message '/words' }
 
-    include_examples 'responds with message', "Your saved words:\nword - translation"
+    context 'with existing words' do
+      let!(:word) { create :word, language: language, user: user, word: 'word', translation: 'translation' }
+
+      include_examples 'responds with message', "Your saved words:\nword - translation"
+    end
+
+    context 'with no languages in the DB' do
+      include_examples 'responds with message', "You haven't added any words. Use /addword <word>"
+    end
+  end
+
+  describe '#delword' do
+    let!(:language) { create :language, name: 'Deutsch', slug: 'de' }
+    let!(:user) { create :user, user_id: 123, language: language }
+
+    context 'with wrong parameter count' do
+      subject { dispatch_message '/delword' }
+
+      include_examples 'responds with message', 'Wrong arguments count. Usage: /delword <word>'
+    end
+
+    context 'with one parameter' do
+      subject { dispatch_message '/delword eine' }
+
+      context 'with known word' do
+        let!(:word) { create :word, language: language, user: user, word: 'eine', translation: 'one' }
+
+        include_examples 'responds with message', 'Word deleted: eine.'
+        include_examples 'destroys', Word
+      end
+
+      context 'with unknown word' do
+        include_examples 'responds with message', 'Unknown word: eine!'
+      end
+    end
   end
 
   describe 'context_handler :addword' do

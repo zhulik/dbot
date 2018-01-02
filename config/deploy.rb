@@ -26,5 +26,17 @@ set :rvm_ruby_version, 'ruby-2.4.2@dbot --create'
 
 set :whenever_roles, %w(schedule)
 
-after 'deploy:publishing', 'systemd:restart dbot_rails'
-after 'deploy:publishing', 'systemd:restart dbot_sidekiq'
+namespace :deploy do
+  desc 'Swift config'
+  task :restart do
+    on roles(:web) do
+      execute 'sudo systemctl restart dbot_rails'
+    end
+    on roles(:worker) do
+      execute 'sudo systemctl restart dbot_sidekiq'
+    end
+  end
+end
+
+# after 'deploy:publishing', 'systemd:restart dbot_rails'
+# after 'deploy:publishing', 'systemd:restart dbot_sidekiq'

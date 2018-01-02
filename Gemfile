@@ -25,7 +25,6 @@ group :development do
   gem 'capistrano', '~> 3.6'
   gem 'capistrano-rails', '~> 1.3'
   gem 'capistrano-rvm'
-  gem 'capistrano-systemd'
 end
 
 group :development, :test do

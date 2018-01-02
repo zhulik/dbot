@@ -335,7 +335,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  airbrake (~> 5.0)
+  airbrake
   awesome_print
   capistrano (~> 3.6)
   capistrano-rails (~> 1.3)

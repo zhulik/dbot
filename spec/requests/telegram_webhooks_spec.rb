@@ -113,8 +113,7 @@ describe TelegramWebhooksController, :telegram_bot do
           it 'changes session' do
             subject
             expect(session[:context]).to eq(:word_confirmation)
-            expect(session[:word]).to eq('eins')
-            expect(session[:translation]).to eq('один')
+            expect(session[:word]).to eq(word: 'eins', translation: 'один')
           end
         end
 
@@ -198,7 +197,7 @@ describe TelegramWebhooksController, :telegram_bot do
     let!(:language) { create :language, name: 'Deutsch', code: 'de' }
     let!(:user) { create :user, user_id: 123, language: language }
 
-    let!(:session) { { context: :addword, word: 'eins', translation: 'wrong' } }
+    let!(:session) { { context: :addword, word: { word: 'eins', translation: 'wrong' } } }
     before { override_session(session) }
 
     subject { dispatch_message 'one' }
@@ -261,7 +260,7 @@ describe TelegramWebhooksController, :telegram_bot do
     context 'with word_confirmation context' do
       let!(:language) { create :language, name: 'Deutsch', code: 'de' }
       let!(:user) { create :user, user_id: 123, language: language }
-      before { override_session(context: :word_confirmation, word: 'eins', translation: 'one') }
+      before { override_session(context: :word_confirmation, word: { word: 'eins', translation: 'one' }) }
 
       context 'with yes answer' do
         let(:data) { 'yes' }

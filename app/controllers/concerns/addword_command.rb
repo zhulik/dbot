@@ -4,53 +4,74 @@ module AddwordCommand
   extend ActiveSupport::Concern
 
   included do
-    context_handler :addword do |*words|
-      word = session.delete(:word).merge(translation: words.first)
-      current_user.current_words.create!(word.merge(pos: :noun, gen: :m))
-      respond_with :message, text: t('dbot.addword.word_added', word)
+    context_handler :addword_send_word do |*ws|
+      addword_short(ws.first)
+    end
+
+    context_handler :addword_custom_variant do |*ws|
+      if ws.count < 2 || ws.count > 3
+        save_context :addword_custom_variant
+        return respond_with :message, text: t('.usage')
+      end
+      unless Word.pos.keys.include?(ws.second)
+        save_context :addword_custom_variant
+        return respond_with :message, text: t('.unknown_pos', pos: ws.second, valid: Word.pos.keys.join(', '))
+      end
+      if ws.third.present? && !Word.gens.keys.include?(ws.third)
+        save_context :addword_custom_variant
+        return respond_with :message, text: t('.unknown_gen', gen: ws.third, valid: Word.gens.keys.join(', '))
+      end
+      word = { word: session[:addword_word], translation: ws.first, pos: ws.second, gen: ws.third }
+      current_user.current_words.create!(word)
+      respond_with :message, text: t('dbot.addword.word_added', word: session[:addword_word], translation: ws.first)
+      session[:addword_variants] = nil
+      session[:addword_word] = nil
     end
   end
 
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
   # rubocop:disable Metrics/AbcSize
-  # rubocop:disable Metrics/MethodLength
-  def addword(*args)
-    return respond_with :message, text: t('.usage') if args.empty?
-    return respond_with :message, text: t('.usage') if args.count > 2
+  def addword(*ws)
+    return respond_with :message, text: t('.usage') if ws.count > 4 || ws.count == 2
     return respond_with :message, text: t('.select_language') if current_user.language.nil?
-    return respond_with :message, text: t('.already_added', word: args.first) if current_user.word?(args.first).present?
-    if args.count == 1
-      translation = TRANSLATOR.translate args.first, from: current_user.language.code, to: 'ru'
-      save_context :word_confirmation
-      session[:word] = {
-        word: args.first,
-        translation: translation
-      }
-      return respond_with :message, text: t('.is_it_right_translation', translation: translation),
-                                    reply_markup: { inline_keyboard: yes_no_inline_keyboard }
-    end
-    current_user.current_words.create!(word: args.first, translation: args.second, pos: :noun, gen: :m)
-    respond_with :message, text: t('.word_added', word: args.first, translation: args.second)
+    return respond_with :message, text: t('.already_added', word: ws.first) if current_user.word?(ws.first).present?
+    return addword_full if ws.empty?
+    return addword_short(ws.first) if ws.count == 1
+    # check validity of pos and gen
+    current_user.current_words.create!(word: ws.first, translation: ws.second, pos: ws.third) if ws.count == 3
+    current_user.current_words.create!(word: ws[0], translation: ws[1], pos: ws[2], gen: ws[3]) if ws.count == 4
+    respond_with :message, text: t('.word_added', word: ws.first, translation: ws.second)
   end
-  # rubocop:enable Metrics/MethodLength
   # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/PerceivedComplexity
+
+  def addword_choose_callback_query(query)
+    if query == 'custom_variant'
+      save_context :addword_custom_variant
+      return edit_message :text, text: t('dbot.addword.send_translation')
+    end
+    if query == 'cancel'
+
+    end
+    variants = session.delete(:addword_variants)
+    w = current_user.current_words.create!(variants[query.to_i])
+    edit_message :text, text: t('dbot.addword.word_added', word: w.word, translation: w.translation)
+  end
 
   protected
 
-  def handle_callback_query_action_word_confirmation(query)
-    case query
-    when 'yes'
-      current_user.current_words.create!(
-        session[:word].merge(pos: :noun, gen: :m)
-      )
-      edit_message :text, text: t('dbot.addword.word_added',
-                                  session[:word])
-    when 'no'
-      save_context :addword
-      edit_message :text, text: t('dbot.addword.send_valid')
-    when 'cancel'
-      session.delete(:word)
-      edit_message :text, text: t('common.canceled')
-    end
+  def addword_full
+    save_context :addword_send_word
+    respond_with :message, text: t('.send_word')
   end
-  # rubocop:enable Metrics/AbcSize
+
+  def addword_short(word)
+    variants = Dictionaries::YandexWrapper.new(word, from: current_user.language.code, to: 'ru').variants
+    session[:addword_variants] = variants
+    session[:addword_word] = word
+    respond_with :message, text: t('dbot.addword.choose_right_variant'),
+                           reply_markup: { inline_keyboard: variants_keyboard(variants, :addword_choose) }
+  end
 end

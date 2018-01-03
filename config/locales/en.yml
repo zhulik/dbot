@@ -9,13 +9,19 @@ en:
       choose_language: 'Choose the language you will work with:'
       language_accepted: 'Language changed: %{name}'
       unknown_language: 'Unknown language: %{code}'
-      unknown_action: 'Unknown action'
     addword:
-      usage: 'Wrong arguments count. Usage: /addword <word> [translation]'
+      choose_right_variant: 'Choose right variant:'
+      usage: |
+              Wrong arguments count. Usage:
+              /addword
+              /addword <word>
+              /addword <word> <translation> <pos>
+              /addword <word> <translation> <pos> <gen>
       select_language: 'Language is not selected. Use /languages'
       word_added: 'Word has been successfully added: %{word} - %{translation}'
       is_it_right_translation: 'Is it right translation: %{translation}?'
-      send_valid: 'Send me the valid translation'
+      send_translation: 'Send me the valid translation'
+      send_word: 'Send me the word'
       already_added: 'Word %{word} is already added!'
     words:
       no_words_added: You haven't added any words. Use /addword <word>
@@ -24,6 +30,10 @@ en:
       usage: 'Wrong arguments count. Usage: /delword <word>'
       unknown_word: 'Unknown word: %{word}!'
       word_deleted: 'Word deleted: %{word}.'
+    _context_handler_addword_custom_variant:
+      usage: 'Wrong format. Example: <word> <pos> [gen]'
+      unknown_pos: 'Unknown pos: %{pos}. Valid are: %{valid}'
+      unknown_gen: 'Unknown gen: %{gen}. Valid are: %{valid}'
   common:
     my_friend: my friend
     not_authorized: 'Sorry, you are not authorized, use /start'
@@ -31,3 +41,5 @@ en:
     choice_no: '👎 No'
     canceled: 'Canceled'
     cancel: '❌ Cancel'
+    unknown_action: 'Unknown action'
+    custom_variant: 'Custom variant'

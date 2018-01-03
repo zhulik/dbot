@@ -10,7 +10,7 @@ class DbotController < Telegram::Bot::UpdatesController
 
   def callback_query(query)
     context = session.delete(:context)
-    return answer_callback_query t('.unknown_action') if context.nil?
+    return answer_callback_query t('common.unknown_action') if context.nil?
     send("handle_callback_query_action_#{context}", query)
   end
 end

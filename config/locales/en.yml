@@ -32,8 +32,6 @@ en:
       word_deleted: 'Word deleted: %{word}.'
     _context_handler_addword_custom_variant:
       usage: 'Wrong format. Example: <word> <pos> [gen]'
-      unknown_pos: 'Unknown pos: %{pos}. Valid are: %{valid}'
-      unknown_gen: 'Unknown gen: %{gen}. Valid are: %{valid}'
   common:
     my_friend: my friend
     not_authorized: 'Sorry, you are not authorized, use /start'
@@ -44,3 +42,5 @@ en:
     unknown_action: 'Unknown action'
     custom_variant: 'Custom variant'
     something_went_wrong: 'Something went wrong...'
+    unknown_pos: 'Unknown pos: %{pos}. Valid are: %{valid}'
+    unknown_gen: 'Unknown gen: %{gen}. Valid are: %{valid}'

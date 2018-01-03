@@ -15,11 +15,11 @@ module AddwordCommand
       end
       unless Word.pos.keys.include?(ws.second)
         save_context :addword_custom_variant
-        return respond_with :message, text: t('.unknown_pos', pos: ws.second, valid: Word.pos.keys.join(', '))
+        return respond_with :message, text: t('common.unknown_pos', pos: ws.second, valid: Word.pos.keys.join(', '))
       end
       if ws.third.present? && !Word.gens.keys.include?(ws.third)
         save_context :addword_custom_variant
-        return respond_with :message, text: t('.unknown_gen', gen: ws.third, valid: Word.gens.keys.join(', '))
+        return respond_with :message, text: t('common.unknown_gen', gen: ws.third, valid: Word.gens.keys.join(', '))
       end
       word = { word: session[:addword_word], translation: ws.first, pos: ws.second, gen: ws.third }
       current_user.current_words.create!(word)
@@ -33,17 +33,21 @@ module AddwordCommand
   # rubocop:disable Metrics/PerceivedComplexity
   # rubocop:disable Metrics/AbcSize
   def addword(*ws)
-    return respond_with :message, text: t('.usage') if ws.count > 4 || ws.count == 2
+    return respond_with :message, text: t('.usage') if ws.count == 2 || ws.count > 4
     return respond_with :message, text: t('.select_language') if current_user.language.nil?
     return respond_with :message, text: t('.already_added', word: ws.first) if current_user.word?(ws.first).present?
     return addword_full if ws.empty?
     return addword_short(ws.first) if ws.count == 1
-    # check validity of pos and gen
-    current_user.current_words.create!(word: ws.first, translation: ws.second, pos: ws.third) if ws.count == 3
-    current_user.current_words.create!(word: ws[0], translation: ws[1], pos: ws[2], gen: ws[3]) if ws.count == 4
+    unless Word.pos.keys.include?(ws[2])
+      return respond_with :message, text: t('common.unknown_pos', pos: ws[2], valid: Word.pos.keys.join(', '))
+    end
+    if ws[3].present? && !Word.gens.keys.include?(ws[3])
+      return respond_with :message, text: t('common.unknown_gen', gen: ws[3], valid: Word.gens.keys.join(', '))
+    end
+    word = { word: ws[0], translation: ws[1], pos: ws[2], gen: ws[3] }
+    current_user.current_words.create!(word)
     respond_with :message, text: t('.word_added', word: ws.first, translation: ws.second)
   end
-  # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/PerceivedComplexity
 
@@ -53,12 +57,15 @@ module AddwordCommand
       return edit_message :text, text: t('dbot.addword.send_translation')
     end
     if query == 'cancel'
-
+      session[:addword_variants] = nil
+      session[:addword_word] = nil
+      return edit_message :text, text: t('common.canceled')
     end
     variants = session.delete(:addword_variants)
     w = current_user.current_words.create!(variants[query.to_i])
     edit_message :text, text: t('dbot.addword.word_added', word: w.word, translation: w.translation)
   end
+  # rubocop:enable Metrics/AbcSize
 
   protected
 

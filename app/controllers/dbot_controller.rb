@@ -13,12 +13,6 @@ class DbotController < Telegram::Bot::UpdatesController
   rescue_from StandardError, with: :send_error_and_raise
   rescue_from NotStartedError, with: :send_not_authorized
 
-  def callback_query(query)
-    context = session.delete(:context)
-    return answer_callback_query t('common.unknown_action') if context.nil?
-    send("handle_callback_query_action_#{context}", query)
-  end
-
   private
 
   def process_action(*args)

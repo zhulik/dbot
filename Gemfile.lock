@@ -1,4 +1,11 @@
 GIT
+  remote: https://github.com/s-mage/yandex-dictionary.git
+  revision: 6158524a1b27a203cc180d398cd5d8594fca38e6
+  specs:
+    yandex-dictionary (0.2.0)
+      httparty
+
+GIT
   remote: https://github.com/zhulik/opie.git
   revision: e3a5905dd692ac84268fbcc70729f3a64787c831
   specs:
@@ -365,6 +372,7 @@ DEPENDENCIES
   tzinfo-data
   vcr
   webmock
+  yandex-dictionary!
   yandex-translator
 
 BUNDLED WITH

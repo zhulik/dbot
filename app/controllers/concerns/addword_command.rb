@@ -7,7 +7,7 @@ module AddwordCommand
     context_handler :addword do |*words|
       word = session.delete(:word)
       session.delete(:translation)
-      current_user.current_words.create!(word: word, translation: words.first)
+      current_user.current_words.create!(word: word, translation: words.first, pos: :noun, gen: :m)
       respond_with :message, text: t('telegram_webhooks.addword.word_added', word: word, translation: words.first)
     end
   end
@@ -26,7 +26,7 @@ module AddwordCommand
       return respond_with :message, text: t('.is_it_right_translation', translation: translation),
                                     reply_markup: { inline_keyboard: yes_no_inline_keyboard }
     end
-    current_user.current_words.create!(word: args.first, translation: args.second)
+    current_user.current_words.create!(word: args.first, translation: args.second, pos: :noun, gen: :m)
     respond_with :message, text: t('.word_added', word: args.first, translation: args.second)
   end
   # rubocop:enable Metrics/AbcSize
@@ -37,7 +37,9 @@ module AddwordCommand
   def handle_callback_query_action_word_confirmation(query)
     case query
     when 'yes'
-      current_user.current_words.create!(session.to_h.symbolize_keys.slice(:word, :translation))
+      current_user.current_words.create!(
+        session.to_h.symbolize_keys.slice(:word, :translation).merge(pos: :noun, gen: :m)
+      )
       edit_message :text, text: t('telegram_webhooks.addword.word_added',
                                   session.to_h.symbolize_keys.slice(:word, :translation))
     when 'no'

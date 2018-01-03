@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class TelegramWebhooksController < Telegram::Bot::UpdatesController
+class DbotController < Telegram::Bot::UpdatesController
   include ControllerConfig
   include StartCommand
   include LanguagesCommand

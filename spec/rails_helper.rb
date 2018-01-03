@@ -32,7 +32,6 @@ RSpec.configure do |config|
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
   config.use_transactional_fixtures = true
-  config.infer_spec_type_from_file_location!
 
   config.filter_rails_from_backtrace!
 
@@ -41,5 +40,14 @@ RSpec.configure do |config|
     DatabaseCleaner.clean!
   end
   config.after { Telegram.bot.reset }
-  config.include_context 'telegram/bot/session', :telegram_bot
+
+  config.define_derived_metadata(file_path: Regexp.new('/spec/telegram_bots/')) do |metadata|
+    metadata[:type] = :telegram_bot
+  end
+  config.infer_spec_type_from_file_location!
+  config.include_context 'telegram/bot/session', type: :telegram_bot
+  config.include_context 'telegram/bot/callback_query_helpers', type: :telegram_bot
+  config.include_context 'telegram/bot/callback_query', type: :telegram_bot
+  config.include_context 'telegram/bot/integration', type: :telegram_bot
+  config.include RSpec::Rails::RequestExampleGroup, type: :telegram_bot
 end

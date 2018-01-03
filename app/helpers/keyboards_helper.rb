@@ -2,7 +2,7 @@
 
 module KeyboardsHelper
   def languages_inline_keyboard
-    Language.select(:name, :code).map { |l| { text: l.name, callback_data: l.code } }.each_slice(2).to_a
+    Language.select(:name, :code).map { |l| { text: l.name, callback_data: "languages:#{l.code}" } }.each_slice(2).to_a
   end
 
   def yes_no_inline_keyboard

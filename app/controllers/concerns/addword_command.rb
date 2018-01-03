@@ -7,7 +7,7 @@ module AddwordCommand
     context_handler :addword do |*words|
       word = session.delete(:word).merge(translation: words.first)
       current_user.current_words.create!(word.merge(pos: :noun, gen: :m))
-      respond_with :message, text: t('telegram_webhooks.addword.word_added', word)
+      respond_with :message, text: t('dbot.addword.word_added', word)
     end
   end
 
@@ -42,11 +42,11 @@ module AddwordCommand
       current_user.current_words.create!(
         session[:word].merge(pos: :noun, gen: :m)
       )
-      edit_message :text, text: t('telegram_webhooks.addword.word_added',
+      edit_message :text, text: t('dbot.addword.word_added',
                                   session[:word])
     when 'no'
       save_context :addword
-      edit_message :text, text: t('telegram_webhooks.addword.send_valid')
+      edit_message :text, text: t('dbot.addword.send_valid')
     when 'cancel'
       session.delete(:word)
       edit_message :text, text: t('common.canceled')

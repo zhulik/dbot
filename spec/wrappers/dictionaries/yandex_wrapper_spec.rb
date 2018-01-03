@@ -5,7 +5,7 @@ describe Dictionaries::YandexWrapper do
     context 'with from==de' do
       let!(:from_lang) { 'de' }
 
-      VARIANTS = {
+      VARIANTS_DE = {
         'Stuhl': [{ word: 'Stuhl', translation: 'стул', gen: 'm', pos: 'noun' },
                   { word: 'Stuhl', translation: 'Святой Престол', gen: 'm', pos: 'noun' }],
         'haben': [{ word: 'haben', translation: 'иметь', gen: nil, pos: 'verb' },
@@ -29,7 +29,7 @@ describe Dictionaries::YandexWrapper do
         'xyz': []
       }.freeze
 
-      VARIANTS.each do |word, variants|
+      VARIANTS_DE.each do |word, variants|
         it "returns valid variants for #{word}" do
           VCR.use_cassette("yandex_dictionary_from_#{from_lang}_#{word}") do
             v = described_class.new(word, from: from_lang, to: 'ru').variants
@@ -42,7 +42,7 @@ describe Dictionaries::YandexWrapper do
     context 'with from==en' do
       let!(:from_lang) { 'en' }
 
-      VARIANTS = {
+      VARIANTS_EN = {
         'chair': [{ word: 'chair', translation: 'стул', gen: nil, pos: 'noun' },
                   { word: 'chair', translation: 'кафедра', gen: nil, pos: 'noun' },
                   { word: 'chair', translation: 'председательствовать', gen: nil, pos: 'verb' },
@@ -73,7 +73,7 @@ describe Dictionaries::YandexWrapper do
         'xyz': []
       }.freeze
 
-      VARIANTS.each do |word, variants|
+      VARIANTS_EN.each do |word, variants|
         it "returns valid variants for #{word}" do
           VCR.use_cassette("yandex_dictionary_from_#{from_lang}_#{word}") do
             v = described_class.new(word, from: from_lang, to: 'ru').variants

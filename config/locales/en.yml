@@ -1,5 +1,5 @@
 en:
-  telegram_webhooks:
+  dbot:
     start:
       hi: Hi, %{name}!
       already_started: We have already started!
@@ -7,8 +7,6 @@ en:
     languages:
       no_languages: Sorry, languages are not created yet!
       choose_language: 'Choose the language you will work with:'
-
-    callback_query:
       language_accepted: 'Language changed: %{name}'
       unknown_language: 'Unknown language: %{code}'
       unknown_action: 'Unknown action'

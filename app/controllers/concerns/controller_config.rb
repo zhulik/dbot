@@ -5,6 +5,7 @@ module ControllerConfig
   extend ActiveSupport::Concern
 
   included do
+    include Telegram::Bot::UpdatesController::CallbackQueryContext
     include Telegram::Bot::UpdatesController::TypedUpdate
     include Telegram::Bot::UpdatesController::MessageContext
     include UsersHelper

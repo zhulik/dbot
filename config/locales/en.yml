@@ -43,3 +43,4 @@ en:
     cancel: '❌ Cancel'
     unknown_action: 'Unknown action'
     custom_variant: 'Custom variant'
+    something_went_wrong: 'Something went wrong...'

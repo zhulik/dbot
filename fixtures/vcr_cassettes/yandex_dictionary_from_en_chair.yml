@@ -1,0 +1,43 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://dictionary.yandex.net/api/v1/dicservice.json/lookup?key=dict.1.1.20180102T161730Z.9b97a277191b98cb.e35dcc4831972b13d7e921627d5e38b54324f6cb&lang=en-ru&text=chair
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.6.2
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Keep-Alive:
+      - timeout=120
+      Date:
+      - Wed, 03 Jan 2018 15:25:18 GMT
+      Cache-Control:
+      - no-store
+      X-Content-Type-Options:
+      - nosniff
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJoZWFkIjp7fSwiZGVmIjpbeyJ0ZXh0IjoiY2hhaXIiLCJwb3MiOiJub3VuIiwidHMiOiLKp8mbyZkiLCJ0ciI6W3sidGV4dCI6ItGB0YLRg9C7IiwicG9zIjoibm91biIsImdlbiI6ItC8Iiwic3luIjpbeyJ0ZXh0Ijoi0LrRgNC10YHQu9C+IiwicG9zIjoibm91biIsImdlbiI6ItGB0YAifSx7InRleHQiOiLRgdGC0YPQu9GM0YfQuNC6IiwicG9zIjoibm91biIsImdlbiI6ItC8In0seyJ0ZXh0Ijoi0LrQsNGH0LDQu9C60LAiLCJwb3MiOiJub3VuIiwiZ2VuIjoi0LYifV0sIm1lYW4iOlt7InRleHQiOiJhcm1jaGFpciJ9LHsidGV4dCI6ImhpZ2hjaGFpciJ9LHsidGV4dCI6InJvY2tpbmcgY2hhaXIifV0sImV4IjpbeyJ0ZXh0IjoiZWxlY3RyaWMgY2hhaXIiLCJ0ciI6W3sidGV4dCI6ItGN0LvQtdC60YLRgNC40YfQtdGB0LrQuNC5INGB0YLRg9C7In1dfSx7InRleHQiOiJjYXJ2ZWQgd29vZGVuIGNoYWlyIiwidHIiOlt7InRleHQiOiLRgNC10LfQvdC+0Lkg0LTQtdGA0LXQstGP0L3QvdGL0Lkg0YHRgtGD0LsifV19LHsidGV4dCI6IndoaXRlIHBsYXN0aWMgY2hhaXIiLCJ0ciI6W3sidGV4dCI6ItCx0LXQu9GL0Lkg0L/Qu9Cw0YHRgtC80LDRgdGB0L7QstGL0Lkg0YHRgtGD0LsifV19LHsidGV4dCI6ImNoYWlycyB3aXRoIGhpZ2ggYmFja3MiLCJ0ciI6W3sidGV4dCI6ItGB0YLRg9C70YzRjyDRgSDQstGL0YHQvtC60LjQvNC4INGB0L/QuNC90LrQsNC80LgifV19LHsidGV4dCI6Im9mZmljZSBjaGFpciIsInRyIjpbeyJ0ZXh0Ijoi0L7RhNC40YHQvdGL0Lkg0YHRgtGD0LsifV19LHsidGV4dCI6ImJhcmJlcidzIGNoYWlyIiwidHIiOlt7InRleHQiOiLQv9Cw0YDQuNC60LzQsNGF0LXRgNGB0LrQvtC1INC60YDQtdGB0LvQviJ9XX0seyJ0ZXh0IjoiY29tZm9ydGFibGUgbGVhdGhlciBjaGFpcnMiLCJ0ciI6W3sidGV4dCI6ItGD0LTQvtCx0L3QvtC1INC60L7QttCw0L3QvtC1INC60YDQtdGB0LvQviJ9XX0seyJ0ZXh0IjoiZWxib3cgb2YgaGlzIGNoYWlyIiwidHIiOlt7InRleHQiOiLQv9C+0LTQu9C+0LrQvtGC0L3QuNC6INC60YDQtdGB0LvQsCJ9XX1dfSx7InRleHQiOiLQutCw0YTQtdC00YDQsCIsInBvcyI6Im5vdW4iLCJnZW4iOiLQtiIsIm1lYW4iOlt7InRleHQiOiJkZXBhcnRtZW50In1dLCJleCI6W3sidGV4dCI6ImRlcGFydG1lbnQgY2hhaXIiLCJ0ciI6W3sidGV4dCI6ItC30LDQstC10LTRg9GO0YnQuNC5INC60LDRhNC10LTRgNC+0LkifV19XX0seyJ0ZXh0Ijoi0L/RgNC10LTRgdC10LTQsNGC0LXQu9GMIiwicG9zIjoibm91biIsImdlbiI6ItC8IiwibWVhbiI6W3sidGV4dCI6ImNoYWlybWFuIn1dLCJleCI6W3sidGV4dCI6ImNvbW1pdHRlZSBjaGFpciIsInRyIjpbeyJ0ZXh0Ijoi0L/RgNC10LTRgdC10LTQsNGC0LXQu9GMINC60L7QvNC40YLQtdGC0LAifV19XX0seyJ0ZXh0Ijoi0L/RgNC10LTRgdC10LTQsNGC0LXQu9GM0YHRgtCy0L4iLCJwb3MiOiJub3VuIiwiZ2VuIjoi0YHRgCIsInN5biI6W3sidGV4dCI6ItC/0YDQtdC00YHQtdC00LDRgtC10LvRjNGB0YLQstC+0LLQsNC90LjQtSIsInBvcyI6Im5vdW4iLCJnZW4iOiLRgdGAIn1dLCJtZWFuIjpbeyJ0ZXh0IjoiY2hhaXJtYW5zaGlwIn1dfSx7InRleHQiOiLQutC+0LvRj9GB0LrQsCIsInBvcyI6Im5vdW4iLCJnZW4iOiLQtiIsIm1lYW4iOlt7InRleHQiOiJ3aGVlbGNoYWlyIn1dfSx7InRleHQiOiLRgdC40LTQtdC90YzQtSIsInBvcyI6Im5vdW4iLCJnZW4iOiLRgdGAIiwibWVhbiI6W3sidGV4dCI6InNlYXQifV19XX0seyJ0ZXh0IjoiY2hhaXIiLCJwb3MiOiJ2ZXJiIiwidHMiOiLKp8mbyZkiLCJ0ciI6W3sidGV4dCI6ItC/0YDQtdC00YHQtdC00LDRgtC10LvRjNGB0YLQstC+0LLQsNGC0YwiLCJwb3MiOiJ2ZXJiIiwiYXNwIjoi0L3QtdGB0L7QsiIsInN5biI6W3sidGV4dCI6ItCy0L7Qt9Cz0LvQsNCy0LvRj9GC0YwiLCJwb3MiOiJ2ZXJiIiwiYXNwIjoi0L3QtdGB0L7QsiJ9LHsidGV4dCI6ItCy0L7Qt9Cz0LvQsNCy0LjRgtGMIiwicG9zIjoidmVyYiIsImFzcCI6ItGB0L7QsiJ9XSwibWVhbiI6W3sidGV4dCI6InByZXNpZGUifSx7InRleHQiOiJsZWFkIn0seyJ0ZXh0IjoiaGVhZCJ9XX1dfSx7InRleHQiOiJjaGFpciIsInBvcyI6ImFkamVjdGl2ZSIsInRzIjoiyqfJm8mZIiwidHIiOlt7InRleHQiOiLQutGA0LXRgdC10LvRjNC90YvQuSIsInBvcyI6ImFkamVjdGl2ZSIsIm1lYW4iOlt7InRleHQiOiJzZWF0In1dfV19XX0=
+    http_version: 
+  recorded_at: Wed, 03 Jan 2018 15:24:55 GMT
+recorded_with: VCR 4.0.0

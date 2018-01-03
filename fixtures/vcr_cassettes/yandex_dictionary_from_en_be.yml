@@ -1,0 +1,43 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://dictionary.yandex.net/api/v1/dicservice.json/lookup?key=dict.1.1.20180102T161730Z.9b97a277191b98cb.e35dcc4831972b13d7e921627d5e38b54324f6cb&lang=en-ru&text=be
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.6.2
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Keep-Alive:
+      - timeout=120
+      Cache-Control:
+      - no-store
+      X-Content-Type-Options:
+      - nosniff
+      Date:
+      - Wed, 03 Jan 2018 15:25:18 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJoZWFkIjp7fSwiZGVmIjpbeyJ0ZXh0IjoiYmUiLCJwb3MiOiJ2ZXJiIiwidHMiOiJiacuQIiwiZmwiOiJ3YXMgKHdlcmUpLCBiZWVuIiwidHIiOlt7InRleHQiOiLQsdGL0YLRjCIsInBvcyI6InZlcmIiLCJhc3AiOiLQvdC10YHQvtCyIiwic3luIjpbeyJ0ZXh0Ijoi0Y/QstC70Y/RgtGM0YHRjyIsInBvcyI6InZlcmIiLCJhc3AiOiLQvdC10YHQvtCyIn0seyJ0ZXh0Ijoi0YHRgtCw0YLRjCIsInBvcyI6InZlcmIiLCJhc3AiOiLRgdC+0LIifSx7InRleHQiOiLQvtC60LDQt9Cw0YLRjNGB0Y8iLCJwb3MiOiJ2ZXJiIiwiYXNwIjoi0YHQvtCyIn0seyJ0ZXh0Ijoi0L7RgdGC0LDQstCw0YLRjNGB0Y8iLCJwb3MiOiJ2ZXJiIiwiYXNwIjoi0L3QtdGB0L7QsiJ9LHsidGV4dCI6ItGB0YfQuNGC0LDRgtGM0YHRjyIsInBvcyI6InZlcmIiLCJhc3AiOiLQvdC10YHQvtCyIn0seyJ0ZXh0Ijoi0Y/QstC40YLRjNGB0Y8iLCJwb3MiOiJ2ZXJiIiwiYXNwIjoi0YHQvtCyIn1dLCJtZWFuIjpbeyJ0ZXh0IjoiY29uc3RpdHV0ZSJ9LHsidGV4dCI6ImJlY29tZSJ9LHsidGV4dCI6ImFwcGVhciJ9LHsidGV4dCI6InJlbWFpbiJ9LHsidGV4dCI6ImNvbnNpZGVyIn1dLCJleCI6W3sidGV4dCI6ImJlIGhvbWUiLCJ0ciI6W3sidGV4dCI6ItCx0YvRgtGMINC00L7QvNCwIn1dfSx7InRleHQiOiJiZSB0aGUgcmVzdWx0IiwidHIiOlt7InRleHQiOiLRj9Cy0LvRj9GC0YzRgdGPINGA0LXQt9GD0LvRjNGC0LDRgtC+0LwifV19LHsidGV4dCI6ImJlIGEgc2Vuc2F0aW9uIiwidHIiOlt7InRleHQiOiLRgdGC0LDRgtGMINGB0LXQvdGB0LDRhtC40LXQuSJ9XX0seyJ0ZXh0IjoiYmUgdGhlIGxvc2VyIiwidHIiOlt7InRleHQiOiLQvtC60LDQt9Cw0YLRjNGB0Y8g0LIg0L/RgNC+0LjQs9GA0YvRiNC1In1dfV19LHsidGV4dCI6ItC/0YDQvtC40YHRhdC+0LTQuNGC0YwiLCJwb3MiOiJ2ZXJiIiwiYXNwIjoi0L3QtdGB0L7QsiIsInN5biI6W3sidGV4dCI6ItCx0YvQstCw0YLRjCIsInBvcyI6InZlcmIiLCJhc3AiOiLQvdC10YHQvtCyIn1dLCJtZWFuIjpbeyJ0ZXh0IjoiaGFwcGVuIn1dfSx7InRleHQiOiLQvdCw0YXQvtC00LjRgtGM0YHRjyIsInBvcyI6InZlcmIiLCJzeW4iOlt7InRleHQiOiLRgdGC0L7Rj9GC0YwiLCJwb3MiOiJ2ZXJiIiwiYXNwIjoi0L3QtdGB0L7QsiJ9LHsidGV4dCI6ItC70LXQttCw0YLRjCIsInBvcyI6InZlcmIiLCJhc3AiOiLQvdC10YHQvtCyIn1dLCJtZWFuIjpbeyJ0ZXh0Ijoic3RheSJ9LHsidGV4dCI6InN0YW5kIn0seyJ0ZXh0IjoibGllIn1dLCJleCI6W3sidGV4dCI6ImJlIHVuZGVyIGNvbnRyb2wiLCJ0ciI6W3sidGV4dCI6ItC90LDRhdC+0LTQuNGC0YzRgdGPINC/0L7QtCDQutC+0L3RgtGA0L7Qu9C10LwifV19XX0seyJ0ZXh0Ijoi0YHQvtGB0YLQsNCy0LvRj9GC0YwiLCJwb3MiOiJ2ZXJiIiwiYXNwIjoi0L3QtdGB0L7QsiIsInN5biI6W3sidGV4dCI6ItGB0L7RgdGC0LDQstC40YLRjCIsInBvcyI6InZlcmIiLCJhc3AiOiLRgdC+0LIifV0sIm1lYW4iOlt7InRleHQiOiJtYWtlIn1dLCJleCI6W3sidGV4dCI6ImJlIGFuIGV4Y2VwdGlvbiIsInRyIjpbeyJ0ZXh0Ijoi0YHQvtGB0YLQsNCy0LvRj9GC0Ywg0LjRgdC60LvRjtGH0LXQvdC40LUifV19XX0seyJ0ZXh0Ijoi0LfQsNC60LvRjtGH0LDRgtGM0YHRjyIsInBvcyI6InZlcmIiLCJhc3AiOiLQvdC10YHQvtCyIiwic3luIjpbeyJ0ZXh0Ijoi0YHQvtGB0YLQvtGP0YLRjCIsInBvcyI6InZlcmIiLCJhc3AiOiLQvdC10YHQvtCyIn1dLCJtZWFuIjpbeyJ0ZXh0IjoiY29uc2lzdCJ9XSwiZXgiOlt7InRleHQiOiJiZSB0aGUgZmFjdCIsInRyIjpbeyJ0ZXh0Ijoi0LfQsNC60LvRjtGH0LDRgtGM0YHRjyDQsiDRgtC+0LwifV19XX0seyJ0ZXh0Ijoi0LjQtNGC0LgiLCJwb3MiOiJ2ZXJiIiwiYXNwIjoi0L3QtdGB0L7QsiIsInN5biI6W3sidGV4dCI6ItC/0YDQvtGF0L7QtNC40YLRjCIsInBvcyI6InZlcmIifV0sImV4IjpbeyJ0ZXh0IjoiYmUgb24gZm9vdCIsInRyIjpbeyJ0ZXh0Ijoi0LjQtNGC0Lgg0L/QtdGI0LrQvtC8In1dfSx7InRleHQiOiJiZSByZWdpc3RlcmVkIiwidHIiOlt7InRleHQiOiLQv9GA0L7RhdC+0LTQuNGC0Ywg0YDQtdCz0LjRgdGC0YDQsNGG0LjRjiJ9XX1dfSx7InRleHQiOiLQvtGC0L3QvtGB0LjRgtGM0YHRjyIsInBvcyI6InZlcmIiLCJtZWFuIjpbeyJ0ZXh0IjoiYXBwbHkifV19XX0seyJ0ZXh0IjoiYmUiLCJwb3MiOiJhZGplY3RpdmUiLCJ0cyI6ImJpy5AiLCJ0ciI6W3sidGV4dCI6ItGA0LDQstC90L4iLCJwb3MiOiJhZGplY3RpdmUifV19XX0=
+    http_version: 
+  recorded_at: Wed, 03 Jan 2018 15:24:54 GMT
+recorded_with: VCR 4.0.0

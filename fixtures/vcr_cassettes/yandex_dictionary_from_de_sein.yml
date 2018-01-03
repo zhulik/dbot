@@ -1,0 +1,43 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://dictionary.yandex.net/api/v1/dicservice.json/lookup?key=dict.1.1.20180102T161730Z.9b97a277191b98cb.e35dcc4831972b13d7e921627d5e38b54324f6cb&lang=de-ru&text=sein
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.6.2
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Keep-Alive:
+      - timeout=120
+      X-Content-Type-Options:
+      - nosniff
+      Cache-Control:
+      - no-store
+      Date:
+      - Wed, 03 Jan 2018 15:14:10 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJoZWFkIjp7fSwiZGVmIjpbeyJ0ZXh0Ijoic2VpbiIsInBvcyI6InZlcmIiLCJ0cyI6InphyarMr24iLCJ0ciI6W3sidGV4dCI6ItGP0LLQu9GP0YLRjNGB0Y8iLCJwb3MiOiJ2ZXJiIiwiYXNwIjoi0L3QtdGB0L7QsiIsInN5biI6W3sidGV4dCI6ItCx0YvQstCw0YLRjCIsInBvcyI6InZlcmIiLCJhc3AiOiLQvdC10YHQvtCyIn0seyJ0ZXh0Ijoi0LHRi9GC0YwiLCJwb3MiOiJ2ZXJiIiwiYXNwIjoi0L3QtdGB0L7QsiJ9LHsidGV4dCI6ItC90LDRhdC+0LTQuNGC0YzRgdGPIiwicG9zIjoidmVyYiJ9LHsidGV4dCI6ItGB0YLQvtGP0YLRjCIsInBvcyI6InZlcmIiLCJhc3AiOiLQvdC10YHQvtCyIn0seyJ0ZXh0Ijoi0YHRg9GJ0LXRgdGC0LLQvtCy0LDRgtGMIiwicG9zIjoidmVyYiIsImFzcCI6ItC90LXRgdC+0LIifSx7InRleHQiOiLRgdC+0YHRgtC+0Y/RgtGMIiwicG9zIjoidmVyYiIsImFzcCI6ItC90LXRgdC+0LIifSx7InRleHQiOiLQvtGB0YLQsNGC0YzRgdGPIiwicG9zIjoidmVyYiIsImFzcCI6ItGB0L7QsiJ9LHsidGV4dCI6ItC00LXRgNC20LDRgtGMIiwicG9zIjoidmVyYiIsImFzcCI6ItC90LXRgdC+0LIifSx7InRleHQiOiLQvdCw0YXQvtC00LjRgtGMIiwicG9zIjoidmVyYiJ9LHsidGV4dCI6ItGB0L7QtNC10YDQttCw0YLRjNGB0Y8iLCJwb3MiOiJ2ZXJiIiwiYXNwIjoi0L3QtdGB0L7QsiJ9LHsidGV4dCI6ItC/0YDQtdCx0YvQstCw0YLRjCIsInBvcyI6InZlcmIiLCJhc3AiOiLQvdC10YHQvtCyIn1dLCJtZWFuIjpbeyJ0ZXh0IjoiYmlsZGVuIn0seyJ0ZXh0IjoicGFzc2llcmVuIn0seyJ0ZXh0IjoibGllZ2VuIn0seyJ0ZXh0IjoiYmVzdGVoZW4ifSx7InRleHQiOiJzdGVoZW4ifSx7InRleHQiOiJibGVpYmVuIn0seyJ0ZXh0IjoiaGFiZW4ifV0sImV4IjpbeyJ0ZXh0IjoiTMO2c3VuZyBpc3QgZWluZmFjaCIsInRyIjpbeyJ0ZXh0Ijoi0YDQtdGI0LXQvdC40LUg0Y/QstC70Y/QtdGC0YHRjyDQv9GA0L7RgdGC0YvQvCJ9XX0seyJ0ZXh0IjoiYmVzb25kZXJzIHZvcnNpY2h0aWcgc2VpbiIsInRyIjpbeyJ0ZXh0Ijoi0LHRi9GC0Ywg0L7RgdC+0LHQtdC90L3QviDQvtGB0YLQvtGA0L7QttC90YvQvCJ9XX0seyJ0ZXh0IjoiYmVkcm9odCBzZWluIiwidHIiOlt7InRleHQiOiLQvdCw0YXQvtC00LjRgtGM0YHRjyDQv9C+0LQg0YPQs9GA0L7Qt9C+0LkifV19LHsidGV4dCI6InZlcmhlaXJhdGV0IHNpbmQiLCJ0ciI6W3sidGV4dCI6ItGB0L7RgdGC0L7Rj9GC0Ywg0LIg0LHRgNCw0LrQtSJ9XX1dfSx7InRleHQiOiLRgdC70YPRh9Cw0YLRjNGB0Y8iLCJwb3MiOiJ2ZXJiIiwiYXNwIjoi0L3QtdGB0L7QsiIsInN5biI6W3sidGV4dCI6ItC/0YDQvtC40YHRhdC+0LTQuNGC0YwiLCJwb3MiOiJ2ZXJiIiwiYXNwIjoi0L3QtdGB0L7QsiJ9XSwibWVhbiI6W3sidGV4dCI6InBhc3NpZXJlbiJ9XX0seyJ0ZXh0Ijoi0YDQsNCx0L7RgtCw0YLRjCIsInBvcyI6InZlcmIiLCJhc3AiOiLQvdC10YHQvtCyIiwic3luIjpbeyJ0ZXh0Ijoi0YHQuNC00LXRgtGMIiwicG9zIjoidmVyYiIsImFzcCI6ItC90LXRgdC+0LIifV19LHsidGV4dCI6ItC40LTRgtC4IiwicG9zIjoidmVyYiIsImFzcCI6ItC90LXRgdC+0LIiLCJzeW4iOlt7InRleHQiOiLQv9GA0LjRhdC+0LTQuNGC0YwiLCJwb3MiOiJ2ZXJiIiwiYXNwIjoi0L3QtdGB0L7QsiJ9XSwibWVhbiI6W3sidGV4dCI6IndlcmRlbiJ9XX0seyJ0ZXh0Ijoi0L/RgNC10LTRgdGC0LDQstC70Y/RgtGMINGB0L7QsdC+0LkiLCJwb3MiOiJ2ZXJiIiwibWVhbiI6W3sidGV4dCI6ImRhcnN0ZWxsZW4ifV19LHsidGV4dCI6ItC10LfQtNC40YLRjCIsInBvcyI6InZlcmIiLCJhc3AiOiLQvdC10YHQvtCyIn1dfSx7InRleHQiOiJzZWluIiwicG9zIjoiZGV0ZXJtaW5lciIsInRzIjoiemHJqsyvbiIsInRyIjpbeyJ0ZXh0Ijoi0LXQs9C+IiwicG9zIjoicHJvbm91biJ9LHsidGV4dCI6ItGB0LLQvtC5IiwicG9zIjoicHJvbm91biJ9LHsidGV4dCI6ItGB0LLQvtC1IiwicG9zIjoicHJvbm91biIsIm1lYW4iOlt7InRleHQiOiJkYXMgU2VpbmUifV19LHsidGV4dCI6ItGB0LLQvtGPIiwicG9zIjoicHJvbm91biJ9LHsidGV4dCI6ItGB0LLQvtC4IiwicG9zIjoicHJvbm91biIsIm1lYW4iOlt7InRleHQiOiJkaWUgSWhyZW4ifV19XX0seyJ0ZXh0IjoiU2VpbiIsInBvcyI6Im5vdW4iLCJ0cyI6InphyarMr24iLCJmbCI6Ii1zOyA9IiwidHIiOlt7InRleHQiOiLRgdGD0YnQtdGB0YLQstC+0LLQsNC90LjQtSIsInBvcyI6Im5vdW4iLCJnZW4iOiLRgdGAIiwic3luIjpbeyJ0ZXh0Ijoi0LHRi9GC0LjQtSIsInBvcyI6Im5vdW4iLCJnZW4iOiLRgdGAIn1dfV19XX0=
+    http_version: 
+  recorded_at: Wed, 03 Jan 2018 15:13:47 GMT
+recorded_with: VCR 4.0.0

@@ -1,0 +1,43 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://dictionary.yandex.net/api/v1/dicservice.json/lookup?key=dict.1.1.20180102T161730Z.9b97a277191b98cb.e35dcc4831972b13d7e921627d5e38b54324f6cb&lang=de-ru&text=Frau
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.6.2
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '970'
+      Connection:
+      - keep-alive
+      Keep-Alive:
+      - timeout=120
+      Cache-Control:
+      - no-store
+      X-Content-Type-Options:
+      - nosniff
+      Date:
+      - Wed, 03 Jan 2018 15:14:10 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJoZWFkIjp7fSwiZGVmIjpbeyJ0ZXh0IjoiRnJhdSIsInBvcyI6Im5vdW4iLCJnZW4iOiJmIiwidHMiOiJmyoFhyorMryIsImZsIjoiPTsgLWVuIiwidHIiOlt7InRleHQiOiLQttC10L3RidC40L3QsCIsInBvcyI6Im5vdW4iLCJnZW4iOiLQtiIsInN5biI6W3sidGV4dCI6ItC20LXQvdCwIiwicG9zIjoibm91biIsImdlbiI6ItC2In0seyJ0ZXh0Ijoi0LHQsNCx0LAiLCJwb3MiOiJub3VuIiwiZ2VuIjoi0LYifV0sIm1lYW4iOlt7InRleHQiOiJEYW1lIn0seyJ0ZXh0IjoiRWhlZnJhdSJ9XSwiZXgiOlt7InRleHQiOiJlaW5lIHNjaHdhbmdlcmUgRnJhdSIsInRyIjpbeyJ0ZXh0Ijoi0LHQtdGA0LXQvNC10L3QvdCw0Y8g0LbQtdC90YnQuNC90LAifV19LHsidGV4dCI6IkZyYXUgbGllYnQiLCJ0ciI6W3sidGV4dCI6ItC20LXQvdCwINC70Y7QsdC40YIifV19LHsidGV4dCI6IkZyYXUgS2F0ZSIsInRyIjpbeyJ0ZXh0Ijoi0LHQsNCx0LAg0LrQsNGC0Y8ifV19XX0seyJ0ZXh0Ijoi0LPQvtGB0L/QvtC20LAiLCJwb3MiOiJub3VuIiwiZ2VuIjoi0LYiLCJzeW4iOlt7InRleHQiOiLRhNGA0LDRgyIsInBvcyI6Im5vdW4iLCJnZW4iOiLQtiJ9XSwibWVhbiI6W3sidGV4dCI6IkRhbWUifV0sImV4IjpbeyJ0ZXh0Ijoic2FndGUgRnJhdSIsInRyIjpbeyJ0ZXh0Ijoi0YHQutCw0LfQsNC70LAg0LPQvtGB0L/QvtC20LAifV19XX0seyJ0ZXh0Ijoi0LzQsNC00LDQvCIsInBvcyI6Im5vdW4iLCJnZW4iOiLQtiJ9LHsidGV4dCI6ItGC0LXRgtC60LAiLCJwb3MiOiJub3VuIiwiZ2VuIjoi0LYiLCJzeW4iOlt7InRleHQiOiLRgtC10YLRjyIsInBvcyI6Im5vdW4iLCJnZW4iOiLQtiJ9XSwiZXgiOlt7InRleHQiOiJkaWNrZSBGcmF1IiwidHIiOlt7InRleHQiOiLRgtC+0LvRgdGC0LDRjyDRgtC10YLQutCwIn1dfV19LHsidGV4dCI6ItCz0YDQsNC20LTQsNC90LjQvSIsInBvcyI6Im5vdW4iLCJnZW4iOiLQvCJ9XX1dfQ==
+    http_version: 
+  recorded_at: Wed, 03 Jan 2018 15:13:47 GMT
+recorded_with: VCR 4.0.0

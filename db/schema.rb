@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(version: 20180103131924) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "pos", null: false
-    t.string "gen", null: false
+    t.string "gen"
     t.index ["language_id"], name: "index_words_on_language_id"
     t.index ["user_id", "language_id", "word"], name: "index_words_on_user_id_and_language_id_and_word", unique: true
     t.index ["user_id"], name: "index_words_on_user_id"

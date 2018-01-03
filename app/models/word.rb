@@ -4,7 +4,7 @@ class Word < ApplicationRecord
   belongs_to :user
   belongs_to :language
 
-  validates :word, :translation, :pos, :gen, presence: true
+  validates :word, :translation, :pos, presence: true
   validates :word, uniqueness: { scope: %i[user_id language_id] }
 
   enum pos: {
@@ -14,7 +14,8 @@ class Word < ApplicationRecord
     adverb: :adverb,
     pronoun: :pronoun,
     preposition: :preposition,
-    conjunction: :conjunction
+    conjunction: :conjunction,
+    numeral: :numeral
   }
   enum gen: {
     f: :f,

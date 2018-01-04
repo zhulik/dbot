@@ -16,7 +16,6 @@ module AddwordCommand
     end
   end
 
-  # rubocop:disable Metrics/AbcSize
   def addword(*ws)
     return respond_with :message, text: t('.usage') if ws.count == 2 || ws.count > 4
     return respond_with :message, text: t('.select_language') if current_user.language.nil?
@@ -52,7 +51,6 @@ module AddwordCommand
     respond_with :message, text: t('dbot.addword.word_added', word)
     session.clear
   end
-  # rubocop:enable Metrics/AbcSize
 
   def addword_full
     save_context :addword_send_word

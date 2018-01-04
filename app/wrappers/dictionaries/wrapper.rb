@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
 class Dictionaries::Wrapper
-  def initialize(word, from:, to:)
+  def initialize(word, from:, to:, inverse: false)
     @word = word
     @from = from
     @to = to
+    @inverse = inverse
   end
 
   # Subclasses should implement this method and return array of length 4 or less with translation variants like

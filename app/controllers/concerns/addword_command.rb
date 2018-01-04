@@ -12,6 +12,7 @@ module AddwordCommand
       save_context :addword_custom_variant
       return respond_with :message, text: t('.usage') if ws.count < 2 || ws.count > 3
       word = { word: session[:addword_word], translation: ws.first, pos: ws.second, gen: ws.third }
+      word[:word], word[:translation] = word[:translation], word[:word] if session.delete(:addword_inverse)
       create_word(word)
     end
   end
@@ -58,9 +59,16 @@ module AddwordCommand
   end
 
   def addword_short(word)
-    variants = Dictionaries::YandexWrapper.new(word, from: current_user.language.code, to: 'ru').variants
+    inverse = TRANSLATOR.detect(word) == 'ru'
+    variants = if inverse # If source language is russian use native addword workflow, otherwise user target lang
+                 Dictionaries::YandexWrapper.new(word, from: 'ru', to: current_user.language.code,
+                                                       inverse: inverse).variants
+               else
+                 Dictionaries::YandexWrapper.new(word, from: current_user.language.code, to: 'ru').variants
+               end
     session[:addword_variants] = variants
     session[:addword_word] = word
+    session[:addword_inverse] = inverse
     respond_with :message, text: t('dbot.addword.choose_right_variant'),
                            reply_markup: { inline_keyboard: variants_keyboard(variants, :addword_choose) }
   end

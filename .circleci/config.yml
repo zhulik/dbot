@@ -38,8 +38,8 @@ jobs:
       - run: bundle exec rubocop
       - run: bundle exec rspec
       - run:
-        name: Deploy
-        command: |
-        if [ "${CIRCLE_BRANCH}" == "master" ]; then
-          bundle exec cap production deploy
-        fi
+          name: Deploy
+          command: |
+          if [ "${CIRCLE_BRANCH}" == "master" ]; then
+            bundle exec cap production deploy
+          fi

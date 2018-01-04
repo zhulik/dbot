@@ -9,19 +9,11 @@ module AddwordCommand
     end
 
     context_handler :addword_custom_variant do |*ws|
-      if ws.count < 2 || ws.count > 3
-        save_context :addword_custom_variant
-        return respond_with :message, text: t('.usage')
-      end
+      save_context :addword_custom_variant
+      return respond_with :message, text: t('.usage') if ws.count < 2 || ws.count > 3
       word = { word: session[:addword_word], translation: ws.first, pos: ws.second, gen: ws.third }
-      unless Word.pos.keys.include?(word[:pos])
-        save_context :addword_custom_variant
-        return unknown_pos(word[:pos])
-      end
-      if ws.third.present? && !Word.gens.keys.include?(word[:gen])
-        save_context :addword_custom_variant
-        return unknown_gen(word[:gen])
-      end
+      return unknown_pos(word[:pos]) unless Word.pos.keys.include?(word[:pos])
+      return unknown_gen(word[:gen]) if word[:gen].present? && !Word.gens.keys.include?(word[:gen])
       current_user.current_words.create!(word)
       respond_with :message, text: t('dbot.addword.word_added', word: session[:addword_word], translation: ws.first)
       session.clear
@@ -43,11 +35,9 @@ module AddwordCommand
       save_context :addword_custom_variant
       return edit_message :text, text: t('dbot.addword.send_translation')
     end
-    if query == 'cancel'
-      session.clear
-      return edit_message :text, text: t('common.canceled')
-    end
-    variants = session.delete(:addword_variants)
+    variants = session[:addword_variants]
+    session.clear
+    return edit_message :text, text: t('common.canceled') if query == 'cancel'
     w = current_user.current_words.create!(variants[query.to_i])
     edit_message :text, text: t('dbot.addword.word_added', word: w.word, translation: w.translation)
   end
@@ -56,10 +46,8 @@ module AddwordCommand
 
   def addword_direct(ws)
     word = { word: ws[0], translation: ws[1], pos: ws[2], gen: ws[3] }
-
     return unknown_pos(word[:pos]) unless Word.pos.keys.include?(word[:pos])
     return unknown_gen(word[:gen]) if word[:gen].present? && !Word.gens.keys.include?(word[:gen])
-
     current_user.current_words.create!(word)
     respond_with :message, text: t('.word_added', word: ws.first, translation: ws.second)
   end

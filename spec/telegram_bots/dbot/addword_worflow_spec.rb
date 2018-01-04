@@ -36,7 +36,9 @@ describe DbotController do
                                                     { word: 'Stuhl', translation: 'Святой Престол', gen: 'm', pos: 'noun' }])
           expect {
             expect { dispatch_callback_query('addword_choose:0') }.to edit_current_message(:text, text: 'Word has been successfully added: Stuhl - стул')
+            expect(session[:context]).to be_nil
             expect(session[:addword_variants]).to be_nil
+            expect(session[:addword_word]).to be_nil
           }.to change(Word, :count).by(1)
         end
       end

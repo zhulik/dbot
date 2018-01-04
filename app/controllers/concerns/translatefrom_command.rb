@@ -10,6 +10,7 @@ module TranslatefromCommand
   end
 
   def translatefrom(*ws)
+    return respond_with :message, text: t('common.select_language') if current_user.language.nil?
     return translatefrom_full if ws.empty?
     translatefrom_direct(ws.join(' '))
   end

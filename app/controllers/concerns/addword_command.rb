@@ -18,7 +18,7 @@ module AddwordCommand
 
   def addword(*ws)
     return respond_with :message, text: t('.usage') if ws.count == 2 || ws.count > 4
-    return respond_with :message, text: t('.select_language') if current_user.language.nil?
+    return respond_with :message, text: t('common.select_language') if current_user.language.nil?
     return respond_with :message, text: t('.already_added', word: ws.first) if current_user.word?(ws.first).present?
     return addword_full if ws.empty?
     return addword_short(ws.first) if ws.count == 1

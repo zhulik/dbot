@@ -17,7 +17,6 @@ en:
               /addword <word>
               /addword <word> <translation> <pos>
               /addword <word> <translation> <pos> <gen>
-      select_language: 'Language is not selected. Use /languages'
       word_added: 'Word has been successfully added: %{word} - %{translation}'
       is_it_right_translation: 'Is it right translation: %{translation}?'
       send_translation: 'Send me the valid translation'
@@ -45,3 +44,4 @@ en:
     unknown_pos: 'Unknown pos: %{pos}. Valid are: %{valid}'
     unknown_gen: 'Unknown gen: %{gen}. Valid are: %{valid}'
     send_sentence: Send me the sentence
+    select_language: 'Language is not selected. Use /languages'

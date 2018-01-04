@@ -1,0 +1,42 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://translate.yandex.net/api/v1.5/tr.json/translate
+    body:
+      encoding: UTF-8
+      string: text=%D0%AF%20%D0%B5%D0%BC.&lang=ru-de&key=text_bot_token
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.6.2
+      Date:
+      - Thu, 04 Jan 2018 02:38:24 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '48'
+      Connection:
+      - keep-alive
+      Keep-Alive:
+      - timeout=120
+      Cache-Control:
+      - no-store
+      X-Content-Type-Options:
+      - nosniff
+    body:
+      encoding: UTF-8
+      string: '{"code":200,"lang":"ru-de","text":["Ich esse."]}'
+    http_version: 
+  recorded_at: Thu, 04 Jan 2018 02:38:01 GMT
+recorded_with: VCR 4.0.0

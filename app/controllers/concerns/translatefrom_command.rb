@@ -5,7 +5,7 @@ module TranslatefromCommand
 
   included do
     context_handler :translatefrom_send_sentence do |*ws|
-      respond_with :message, text: TRANSLATOR.translate(ws.join(' '), from: current_user.language.code, to: 'ru')
+      translatefrom_direct(ws.join(' '))
     end
   end
 

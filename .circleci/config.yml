@@ -17,18 +17,14 @@ jobs:
 
     steps:
       - checkout
-
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "Gemfile.lock" }}
-          # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
-
       - run:
           name: install dependencies
           command: |
             bundle install --jobs=4 --retry=3 --path vendor/bundle
-
       - save_cache:
           paths:
             - ./vendor/bundle
@@ -38,13 +34,12 @@ jobs:
           command: |
             mv config/database.ci.yml config/database.yml
             mv config/secrets.ci.yml config/secrets.yml
-
-      # Database setup
       - run: bundle exec rake db:create db:schema:load
       - run: bundle exec rubocop
-
-      # run tests!
       - run: bundle exec rspec
-
-      # deploy!
-      - run: bundle exec cap production deploy
+      - run:
+          name: Deploy
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              bundle exec cap production deploy
+            fi

@@ -21,7 +21,6 @@ en:
       is_it_right_translation: 'Is it right translation: %{translation}?'
       send_translation: 'Send me the valid translation'
       send_word: 'Send me the word'
-      already_added: 'Word %{word} is already added!'
     words:
       no_words_added: You haven't added any words. Use /addword <word>
       your_saved_words: 'Your saved words:'
@@ -44,6 +43,7 @@ en:
     unknown_pos: 'Unknown pos: %{pos}. Valid are: %{valid}'
     unknown_gen: 'Unknown gen: %{gen}. Valid are: %{valid}'
     send_sentence: Send me the sentence
-    select_language: 'Language is not selected. Use /languages'
+    select_language: Language is not selected. Use /languages
     i_dont_understand: Sorry, I don't undestand.
     unknown_command: Sorry, I don't know this command.
+    already_added: Word %{word} is already added!

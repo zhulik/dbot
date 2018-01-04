@@ -18,7 +18,7 @@ module AddwordCommand
 
   def addword(*ws)
     return respond_with :message, text: t('.usage') if ws.count == 2 || ws.count > 4
-    return respond_with :message, text: t('.already_added', word: ws.first) if current_user.word?(ws.first).present?
+    return respond_with :message, text: t('common.already_added', word: ws[0]) if current_user.word?(ws[0])
     return addword_full if ws.empty?
     return addword_short(ws.first) if ws.count == 1
     addword_direct(ws)
@@ -43,11 +43,12 @@ module AddwordCommand
     create_word(word)
   end
 
-  def create_word(word)
-    return unknown_pos(word[:pos]) unless Word.pos.keys.include?(word[:pos])
-    return unknown_gen(word[:gen]) if word[:gen].present? && !Word.gens.keys.include?(word[:gen])
-    current_user.current_words.create!(word)
-    respond_with :message, text: t('dbot.addword.word_added', word)
+  def create_word(w)
+    return unknown_pos(w[:pos]) unless Word.pos.keys.include?(w[:pos])
+    return unknown_gen(w[:gen]) if w[:gen].present? && !Word.gens.keys.include?(w[:gen])
+    return respond_with :message, text: t('common.already_added', word: w[:word]) if current_user.word?(w[:word])
+    current_user.current_words.create!(w)
+    respond_with :message, text: t('dbot.addword.word_added', w)
     session.clear
   end
 

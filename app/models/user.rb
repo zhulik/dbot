@@ -16,6 +16,6 @@ class User < ApplicationRecord
   end
 
   def word?(word)
-    current_words.find_by(word: word)
+    current_words.find_by(word: word).present?
   end
 end

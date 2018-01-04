@@ -15,16 +15,6 @@ module KeyboardsHelper
     keys + [[cancel_button(context), custom_variant_button(context)]]
   end
 
-  def yes_no_inline_keyboard(context)
-    [
-      [
-        { text: t('common.choice_yes'), callback_data: "#{context}:yes" },
-        { text: t('common.choice_no'), callback_data: "#{context}:no" },
-        cancel_button(context)
-      ]
-    ]
-  end
-
   def cancel_button(context)
     { text: t('common.cancel'), callback_data: "#{context}:cancel" }
   end
@@ -40,5 +30,17 @@ module KeyboardsHelper
         cancel_button(context)
       ]
     ]
+  end
+
+  def message_keyboard(text, translate_context)
+    [
+      { text: t('.feedback'), callback_data: 'feedback:message' },
+      { text: t('.translate'), callback_data: "#{translate_context}:message" },
+      { text: t('.pronounce'), callback_data: 'pronounce:message' },
+      cancel_button(:message)
+    ].tap do |keys|
+      clean = text.tr('.', ' ').strip
+      keys << { text: t('common.add_word', word: clean), callback_data: "addword:#{clean}" } if clean.split.length == 1
+    end.each_slice(2).to_a
   end
 end

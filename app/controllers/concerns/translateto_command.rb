@@ -14,6 +14,12 @@ module TranslatetoCommand
     translateto_direct(ws.join(' '))
   end
 
+  def translateto_callback_query(_query)
+    message = session.delete(:message_to_handle)
+    reply_markup, text = prepare_translateto_worflow(message)
+    edit_message :text, text: text, reply_markup: reply_markup
+  end
+
   private
 
   def translateto_full
@@ -22,12 +28,17 @@ module TranslatetoCommand
   end
 
   def translateto_direct(sentence)
+    reply_markup, text = prepare_translateto_worflow(sentence)
+    respond_with :message, text: text, reply_markup: reply_markup
+  end
+
+  def prepare_translateto_worflow(sentence)
     text = Translators::YandexWrapper.new(sentence).translate('ru', current_language)
     clean = text.tr('.', ' ').strip
     reply_markup = nil
     if clean.split.count == 1 && !current_user.word?(clean)
       reply_markup = { inline_keyboard: addword_keyboard(clean, :addword) }
     end
-    respond_with :message, text: text, reply_markup: reply_markup
+    [reply_markup, text]
   end
 end

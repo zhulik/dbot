@@ -23,7 +23,7 @@ class DbotController < Telegram::Bot::UpdatesController
 
   # rubocop:disable Rails/LexicallyScopedActionFilter
   before_action :authenticate!, except: :start
-  before_action :check_lanaguage!, only: %i[addword translateto translatefrom]
+  before_action :check_lanaguage!, only: %i[addword translateto translatefrom message]
   # rubocop:enable Rails/LexicallyScopedActionFilter
 
   rescue_from StandardError, with: :send_error_and_raise

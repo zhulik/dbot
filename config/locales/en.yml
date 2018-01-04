@@ -31,6 +31,11 @@ en:
       unknown_word: 'Unknown word: %{word}!'
     _context_handler_addword_custom_variant:
       usage: 'Wrong format. Example: <word> <pos> [gen]'
+    message:
+      what_do_you_want: 'What do you want to do with this text?'
+      feedback: Give feedback
+      translate: Translate
+      pronounce: Pronounce
   common:
     my_friend: my friend
     not_authorized: 'Sorry, you are not authorized, use /start'

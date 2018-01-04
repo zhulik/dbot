@@ -74,7 +74,7 @@ module AddwordCommand
   end
 
   def prepare_addword_worflow(word)
-    inverse = TRANSLATOR.detect(word) == 'ru'
+    inverse = Translators::YandexWrapper.new(word).detect == 'ru'
     variants = if inverse # If source language is russian use native addword workflow, otherwise user target lang
                  Dictionaries::YandexWrapper.new(word, from: 'ru', to: current_language,
                                                        inverse: inverse).variants

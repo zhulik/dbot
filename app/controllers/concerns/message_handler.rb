@@ -11,7 +11,7 @@ module MessageHandler
   private
 
   def handle_text
-    lang = TRANSLATOR.detect(payload.text)
+    lang = Translators::YandexWrapper.new(payload.text).detect
     unless language_supported?(lang) # rubocop:disable Style/GuardClause
       return respond_with :message, text: t('common.unknown_language', lang: lang, current: current_language)
     end

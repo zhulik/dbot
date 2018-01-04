@@ -22,7 +22,7 @@ module TranslatetoCommand
   end
 
   def translateto_direct(sentence)
-    text = TRANSLATOR.translate(sentence, from: 'ru', to: current_language)
+    text = Translators::YandexWrapper.new(sentence).translate('ru', current_language)
     clean = text.tr('.', ' ').strip
     reply_markup = nil
     if clean.split.count == 1 && !current_user.word?(clean)

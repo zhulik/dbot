@@ -8,7 +8,7 @@ module KeyboardsHelper
   def variants_keyboard(variants, context)
     keys = variants.map.with_index do |var, index|
       {
-        text: "#{var[:translation]} #{var[:pos]} #{var[:gen]}",
+        text: "#{var[:word]} - #{var[:translation]} #{var[:pos]} #{var[:gen]}",
         callback_data: "#{context}:#{index}"
       }
     end.each_slice(1).to_a

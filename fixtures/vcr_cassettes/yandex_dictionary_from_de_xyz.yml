@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://dictionary.yandex.net/api/v1/dicservice.json/lookup?key=dict.1.1.20180102T161730Z.9b97a277191b98cb.e35dcc4831972b13d7e921627d5e38b54324f6cb&lang=de-ru&text=xyz
+    uri: https://dictionary.yandex.net/api/v1/dicservice.json/lookup?key=test_bot_token&lang=de-ru&text=xyz
     body:
       encoding: US-ASCII
       string: ''

@@ -139,7 +139,7 @@ describe DbotController do
         end
       end
 
-      context 'with tree arguments passed' do
+      context 'with three or four arguments passed' do
         it 'works as expected' do
           expect {
             expect { dispatch_message '/addword Stuhl стул noun' }.to respond_with_message 'Word has been successfully added: Stuhl - стул'
@@ -151,11 +151,6 @@ describe DbotController do
           expect(session[:addword_variants]).to be_nil
           expect(session[:addword_word]).to be_nil
         end
-      end
-
-      context 'with four arguments passed' do
-        # adds new word
-        # # validates pos and gen
       end
 
       context 'with five arguments passed' do

@@ -15,6 +15,8 @@ class DbotController < Telegram::Bot::UpdatesController
   include WordsCommand
   include DelwordCommand
   include AddwordCommand
+  include TranslatetoCommand
+  include TranslatefromCommand
 
   self.session_store = :redis_store, { expires_in: 1.month }
   before_action :authenticate!, except: :start # rubocop:disable Rails/LexicallyScopedActionFilter

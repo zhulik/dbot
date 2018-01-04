@@ -44,3 +44,4 @@ en:
     something_went_wrong: 'Something went wrong...'
     unknown_pos: 'Unknown pos: %{pos}. Valid are: %{valid}'
     unknown_gen: 'Unknown gen: %{gen}. Valid are: %{valid}'
+    send_sentence: Send me the sentence

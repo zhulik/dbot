@@ -20,14 +20,12 @@ en:
       word_added: 'Word has been successfully added: %{word} - %{translation}'
       is_it_right_translation: 'Is it right translation: %{translation}?'
       send_translation: 'Send me the valid translation'
-      send_word: 'Send me the word'
     words:
       no_words_added: You haven't added any words. Use /addword <word>
       your_saved_words: 'Your saved words:'
     delword:
       usage: 'Wrong arguments count. Usage: /delword <word>'
       unknown_word: 'Unknown word: %{word}!'
-      word_deleted: 'Word deleted: %{word}.'
     _context_handler_addword_custom_variant:
       usage: 'Wrong format. Example: <word> <pos> [gen]'
   common:
@@ -47,3 +45,5 @@ en:
     i_dont_understand: Sorry, I don't undestand.
     unknown_command: Sorry, I don't know this command.
     already_added: Word %{word} is already added!
+    send_word: 'Send me the word'
+    word_deleted: 'Word deleted: %{word}.'

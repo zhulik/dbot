@@ -54,7 +54,7 @@ module AddwordCommand
 
   def addword_full
     save_context :addword_send_word
-    respond_with :message, text: t('.send_word')
+    respond_with :message, text: t('common.send_word')
   end
 
   def addword_short(word)

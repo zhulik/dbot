@@ -45,3 +45,5 @@ en:
     unknown_gen: 'Unknown gen: %{gen}. Valid are: %{valid}'
     send_sentence: Send me the sentence
     select_language: 'Language is not selected. Use /languages'
+    i_dont_understand: Sorry, I don't undestand.
+    unknown_command: Sorry, I don't know this command.

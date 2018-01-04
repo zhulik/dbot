@@ -29,6 +29,14 @@ class DbotController < Telegram::Bot::UpdatesController
   rescue_from NotStartedError, with: :send_not_authorized
   rescue_from LanguageNotSetError, with: :send_select_language
 
+  def message(*)
+    respond_with :message, text: t('common.i_dont_understand')
+  end
+
+  def _handle_action_missing(*)
+    respond_with :message, text: t('common.unknown_command')
+  end
+
   private
 
   def process_action(*args)

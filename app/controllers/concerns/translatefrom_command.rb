@@ -25,7 +25,7 @@ module TranslatefromCommand
     text = TRANSLATOR.translate(sentence, from: current_user.language.code, to: 'ru')
     clean = text.tr('.', ' ').strip
     reply_markup = nil
-    reply_markup = { inline_keyboard: addword_keyboard(clean) } if clean.split(' ').count == 1
+    reply_markup = { inline_keyboard: addword_keyboard(clean, 'addword') } if clean.split(' ').count == 1
     respond_with :message, text: text, reply_markup: reply_markup
   end
 end

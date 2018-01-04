@@ -43,7 +43,8 @@ describe DbotController do
                                                                                          'Стул.',
                                                                                          reply_markup: {
                                                                                            inline_keyboard: [[
-                                                                                             { text: 'Add word Стул', callback_data: 'addword:Стул' }
+                                                                                             { text: 'Add word Стул', callback_data: 'addword:Стул' },
+                                                                                             { text: '❌ Cancel', callback_data: 'addword:cancel' }
                                                                                            ]]
                                                                                          })
           end

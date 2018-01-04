@@ -33,7 +33,9 @@ module AddwordCommand
     variants = session[:addword_variants]
     session.clear
     return edit_message :text, text: t('common.canceled') if query == 'cancel'
-    w = current_user.current_words.create!(variants[query.to_i])
+    word = variants[query.to_i]
+    return edit_message :text, text: t('common.already_added', word: word[:word]) if current_user.word?(word[:word])
+    w = current_user.current_words.create!(word)
     edit_message :text, text: t('dbot.addword.word_added', word: w.word, translation: w.translation)
   end
 

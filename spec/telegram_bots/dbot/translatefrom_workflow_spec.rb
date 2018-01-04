@@ -48,7 +48,7 @@ describe DbotController do
                                                                                            ]]
                                                                                          })
           end
-          VCR.use_cassette('yandex_dictionary_from_ru_стул', match_requests_on: [:method, VCR.request_matchers.uri_without_param(:key, :text)]) do
+          VCR.use_cassette('yandex_dictionary_from_ru_стул', match_requests_on: [VCR.request_matchers.uri_without_param(:key, :text)]) do
             expect { dispatch_callback_query('addword:Стул') }.to edit_current_message(:text, text: 'Choose right variant:',
                                                                                               reply_markup: {
                                                                                                 inline_keyboard: [

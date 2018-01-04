@@ -4,7 +4,7 @@ module StartCommand
   def start(*)
     return start_with_existing_user if current_user.present?
 
-    User.create!(user_id: from.id)
+    User.create!(user_id: from.id, username: from.username)
     respond_with :message, text: t('.hi', name: user_greeting(from))
   end
 

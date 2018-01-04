@@ -3,12 +3,19 @@
 class DbotController < Telegram::Bot::UpdatesController
   include ActiveSupport::Rescuable
 
-  include ControllerConfig
+  include Telegram::Bot::UpdatesController::CallbackQueryContext
+  include Telegram::Bot::UpdatesController::TypedUpdate
+  include Telegram::Bot::UpdatesController::MessageContext
+  include UsersHelper
+  include KeyboardsHelper
   include StartCommand
   include LanguagesCommand
   include WordsCommand
   include DelwordCommand
   include AddwordCommand
+
+  self.session_store = :redis_store, { expires_in: 1.month }
+  before_action :authenticate!, except: :start # rubocop:disable Rails/LexicallyScopedActionFilter
 
   rescue_from StandardError, with: :send_error_and_raise
   rescue_from NotStartedError, with: :send_not_authorized
@@ -33,5 +40,9 @@ class DbotController < Telegram::Bot::UpdatesController
       respond_with :message, text: t('common.something_went_wrong')
     end
     raise e
+  end
+
+  def authenticate!
+    raise NotStartedError if current_user.nil?
   end
 end

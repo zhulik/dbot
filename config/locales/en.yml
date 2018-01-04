@@ -50,3 +50,4 @@ en:
     already_added: Word %{word} is already added!
     send_word: 'Send me the word'
     word_deleted: 'Word deleted: %{word}.'
+    add_word: Add word %{word}

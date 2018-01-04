@@ -37,6 +37,13 @@ module AddwordCommand
     edit_message :text, text: t('dbot.addword.word_added', word: w.word, translation: w.translation)
   end
 
+  def addword_callback_query(query)
+    return edit_message :text, text: t('common.canceled') if query == 'cancel'
+    variants = prepare_addword_worflow(query)
+    edit_message :text, text: t('dbot.addword.choose_right_variant'),
+                        reply_markup: { inline_keyboard: variants_keyboard(variants, :addword_choose) }
+  end
+
   private
 
   def addword_direct(ws)
@@ -59,6 +66,12 @@ module AddwordCommand
   end
 
   def addword_short(word)
+    variants = prepare_addword_worflow(word)
+    respond_with :message, text: t('dbot.addword.choose_right_variant'),
+                           reply_markup: { inline_keyboard: variants_keyboard(variants, :addword_choose) }
+  end
+
+  def prepare_addword_worflow(word)
     inverse = TRANSLATOR.detect(word) == 'ru'
     variants = if inverse # If source language is russian use native addword workflow, otherwise user target lang
                  Dictionaries::YandexWrapper.new(word, from: 'ru', to: current_user.language.code,
@@ -69,8 +82,7 @@ module AddwordCommand
     session[:addword_variants] = variants
     session[:addword_word] = word
     session[:addword_inverse] = inverse
-    respond_with :message, text: t('dbot.addword.choose_right_variant'),
-                           reply_markup: { inline_keyboard: variants_keyboard(variants, :addword_choose) }
+    variants
   end
 
   def unknown_gen(gen)

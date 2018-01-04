@@ -29,5 +29,13 @@ describe DbotController do
         end
       end
     end
+
+    context 'with two parameters' do
+      context 'with known word' do
+        it 'works as expected' do
+          expect { dispatch_message '/delword eins zvei' }.to respond_with_message "Wrong arguments count. Usage:\n/delword\n/delword <word>\n"
+        end
+      end
+    end
   end
 end

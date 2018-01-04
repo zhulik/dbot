@@ -18,8 +18,8 @@ module KeyboardsHelper
   def yes_no_inline_keyboard(context)
     [
       [
-        { text: t('common.choice_yes'), callback_data: 'yes' },
-        { text: t('common.choice_no'), callback_data: 'no' },
+        { text: t('common.choice_yes'), callback_data: "#{context}:yes" },
+        { text: t('common.choice_no'), callback_data: "#{context}:no" },
         cancel_button(context)
       ]
     ]
@@ -31,5 +31,14 @@ module KeyboardsHelper
 
   def custom_variant_button(context)
     { text: t('common.custom_variant'), callback_data: "#{context}:custom_variant" }
+  end
+
+  def addword_keyboard(word, context)
+    [
+      [
+        { text: t('common.add_word', word: word), callback_data: "#{context}:#{word}" },
+        cancel_button(context)
+      ]
+    ]
   end
 end

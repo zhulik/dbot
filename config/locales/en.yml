@@ -24,7 +24,10 @@ en:
       no_words_added: You haven't added any words. Use /addword <word>
       your_saved_words: 'Your saved words:'
     delword:
-      usage: 'Wrong arguments count. Usage: /delword <word>'
+      usage: |
+              Wrong arguments count. Usage:
+              /delword
+              /delword <word>
       unknown_word: 'Unknown word: %{word}!'
     _context_handler_addword_custom_variant:
       usage: 'Wrong format. Example: <word> <pos> [gen]'
@@ -47,3 +50,4 @@ en:
     already_added: Word %{word} is already added!
     send_word: 'Send me the word'
     word_deleted: 'Word deleted: %{word}.'
+    add_word: Add word %{word}

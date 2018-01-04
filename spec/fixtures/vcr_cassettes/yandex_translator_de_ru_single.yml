@@ -1,11 +1,11 @@
 ---
 http_interactions:
 - request:
-    method: get
-    uri: https://dictionary.yandex.net/api/v1/dicservice.json/lookup?key=test_bot_token&lang=de-ru&text=xyz&ui=en
+    method: post
+    uri: https://translate.yandex.net/api/v1.5/tr.json/translate
     body:
-      encoding: US-ASCII
-      string: ''
+      encoding: UTF-8
+      string: text=Stuhl.&lang=de-ru&key=key
     headers:
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
@@ -20,10 +20,12 @@ http_interactions:
     headers:
       Server:
       - nginx/1.6.2
+      Date:
+      - Thu, 04 Jan 2018 17:13:17 GMT
       Content-Type:
       - application/json; charset=utf-8
       Content-Length:
-      - '20'
+      - '48'
       Connection:
       - keep-alive
       Keep-Alive:
@@ -32,11 +34,10 @@ http_interactions:
       - no-store
       X-Content-Type-Options:
       - nosniff
-      Date:
-      - Wed, 03 Jan 2018 15:23:26 GMT
     body:
-      encoding: UTF-8
-      string: '{"head":{},"def":[]}'
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJjb2RlIjoyMDAsImxhbmciOiJkZS1ydSIsInRleHQiOlsi0KHRgtGD0LsuIl19
     http_version: 
-  recorded_at: Wed, 03 Jan 2018 15:23:03 GMT
+  recorded_at: Thu, 04 Jan 2018 17:12:54 GMT
 recorded_with: VCR 4.0.0

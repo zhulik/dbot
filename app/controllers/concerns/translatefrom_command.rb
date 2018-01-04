@@ -5,7 +5,7 @@ module TranslatefromCommand
 
   included do
     context_handler :translatefrom_send_sentence do |*ws|
-      respond_with :message, text: TRANSLATOR.translate(ws.join(' '), from: current_user.language.code, to: 'ru')
+      translatefrom_direct(ws.join(' '))
     end
   end
 
@@ -22,6 +22,10 @@ module TranslatefromCommand
   end
 
   def translatefrom_direct(sentence)
-    respond_with :message, text: TRANSLATOR.translate(sentence, from: current_user.language.code, to: 'ru')
+    text = TRANSLATOR.translate(sentence, from: current_user.language.code, to: 'ru')
+    clean = text.tr('.', ' ').strip
+    reply_markup = nil
+    reply_markup = { inline_keyboard: addword_keyboard(clean, 'addword') } if clean.split(' ').count == 1
+    respond_with :message, text: text, reply_markup: reply_markup
   end
 end

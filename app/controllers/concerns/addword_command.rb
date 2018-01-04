@@ -12,6 +12,7 @@ module AddwordCommand
       save_context :addword_custom_variant
       return respond_with :message, text: t('.usage') if ws.count < 2 || ws.count > 3
       word = { word: session[:addword_word], translation: ws.first, pos: ws.second, gen: ws.third }
+      word[:word], word[:translation] = word[:translation], word[:word] if session.delete(:addword_inverse)
       create_word(word)
     end
   end
@@ -32,8 +33,17 @@ module AddwordCommand
     variants = session[:addword_variants]
     session.clear
     return edit_message :text, text: t('common.canceled') if query == 'cancel'
-    w = current_user.current_words.create!(variants[query.to_i])
+    word = variants[query.to_i]
+    return edit_message :text, text: t('common.already_added', word: word[:word]) if current_user.word?(word[:word])
+    w = current_user.current_words.create!(word)
     edit_message :text, text: t('dbot.addword.word_added', word: w.word, translation: w.translation)
+  end
+
+  def addword_callback_query(query)
+    return edit_message :text, text: t('common.canceled') if query == 'cancel'
+    variants = prepare_addword_worflow(query)
+    edit_message :text, text: t('dbot.addword.choose_right_variant'),
+                        reply_markup: { inline_keyboard: variants_keyboard(variants, :addword_choose) }
   end
 
   private
@@ -58,11 +68,23 @@ module AddwordCommand
   end
 
   def addword_short(word)
-    variants = Dictionaries::YandexWrapper.new(word, from: current_user.language.code, to: 'ru').variants
-    session[:addword_variants] = variants
-    session[:addword_word] = word
+    variants = prepare_addword_worflow(word)
     respond_with :message, text: t('dbot.addword.choose_right_variant'),
                            reply_markup: { inline_keyboard: variants_keyboard(variants, :addword_choose) }
+  end
+
+  def prepare_addword_worflow(word)
+    inverse = TRANSLATOR.detect(word) == 'ru'
+    variants = if inverse # If source language is russian use native addword workflow, otherwise user target lang
+                 Dictionaries::YandexWrapper.new(word, from: 'ru', to: current_user.language.code,
+                                                       inverse: inverse).variants
+               else
+                 Dictionaries::YandexWrapper.new(word, from: current_user.language.code, to: 'ru').variants
+               end
+    session[:addword_variants] = variants
+    session[:addword_word] = word
+    session[:addword_inverse] = inverse
+    variants
   end
 
   def unknown_gen(gen)

@@ -35,6 +35,32 @@ describe DbotController do
           expect(session[:context]).to be_nil
         end
       end
+
+      context 'with only one word passed' do
+        it 'works as expected' do
+          VCR.use_cassette('yandex_translator_de_ru_single') do
+            expect { dispatch_message '/translatefrom Stuhl.' }.to send_telegram_message(bot,
+                                                                                         'Стул.',
+                                                                                         reply_markup: {
+                                                                                           inline_keyboard: [[
+                                                                                             { text: 'Add word Стул', callback_data: 'addword:Стул' },
+                                                                                             { text: '❌ Cancel', callback_data: 'addword:cancel' }
+                                                                                           ]]
+                                                                                         })
+          end
+          VCR.use_cassette('yandex_dictionary_from_ru_стул', match_requests_on: [:method, VCR.request_matchers.uri_without_param(:key, :text)]) do
+            expect { dispatch_callback_query('addword:Стул') }.to edit_current_message(:text, text: 'Choose right variant:',
+                                                                                              reply_markup: {
+                                                                                                inline_keyboard: [
+                                                                                                  [{ text: 'Stuhl - стул noun m', callback_data: 'addword_choose:0' }],
+                                                                                                  [{ text: 'Stuhlgang - стул noun m', callback_data: 'addword_choose:1' }],
+                                                                                                  [{ text: '❌ Cancel', callback_data: 'addword_choose:cancel' }, { text: 'Custom variant', callback_data: 'addword_choose:custom_variant' }]
+                                                                                                ]
+                                                                                              })
+          end
+          # tested in addword workflow specs
+        end
+      end
     end
   end
 end

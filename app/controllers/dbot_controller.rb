@@ -6,8 +6,10 @@ class DbotController < Telegram::Bot::UpdatesController
   include Telegram::Bot::UpdatesController::CallbackQueryContext
   include Telegram::Bot::UpdatesController::TypedUpdate
   include Telegram::Bot::UpdatesController::MessageContext
+
   include UsersHelper
   include KeyboardsHelper
+
   include StartCommand
   include LanguagesCommand
   include WordsCommand

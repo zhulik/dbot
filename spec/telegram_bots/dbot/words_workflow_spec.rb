@@ -6,10 +6,10 @@ describe DbotController do
     let!(:user) { create :user, user_id: 123, language: language }
 
     context 'with existing words' do
-      let!(:word) { create :word, language: language, user: user, word: 'word', translation: 'translation' }
+      let!(:word) { create :word, language: language, user: user, word: 'word', translation: 'translation', pos: 'noun', gen: 'm' }
 
       it 'works as expected' do
-        expect { dispatch_message '/words' }.to respond_with_message "Your saved words:\nword - translation"
+        expect { dispatch_message '/words' }.to respond_with_message "Your saved words:\nword - translation noun m"
       end
     end
 

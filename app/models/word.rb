@@ -8,18 +8,18 @@ class Word < ApplicationRecord
   validates :word, uniqueness: { scope: %i[user_id language_id] }
 
   enum pos: {
-    noun: :noun,
-    verb: :verb,
-    adjective: :adjective,
-    adverb: :adverb,
-    pronoun: :pronoun,
-    preposition: :preposition,
-    conjunction: :conjunction,
-    numeral: :numeral
+    noun: 'noun',
+    verb: 'verb',
+    adjective: 'adjective',
+    adverb: 'adverb',
+    pronoun: 'pronoun',
+    preposition: 'preposition',
+    conjunction: 'conjunction',
+    numeral: 'numeral'
   }
   enum gen: {
-    f: :f,
-    m: :m,
-    n: :n
+    f: 'f',
+    m: 'm',
+    n: 'n'
   }
 end

@@ -20,7 +20,7 @@ describe DbotController do
         it 'works as expected' do
           expect { dispatch_message '/addword' }.to respond_with_message 'Send me the word'
           expect(session[:context]).to eq(:addword_send_word)
-          VCR.use_cassette('yandex_dictionary_from_de_Stuhl') do
+          VCR.use_cassette('yandex_dictionary_from_de_Stuhl', match_requests_on: [:method, VCR.request_matchers.uri_without_param(:key)]) do
             expect { dispatch_message 'Stuhl' }.to send_telegram_message(bot,
                                                                          'Choose right variant:',
                                                                          reply_markup: {
@@ -46,7 +46,7 @@ describe DbotController do
       context 'with one argument passed' do
         context 'when chose custom translation' do
           it 'works as expected' do
-            VCR.use_cassette('yandex_dictionary_from_de_Stuhl') do
+            VCR.use_cassette('yandex_dictionary_from_de_Stuhl', match_requests_on: [:method, VCR.request_matchers.uri_without_param(:key)]) do
               expect { dispatch_message '/addword Stuhl' }.to send_telegram_message(bot,
                                                                                     'Choose right variant:',
                                                                                     reply_markup: {
@@ -79,7 +79,7 @@ describe DbotController do
 
         context 'when chose cancel' do
           it 'works as expected' do
-            VCR.use_cassette('yandex_dictionary_from_de_Stuhl') do
+            VCR.use_cassette('yandex_dictionary_from_de_Stuhl', match_requests_on: [:method, VCR.request_matchers.uri_without_param(:key)]) do
               expect { dispatch_message '/addword Stuhl' }.to send_telegram_message(bot,
                                                                                     'Choose right variant:',
                                                                                     reply_markup: {

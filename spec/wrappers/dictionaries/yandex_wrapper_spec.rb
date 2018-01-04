@@ -31,7 +31,7 @@ describe Dictionaries::YandexWrapper do
 
       VARIANTS_DE.each do |word, variants|
         it "returns valid variants for #{word}" do
-          VCR.use_cassette("yandex_dictionary_from_#{from_lang}_#{word}") do
+          VCR.use_cassette("yandex_dictionary_from_#{from_lang}_#{word}", match_requests_on: [:method, VCR.request_matchers.uri_without_param(:key)]) do
             v = described_class.new(word, from: from_lang, to: 'ru').variants
             expect(v).to eq(variants)
           end
@@ -75,7 +75,7 @@ describe Dictionaries::YandexWrapper do
 
       VARIANTS_EN.each do |word, variants|
         it "returns valid variants for #{word}" do
-          VCR.use_cassette("yandex_dictionary_from_#{from_lang}_#{word}") do
+          VCR.use_cassette("yandex_dictionary_from_#{from_lang}_#{word}", match_requests_on: [:method, VCR.request_matchers.uri_without_param(:key)]) do
             v = described_class.new(word, from: from_lang, to: 'ru').variants
             expect(v).to eq(variants)
           end

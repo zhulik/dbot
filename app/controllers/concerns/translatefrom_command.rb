@@ -22,7 +22,7 @@ module TranslatefromCommand
   end
 
   def translatefrom_direct(sentence)
-    text = TRANSLATOR.translate(sentence, from: current_user.language.code, to: 'ru')
+    text = TRANSLATOR.translate(sentence, from: current_language, to: 'ru')
     clean = text.tr('.', ' ').strip
     reply_markup = nil
     if clean.split.count == 1 && !current_user.word?(clean)

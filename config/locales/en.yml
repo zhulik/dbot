@@ -51,3 +51,4 @@ en:
     send_word: 'Send me the word'
     word_deleted: 'Word deleted: %{word}.'
     add_word: Add word %{word}
+    unknown_language: 'Unknown or not configured language: %{lang}! Your current_language: %{lang}'

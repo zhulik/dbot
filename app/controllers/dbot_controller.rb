@@ -17,6 +17,7 @@ class DbotController < Telegram::Bot::UpdatesController
   include AddwordCommand
   include TranslatetoCommand
   include TranslatefromCommand
+  include MessageHandler
 
   self.session_store = :redis_store, { expires_in: 1.month }
 
@@ -28,10 +29,6 @@ class DbotController < Telegram::Bot::UpdatesController
   rescue_from StandardError, with: :send_error_and_raise
   rescue_from NotStartedError, with: :send_not_authorized
   rescue_from LanguageNotSetError, with: :send_select_language
-
-  def message(*)
-    respond_with :message, text: t('common.i_dont_understand')
-  end
 
   def _handle_action_missing(*)
     respond_with :message, text: t('common.unknown_command')

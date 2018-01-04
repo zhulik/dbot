@@ -10,4 +10,12 @@ module UsersHelper
   def current_user
     @current_user ||= User.find_by(user_id: from.id)
   end
+
+  def current_language
+    @curren_language ||= current_user.language.code
+  end
+
+  def language_supported?(lang)
+    ['ru', current_language].include?(lang)
+  end
 end

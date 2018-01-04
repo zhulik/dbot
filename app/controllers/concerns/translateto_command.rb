@@ -10,7 +10,6 @@ module TranslatetoCommand
   end
 
   def translateto(*ws)
-    return respond_with :message, text: t('common.select_language') if current_user.language.nil?
     return translateto_full if ws.empty?
     translateto_direct(ws.join(' '))
   end

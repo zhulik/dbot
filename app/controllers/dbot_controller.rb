@@ -19,10 +19,15 @@ class DbotController < Telegram::Bot::UpdatesController
   include TranslatefromCommand
 
   self.session_store = :redis_store, { expires_in: 1.month }
-  before_action :authenticate!, except: :start # rubocop:disable Rails/LexicallyScopedActionFilter
+
+  # rubocop:disable Rails/LexicallyScopedActionFilter
+  before_action :authenticate!, except: :start
+  before_action :check_lanaguage!, only: %i[addword translateto translatefrom]
+  # rubocop:enable Rails/LexicallyScopedActionFilter
 
   rescue_from StandardError, with: :send_error_and_raise
   rescue_from NotStartedError, with: :send_not_authorized
+  rescue_from LanguageNotSetError, with: :send_select_language
 
   private
 
@@ -48,5 +53,13 @@ class DbotController < Telegram::Bot::UpdatesController
 
   def authenticate!
     raise NotStartedError if current_user.nil?
+  end
+
+  def check_lanaguage!
+    raise LanguageNotSetError if current_user.language.nil?
+  end
+
+  def send_select_language
+    respond_with :message, text: t('common.select_language')
   end
 end

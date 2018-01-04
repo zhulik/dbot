@@ -23,8 +23,8 @@ module MessageHandler
       return respond_with :message, text: t('common.unknown_language', lang: lang, current: current_language)
     end
     session[:message_to_handle] = payload.text
-    return respond_for_native(payload.text, :translateto) if lang == 'ru'
-    respond_for_foreign(payload.text, :translatefrom)
+    ctx = lang == 'ru' ? :translateto : :translatefrom
+    respond_to_message(payload.text, ctx)
   end
 
   def respond_to_message(text, translate_context)

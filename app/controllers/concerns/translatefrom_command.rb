@@ -14,7 +14,7 @@ module TranslatefromCommand
     translatefrom_direct(ws.join(' '))
   end
 
-  def translatefrom_callback_query(_query)
+  def translatefrom_callback_query(*)
     message = session.delete(:message_to_handle)
     reply_markup, text = prepare_translatefrom_workflow(message)
     edit_message :text, text: text, reply_markup: reply_markup

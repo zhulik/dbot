@@ -1,7 +1,7 @@
 en:
   dbot:
     start:
-      hi: Hi, %{name}!
+      hi: Hi, %{name}! Use /start to choose target language.
       already_started: We have already started!
       reactivated: Your subscription has been reactivated!
     languages:

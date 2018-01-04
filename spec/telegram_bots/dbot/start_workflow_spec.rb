@@ -5,7 +5,7 @@ describe DbotController do
     context 'with new user' do
       it 'works as expected' do
         expect {
-          expect { dispatch_message '/start' }.to respond_with_message 'Hi, my friend!'
+          expect { dispatch_message '/start' }.to respond_with_message 'Hi, my friend! Use /start to choose target language.'
         }.to change(User, :count).by 1
       end
     end

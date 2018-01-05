@@ -144,7 +144,7 @@ describe DbotController do
           expect {
             expect { dispatch_message '/addword Stuhl стул noun' }.to respond_with_message 'Word has been successfully added: Stuhl - стул'
             expect { dispatch_message '/addword Tisch стол noun m' }.to respond_with_message 'Word has been successfully added: Tisch - стол'
-            expect { dispatch_message '/addword Katze кошка wrong' }.to respond_with_message 'Unknown pos: wrong. Valid are: noun, verb, adjective, adverb, pronoun, preposition, conjunction, numeral'
+            expect { dispatch_message '/addword Katze кошка wrong' }.to respond_with_message 'Unknown pos: wrong. Valid are: noun, verb, adjective, adverb, pronoun, preposition, conjunction, numeral, participle'
             expect { dispatch_message '/addword Katze кошка noun x' }.to respond_with_message 'Unknown gen: x. Valid are: f, m, n'
           }.to change(Word, :count).by(2)
           expect(session[:context]).to be_nil

@@ -25,6 +25,8 @@ module PracticeCommand
 
   def start_words_practice
     word = current_user.words.order('RANDOM()').first
-    edit_message :text, text: word.word, reply_markup: { inline_keyboard: transations_keyboard(word, :words_practice) }
+    edit_message :text, text: with_article(word), reply_markup: {
+      inline_keyboard: transations_keyboard(word, :words_practice)
+    }
   end
 end

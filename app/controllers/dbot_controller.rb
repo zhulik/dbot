@@ -10,6 +10,7 @@ class DbotController < Telegram::Bot::UpdatesController
   include ApplicationHelper
   include UsersHelper
   include KeyboardsHelper
+  include WordsHelper
 
   include StartCommand
   include LanguagesCommand

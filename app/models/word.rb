@@ -17,7 +17,8 @@ class Word < ApplicationRecord
     pronoun: 'pronoun',
     preposition: 'preposition',
     conjunction: 'conjunction',
-    numeral: 'numeral'
+    numeral: 'numeral',
+    participle: 'participle'
   }
   enum gen: {
     f: 'f',

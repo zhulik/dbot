@@ -21,6 +21,7 @@ gem 'airbrake', '~> 7'
 gem 'language_list'
 gem 'sidekiq'
 gem 'nokogiri'
+gem 'german_numbers'
 
 group :development do
   gem 'rubocop', require: false

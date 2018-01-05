@@ -36,7 +36,7 @@ module TranslatefromCommand
     text = Translators::YandexWrapper.new(sentence).translate(current_language, 'ru')
     clean = text.tr('.', ' ').strip
     reply_markup = nil
-    if clean.split.count == 1 && !current_user.word?(clean)
+    if clean.split.one? && !current_user.word?(clean)
       reply_markup = { inline_keyboard: addword_keyboard(clean, 'addword') }
     end
     [reply_markup, text]

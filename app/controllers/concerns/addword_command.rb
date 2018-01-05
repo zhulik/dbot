@@ -21,7 +21,7 @@ module AddwordCommand
     return respond_with :message, text: t('.usage') if ws.count == 2 || ws.count > 4
     return respond_with :message, text: t('common.already_added', word: ws[0]) if current_user.word?(ws[0])
     return addword_full if ws.empty?
-    return addword_short(ws.first) if ws.count == 1
+    return addword_short(ws.first) if ws.one?
     addword_direct(ws)
   end
 

@@ -40,7 +40,7 @@ module KeyboardsHelper
       cancel_button(:message)
     ].tap do |keys|
       clean = text.tr('.', ' ').strip
-      keys << { text: t('common.add_word', word: clean), callback_data: "addword:#{clean}" } if clean.split.length == 1
+      keys << { text: t('common.add_word', word: clean), callback_data: "addword:#{clean}" } if clean.split.one?
     end.each_slice(2).to_a
   end
 

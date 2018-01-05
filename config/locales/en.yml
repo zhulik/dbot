@@ -35,6 +35,9 @@ en:
       feedback: Give feedback
       translate: Translate
       pronounce: Pronounce
+    practice:
+      what_practice: 'What practice do you want?'
+      words: 'Words practice'
   common:
     my_friend: my friend
     not_authorized: 'Sorry, you are not authorized, use /start'
@@ -60,3 +63,5 @@ en:
     prev_page: '⬅️'
     your_saved_words: 'Your saved words:'
     pagination: 'Page %{page} of %{total_pages}. Total count: %{total_count}'
+    right: ✅ %{word} - %{translation}
+    wrong: ❎ %{word} - %{translation}

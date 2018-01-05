@@ -18,6 +18,7 @@ class DbotController < Telegram::Bot::UpdatesController
   include AddwordCommand
   include TranslatetoCommand
   include TranslatefromCommand
+  include PracticeCommand
   include MessageHandler
 
   self.session_store = :redis_store, { expires_in: 1.month }

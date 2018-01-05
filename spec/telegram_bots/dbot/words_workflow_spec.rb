@@ -9,7 +9,7 @@ describe DbotController do
       let!(:word) { create :word, language: language, user: user, word: 'word', translation: 'translation', pos: 'noun', gen: 'm' }
 
       it 'works as expected' do
-        expect { dispatch_message '/words' }.to respond_with_message "Your saved words:\nword - translation noun m"
+        expect { dispatch_message '/words' }.to respond_with_message "Your saved words:\nword - translation noun m\nPage 1 of 1. Total count: 1"
       end
     end
 

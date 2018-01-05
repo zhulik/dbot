@@ -20,6 +20,7 @@ gem 'listen', '>= 3.0.5', '< 3.2'
 gem 'airbrake', '~> 7'
 gem 'language_list'
 gem 'sidekiq'
+gem 'nokogiri'
 
 group :development do
   gem 'rubocop', require: false

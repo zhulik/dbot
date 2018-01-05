@@ -7,6 +7,8 @@ class Word < ApplicationRecord
   validates :word, :translation, :pos, presence: true
   validates :word, uniqueness: { scope: %i[user_id language_id] }
 
+  paginates_per 20
+
   enum pos: {
     noun: 'noun',
     verb: 'verb',

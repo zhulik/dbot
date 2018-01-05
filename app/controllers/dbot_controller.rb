@@ -7,6 +7,7 @@ class DbotController < Telegram::Bot::UpdatesController
   include Telegram::Bot::UpdatesController::TypedUpdate
   include Telegram::Bot::UpdatesController::MessageContext
 
+  include ApplicationHelper
   include UsersHelper
   include KeyboardsHelper
 

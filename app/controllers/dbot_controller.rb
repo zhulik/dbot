@@ -11,6 +11,7 @@ class DbotController < Telegram::Bot::UpdatesController
   include UsersHelper
   include KeyboardsHelper
   include WordsHelper
+  include Rails.application.routes.url_helpers
 
   include StartCommand
   include LanguagesCommand

@@ -4,24 +4,9 @@ module PronounceCommand
   extend ActiveSupport::Concern
 
   def pronounce(*ws)
-    with_tempfile do |f|
-      data = TTS::VoiceRSS.new(ws.join(' '), current_language).pronounce.force_encoding('BINARY')
-
-      f.write(data)
-      f.rewind
-      respond_with :voice, voice: f
-
-      return
+    phrase = ws.join(' ')
+    TTS::CachedTTS.new(phrase, current_user.language).get do |payload|
+      respond_with :voice, voice: payload if Rails.env.development?
     end
-  end
-
-  private
-
-  def with_tempfile
-    f = Tempfile.new('voice.ogg')
-    f.binmode
-    yield f
-  ensure
-    f.close!
   end
 end

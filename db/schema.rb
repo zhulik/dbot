@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180106013402) do
+ActiveRecord::Schema.define(version: 20180106112725) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,6 +44,8 @@ ActiveRecord::Schema.define(version: 20180106013402) do
     t.string "gen"
     t.integer "wordsfrom_success", default: 0, null: false
     t.integer "wordsfrom_fail", default: 0, null: false
+    t.integer "wordsto_success", default: 0, null: false
+    t.integer "wordsto_fail", default: 0, null: false
     t.index ["language_id"], name: "index_words_on_language_id"
     t.index ["user_id", "language_id", "word"], name: "index_words_on_user_id_and_language_id_and_word", unique: true
     t.index ["user_id"], name: "index_words_on_user_id"

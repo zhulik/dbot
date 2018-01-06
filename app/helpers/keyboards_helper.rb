@@ -58,11 +58,19 @@ module KeyboardsHelper
     end.each_slice(2).to_a
   end
 
-  def transations_keyboard(word, variants, ctx)
+  def wordsfrom_keyboard(word, variants)
     vars = variants.map do |w|
-      { text: w.translation, callback_data: "#{ctx}:#{word.id}:#{w.id}" }
+      { text: w.translation, callback_data: "wordsfrom_practice:#{word.id}:#{w.id}" }
     end
-    vars << cancel_button(ctx)
+    vars << cancel_button(:wordsfrom_practice)
+    vars.each_slice(2).to_a
+  end
+
+  def wordsto_keyboard(word, variants)
+    vars = variants.map do |w|
+      { text: with_article(w), callback_data: "wordsto_practice:#{word.id}:#{w.id}" }
+    end
+    vars << cancel_button(:wordsfrom_practice)
     vars.each_slice(2).to_a
   end
 end

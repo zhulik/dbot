@@ -12,7 +12,7 @@ class TTS::VoiceRSS < TTS::Wrapper
       'key' => Rails.application.secrets.voicerss,
       'hl' => LANGS[@language],
       'src' => @phrase,
-      'r' => '0',
+      'r' => '-5',
       'c' => 'ogg',
       'f' => '44khz_16bit_stereo',
       'ssml' => 'false',

@@ -24,6 +24,7 @@ gem 'nokogiri'
 gem 'german_numbers'
 gem 'pickup'
 gem 'voicerss2017'
+gem 'carrierwave'
 
 group :development do
   gem 'rubocop', require: false

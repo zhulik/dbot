@@ -2,7 +2,8 @@
 
 class TtsPhrase < ApplicationRecord
   belongs_to :language
-  has_one_attached :voice
+  mount_uploader :voice, TtsUploader
 
   validates :phrase, presence: true, uniqueness: { scope: [:language_id] }
+  validates :voice, presence: true
 end

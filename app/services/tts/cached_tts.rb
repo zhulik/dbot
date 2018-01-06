@@ -15,10 +15,10 @@ class TTS::CachedTTS
     return development_get(&block) if Rails.env.development?
     tts = existing
     if tts.nil?
-      tts = @language.tts_phrases.create!(phrase: @phrase)
-      tts.voice.attach(io: StringIO.open(data), filename: 'voice.ogg', content_type: 'audio/ogg')
+      io = NamedStringIO.new(data, 'voice.ogg')
+      tts = @language.tts_phrases.create!(phrase: @phrase, voice: io)
     end
-    yield rails_blob_url(tts.voice, disposition: 'attachment', host: 'https://dbot.lighty.photo')
+    yield tts.voice.url
   end
 
   private

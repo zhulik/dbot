@@ -53,14 +53,12 @@ module KeyboardsHelper
 
   def practices_keyboard
     [].tap do |keys|
-      keys << { text: t('.words'), callback_data: 'practice:wordsfrom' }
+      keys << { text: t('.wordsfrom'), callback_data: 'practice:wordsfrom' }
+      keys << { text: t('.wordsto'), callback_data: 'practice:wordsto' }
     end.each_slice(2).to_a
   end
 
-  def transations_keyboard(word, ctx)
-    variants = current_user.words.where(pos: word.pos).where.not(id: word.id).limit(4).to_a
-    variants << word
-    variants.shuffle!
+  def transations_keyboard(word, variants, ctx)
     vars = variants.map do |w|
       { text: w.translation, callback_data: "#{ctx}:#{word.id}:#{w.id}" }
     end

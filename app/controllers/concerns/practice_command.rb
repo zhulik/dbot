@@ -26,10 +26,19 @@ module PracticeCommand
   private
 
   def start_wordsfrom_practice
-    word = Words::WeighedRandom.new(current_user.words, :wordsfrom).get
+    word = Words::WeighedRandom.new(current_user.current_words, :wordsfrom).get
     return edit_message :text, text: t('dbot.words.no_words_added') if word.nil?
+    variants = Words::Variants.new(current_user, word).get
     edit_message :text, text: with_article(word), reply_markup: {
-      inline_keyboard: transations_keyboard(word, :wordsfrom_practice)
+      inline_keyboard: transations_keyboard(word, variants, :wordsfrom_practice)
+    }
+  end
+
+  def start_wordsto_practice
+    word = Words::WeighedRandom.new(current_user.current_words, :wordsto).get
+    return edit_message :text, text: t('dbot.words.no_words_added') if word.nil?
+    edit_message :text, text: word.translation, reply_markup: {
+      inline_keyboard: transations_keyboard(word, :wordsto_practice)
     }
   end
 end

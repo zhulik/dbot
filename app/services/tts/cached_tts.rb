@@ -18,7 +18,7 @@ class TTS::CachedTTS
       tts = @language.tts_phrases.create!(phrase: @phrase)
       tts.voice.attach(io: StringIO.open(data), filename: 'voice.ogg', content_type: 'audio/ogg')
     end
-    yield open(rails_blob_url(tts.voice, disposition: 'attachment', host: 'https://dbot.lighty.photo', port: '3000'))
+    yield open(rails_blob_url(tts.voice, disposition: 'attachment', host: 'https://dbot.lighty.photo'))
   end
 
   private

@@ -11,6 +11,6 @@ class Words::WeighedRandom
     weights = @scope.map { |w| [w, w.send("#{@practice}_success") - w.send("#{@practice}_fail")] }
     max = weights.max_by(&:second).second
     weights = weights.to_h
-    Pickup.new(weights) { |v| max + 1 - v }.pick
+    Pickup.new(weights) { |v| max * 3 + 1 - v }.pick
   end
 end

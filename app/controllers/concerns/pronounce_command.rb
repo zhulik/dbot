@@ -6,7 +6,7 @@ module PronounceCommand
   def pronounce(*ws)
     phrase = ws.join(' ')
     TTS::CachedTTS.new(phrase, current_user.language).get do |payload|
-      respond_with :voice, voice: payload if Rails.env.development?
+      respond_with :voice, voice: payload
     end
   end
 end

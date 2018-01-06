@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CreateTtsPhrases < ActiveRecord::Migration[5.2]
+class CreateTtsPhrases < ActiveRecord::Migration[5.1]
   def change
     create_table :tts_phrases do |t|
       t.string :phrase, null: false

@@ -14,7 +14,7 @@ class TTS::VoiceRSS < TTS::Wrapper
       'src' => @phrase,
       'r' => '0',
       'c' => 'ogg',
-      'f' => '24khz_8bit_mono',
+      'f' => '44khz_16bit_stereo',
       'ssml' => 'false',
       'b64' => 'false'
     )['response']

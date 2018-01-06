@@ -28,7 +28,7 @@ class TTS::CachedTTS
   end
 
   def data
-    @data ||= TTS::VoiceRSS.new(@phrase, @language.code).pronounce.force_encoding('BINARY')
+    @data ||= TTS::OggConverter.new.convert(TTS::VoiceRSS.new(@phrase, @language.code).pronounce)
   end
 
   def with_tempfile

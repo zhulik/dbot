@@ -37,7 +37,8 @@ en:
       pronounce: Pronounce
     practice:
       what_practice: 'What practice do you want?'
-      words: 'Words practice'
+      wordsfrom: 'Foreign -> native practice'
+      wordsto: 'Native -> foreign practice'
   common:
     my_friend: my friend
     not_authorized: 'Sorry, you are not authorized, use /start'

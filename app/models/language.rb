@@ -3,6 +3,7 @@
 class Language < ApplicationRecord
   has_many :users, dependent: :nullify
   has_many :words, dependent: :destroy
+  has_many :tts_phrases, dependent: :destroy
 
   validates :name, :code, presence: true
   validates :code, uniqueness: true, length: { minimum: 2, maximum: 2 }

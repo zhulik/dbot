@@ -12,7 +12,7 @@ module UsersHelper
   end
 
   def current_language
-    @curren_language ||= current_user.language.code
+    @current_language ||= current_user.language.code
   end
 
   def language_supported?(lang)

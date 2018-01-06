@@ -70,7 +70,7 @@ module KeyboardsHelper
     vars = variants.map do |w|
       { text: with_article(w), callback_data: "wordsto_practice:#{word.id}:#{w.id}" }
     end
-    vars << cancel_button(:wordsfrom_practice)
+    vars << cancel_button(:wordsto_practice)
     vars.each_slice(2).to_a
   end
 end

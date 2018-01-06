@@ -54,5 +54,53 @@ describe DbotController do
         end
       end
     end
+
+    context 'with wordsto practice' do
+      context 'when no words added' do
+        it 'works as expected' do
+          expect { dispatch_message '/practice' }.to send_telegram_message(bot,
+                                                                           'What practice do you want?', reply_markup: {
+                                                                             inline_keyboard: [[
+                                                                               { text: 'Foreign -> native practice', callback_data: 'practice:wordsfrom' },
+                                                                               { text: 'Native -> foreign practice', callback_data: 'practice:wordsto' }
+                                                                             ]]
+                                                                           })
+          expect { dispatch_callback_query('practice:wordsto') }.to edit_current_message(:text, text: "You haven't added any words. Use /addword")
+        end
+      end
+
+      context 'with word added' do
+        let!(:word) { create :word, user: user, language: language, word: 'word', translation: 'translation', pos: 'noun', gen: 'm' }
+
+        it 'words as expected' do
+          expect { dispatch_message '/practice' }.to send_telegram_message(bot,
+                                                                           'What practice do you want?', reply_markup: {
+                                                                             inline_keyboard: [[
+                                                                               { text: 'Foreign -> native practice', callback_data: 'practice:wordsfrom' },
+                                                                               { text: 'Native -> foreign practice', callback_data: 'practice:wordsto' }
+                                                                             ]]
+                                                                           })
+          expect { dispatch_callback_query('practice:wordsto') }.to edit_current_message(:text, text: 'translation', reply_markup: {
+                                                                                           inline_keyboard: [[
+                                                                                             { text: 'der Word', callback_data: 'wordsto_practice:1:1' },
+                                                                                             { text: '❌ Cancel', callback_data: 'wordsto_practice:cancel' }
+                                                                                           ]]
+                                                                                         })
+          # Just the same, we have only one word
+          expect { dispatch_callback_query('wordsto_practice:1:1') }.to edit_current_message(:text, text: 'translation', reply_markup: {
+                                                                                               inline_keyboard: [[
+                                                                                                 { text: 'der Word', callback_data: 'wordsto_practice:1:1' },
+                                                                                                 { text: '❌ Cancel', callback_data: 'wordsto_practice:cancel' }
+                                                                                               ]]
+                                                                                             })
+          expect(word.reload.wordsto_success).to eq(1)
+          expect { dispatch_callback_query('wordsto_practice:1:1') }.to answer_callback_query_with('✅ word - translation')
+          expect(word.reload.wordsto_success).to eq(2)
+          expect { dispatch_callback_query('wordsto_practice:1:2') }.to answer_callback_query_with('❎ word - translation')
+          expect(word.reload.wordsto_fail).to eq(1)
+          expect { dispatch_callback_query('wordsto_practice:cancel') }.to edit_current_message(:text, text: 'Canceled')
+        end
+      end
+    end
   end
 end

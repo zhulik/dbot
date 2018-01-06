@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Word < ApplicationRecord
+  include WordAdmin
   belongs_to :user
   belongs_to :language
 

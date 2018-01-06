@@ -23,6 +23,7 @@ gem 'sidekiq'
 gem 'nokogiri'
 gem 'german_numbers'
 gem 'pickup'
+gem 'voicerss2017'
 
 group :development do
   gem 'rubocop', require: false

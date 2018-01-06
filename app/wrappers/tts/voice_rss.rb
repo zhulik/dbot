@@ -13,7 +13,7 @@ class TTS::VoiceRSS < TTS::Wrapper
       'hl' => LANGS[@language],
       'src' => @phrase,
       'r' => '0',
-      'c' => 'mp3',
+      'c' => 'ogg',
       'f' => '44khz_16bit_stereo',
       'ssml' => 'false',
       'b64' => 'false'

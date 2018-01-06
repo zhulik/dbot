@@ -9,24 +9,27 @@ module PracticeCommand
     send("start_#{type}_practice")
   end
 
-  def words_practice_callback_query(query)
+  def wordsfrom_practice_callback_query(query)
     return edit_message :text, text: t('common.canceled') if query == 'cancel'
     w1, w2 = query.split(':')
     word = current_user.words.find(w1)
     if w1 == w2 # right answer
+      word.send('wordsfrom_success!')
       answer_callback_query t('common.right', word: word.word, translation: word.translation)
-      return start_words_practice
+      return start_wordsfrom_practice
     end
+    word.send('wordsfrom_fail!')
     answer_callback_query t('common.wrong', word: word.word, translation: word.translation)
-    start_words_practice
+    start_wordsfrom_practice
   end
 
   private
 
-  def start_words_practice
-    word = current_user.words.order('RANDOM()').first
+  def start_wordsfrom_practice
+    word = Words::WeighedRandom.new(current_user.words, :wordsfrom).get
+    return edit_message :text, text: t('dbot.words.no_words_added') if word.nil?
     edit_message :text, text: with_article(word), reply_markup: {
-      inline_keyboard: transations_keyboard(word, :words_practice)
+      inline_keyboard: transations_keyboard(word, :wordsfrom_practice)
     }
   end
 end

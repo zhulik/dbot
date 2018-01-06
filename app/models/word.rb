@@ -25,4 +25,12 @@ class Word < ApplicationRecord
     m: 'm',
     n: 'n'
   }
+
+  [:wordsfrom].each do |practice|
+    %i[success fail].each do |result|
+      define_method "#{practice}_#{result}!" do
+        increment!("#{practice}_#{result}")
+      end
+    end
+  end
 end

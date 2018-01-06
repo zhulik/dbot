@@ -22,6 +22,7 @@ gem 'language_list'
 gem 'sidekiq'
 gem 'nokogiri'
 gem 'german_numbers'
+gem 'pickup'
 
 group :development do
   gem 'rubocop', require: false

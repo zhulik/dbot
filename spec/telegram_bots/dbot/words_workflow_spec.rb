@@ -15,7 +15,7 @@ describe DbotController do
 
     context 'with no words in the DB' do
       it 'works as expected' do
-        expect { dispatch_message '/words' }.to respond_with_message "You haven't added any words. Use /addword <word>"
+        expect { dispatch_message '/words' }.to respond_with_message "You haven't added any words. Use /addword"
       end
     end
   end

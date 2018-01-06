@@ -10,6 +10,7 @@ describe DbotController do
 
       it 'works as expected' do
         expect { dispatch_message '/words' }.to respond_with_message "Your saved words:\nword - translation noun m\nPage 1 of 1. Total count: 1"
+        expect { dispatch_callback_query('words:page:1') }.to edit_current_message :text, text: "Your saved words:\nword - translation noun m\nPage 1 of 1. Total count: 1"
       end
     end
 

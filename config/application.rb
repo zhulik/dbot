@@ -5,7 +5,6 @@ require_relative 'boot'
 require 'rails/all'
 require 'telegram/bot'
 require 'telegram/bot/types'
-require 'named_string_io'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -21,5 +20,6 @@ module Dbot
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
     config.autoload_paths << Rails.root.join('lib')
+    config.eager_load_paths << Rails.root.join('lib')
   end
 end

@@ -19,6 +19,10 @@ module KeyboardsHelper
     { text: t('common.cancel'), callback_data: "#{ctx}:cancel" }
   end
 
+  def finish_button(ctx)
+    { text: t('common.finish'), callback_data: "#{ctx}:finish" }
+  end
+
   def custom_variant_button(ctx)
     { text: t('common.custom_variant'), callback_data: "#{ctx}:custom_variant" }
   end
@@ -62,7 +66,7 @@ module KeyboardsHelper
     vars = variants.map do |w|
       { text: w.translation, callback_data: "wordsfrom_practice:#{word.id}:#{w.id}" }
     end
-    vars << cancel_button(:wordsfrom_practice)
+    vars << finish_button(:wordsfrom_practice)
     vars.each_slice(2).to_a
   end
 
@@ -70,7 +74,7 @@ module KeyboardsHelper
     vars = variants.map do |w|
       { text: with_article(w), callback_data: "wordsto_practice:#{word.id}:#{w.id}" }
     end
-    vars << cancel_button(:wordsto_practice)
+    vars << finish_button(:wordsto_practice)
     vars.each_slice(2).to_a
   end
 end

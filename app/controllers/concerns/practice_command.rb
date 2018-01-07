@@ -10,12 +10,12 @@ module PracticeCommand
   end
 
   def wordsfrom_practice_callback_query(query)
-    return edit_message :text, text: t('common.canceled') if query == 'cancel'
+    return edit_message :text, text: t('common.finished') if query == 'finish'
     handle_practice_callback_query(query, :wordsfrom)
   end
 
   def wordsto_practice_callback_query(query)
-    return edit_message :text, text: t('common.canceled') if query == 'cancel'
+    return edit_message :text, text: t('common.finished') if query == 'finish'
     handle_practice_callback_query(query, :wordsto)
   end
 

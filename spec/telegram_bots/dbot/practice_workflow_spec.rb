@@ -35,14 +35,14 @@ describe DbotController do
           expect { dispatch_callback_query('practice:wordsfrom') }.to edit_current_message(:text, text: 'der Word', reply_markup: {
                                                                                              inline_keyboard: [[
                                                                                                { text: 'translation', callback_data: 'wordsfrom_practice:1:1' },
-                                                                                               { text: '❌ Cancel', callback_data: 'wordsfrom_practice:cancel' }
+                                                                                               { text: '✅ Finish', callback_data: 'wordsfrom_practice:finish' }
                                                                                              ]]
                                                                                            })
           # Just the same, we have only one word
           expect { dispatch_callback_query('wordsfrom_practice:1:1') }.to edit_current_message(:text, text: 'der Word', reply_markup: {
                                                                                                  inline_keyboard: [[
                                                                                                    { text: 'translation', callback_data: 'wordsfrom_practice:1:1' },
-                                                                                                   { text: '❌ Cancel', callback_data: 'wordsfrom_practice:cancel' }
+                                                                                                   { text: '✅ Finish', callback_data: 'wordsfrom_practice:finish' }
                                                                                                  ]]
                                                                                                })
           expect(word.reload.wordsfrom_success).to eq(1)
@@ -50,7 +50,7 @@ describe DbotController do
           expect(word.reload.wordsfrom_success).to eq(2)
           expect { dispatch_callback_query('wordsfrom_practice:1:2') }.to answer_callback_query_with('❎ word - translation')
           expect(word.reload.wordsfrom_fail).to eq(1)
-          expect { dispatch_callback_query('wordsfrom_practice:cancel') }.to edit_current_message(:text, text: 'Canceled')
+          expect { dispatch_callback_query('wordsfrom_practice:finish') }.to edit_current_message(:text, text: 'Finished!')
         end
       end
     end
@@ -83,14 +83,14 @@ describe DbotController do
           expect { dispatch_callback_query('practice:wordsto') }.to edit_current_message(:text, text: 'translation', reply_markup: {
                                                                                            inline_keyboard: [[
                                                                                              { text: 'der Word', callback_data: 'wordsto_practice:1:1' },
-                                                                                             { text: '❌ Cancel', callback_data: 'wordsto_practice:cancel' }
+                                                                                             { text: '✅ Finish', callback_data: 'wordsto_practice:finish' }
                                                                                            ]]
                                                                                          })
           # Just the same, we have only one word
           expect { dispatch_callback_query('wordsto_practice:1:1') }.to edit_current_message(:text, text: 'translation', reply_markup: {
                                                                                                inline_keyboard: [[
                                                                                                  { text: 'der Word', callback_data: 'wordsto_practice:1:1' },
-                                                                                                 { text: '❌ Cancel', callback_data: 'wordsto_practice:cancel' }
+                                                                                                 { text: '✅ Finish', callback_data: 'wordsto_practice:finish' }
                                                                                                ]]
                                                                                              })
           expect(word.reload.wordsto_success).to eq(1)
@@ -98,7 +98,7 @@ describe DbotController do
           expect(word.reload.wordsto_success).to eq(2)
           expect { dispatch_callback_query('wordsto_practice:1:2') }.to answer_callback_query_with('❎ word - translation')
           expect(word.reload.wordsto_fail).to eq(1)
-          expect { dispatch_callback_query('wordsto_practice:cancel') }.to edit_current_message(:text, text: 'Canceled')
+          expect { dispatch_callback_query('wordsto_practice:finish') }.to edit_current_message(:text, text: 'Finished!')
         end
       end
     end

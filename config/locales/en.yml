@@ -66,3 +66,5 @@ en:
     pagination: 'Page %{page} of %{total_pages}. Total count: %{total_count}'
     right: ✅ %{word} - %{translation}
     wrong: ❎ %{word} - %{translation}
+    finish: ✅ Finish
+    finished: Finished!

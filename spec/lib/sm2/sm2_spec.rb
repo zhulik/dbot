@@ -107,5 +107,42 @@ describe SM2::SM2 do
         end
       end
     end
+
+    context 'with 4 quality' do
+      let(:quality) { 3 }
+
+      context 'with 0 prev interval' do
+        let(:prev_interval) { 0 }
+        let(:prev_ef) { 2.5 }
+
+        it 'returns valid results' do
+          expect(algo.next_repetition_date).to eq('Tue, 16 Jan 2018'.to_date)
+          expect(algo.interval).to eq(6)
+          expect(algo.easiness_factor).to eq(2.6)
+        end
+      end
+
+      context 'with 1 prev interval' do
+        let(:prev_interval) { 1 }
+        let(:prev_ef) { 2.5 }
+
+        it 'returns valid results' do
+          expect(algo.next_repetition_date).to eq('Tue, 16 Jan 2018'.to_date)
+          expect(algo.interval).to eq(6)
+          expect(algo.easiness_factor).to eq(2.6)
+        end
+      end
+
+      context 'with 10 prev interval' do
+        let(:prev_interval) { 10 }
+        let(:prev_ef) { 2.5 }
+
+        it 'returns valid results' do
+          expect(algo.next_repetition_date).to eq('Sun, 04 Feb 2018'.to_date)
+          expect(algo.interval).to eq(25)
+          expect(algo.easiness_factor).to eq(2.6)
+        end
+      end
+    end
   end
 end

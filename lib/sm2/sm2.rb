@@ -1,51 +1,58 @@
 # frozen_string_literal: true
 
-# modified sm2 algorithm
-# changes:
-# - initial interval depends on given quality_response
-# - states (easiness_factor is calulated using that states, sm2 for ok uses 4)
-#   - 0 - bad (0, -0.8), 1 - so so(2, -0.3), 2 - ok(4, 0), 3 - more than better(5, 0.1)
-
 class SM2::SM2
-  attr_reader :interval, :easiness_factor, :next_repetition_date
-
   def initialize(quality_response, prev_interval = 0, prev_ef = 2.5)
     @prev_ef = prev_ef
     @prev_interval = prev_interval
     @quality_response = quality_response
 
-    @interval = nil
-    @easiness_factor = nil
-    @next_repetition_date = nil
+    @calculated_interval = nil
+    @calculated_ef = nil
+    @repetition_date = nil
 
-    # if quality_response is below 3 start repetition from the beginning, but without changing easiness_factor
-    if @quality_response < 2
-      @interval = 0
-      @easiness_factor = @prev_ef
+    # if quality_response is below 3 start repetition from the begining, but without changing easiness_factor
+    if @quality_response < 3
+
+      @calculated_ef = @prev_ef
+      @calculated_interval = 0
     else
-      calculate_easiness_factor!
-      calculate_interval!
+      calculate_easiness_factor
+      calculate_interval
     end
+    calculate_date
+  end
 
-    @next_repetition_date = Date.today + @interval
+  def interval
+    @calculated_interval
+  end
+
+  def easiness_factor
+    @calculated_ef.round(2)
+  end
+
+  def next_repetition_date
+    @repetition_date
   end
 
   private
 
-  def calculate_interval!
-    if @prev_interval.zero?
-      @interval = 1
-      @interval = 6 if @quality_response == 3
-    elsif @prev_interval == 1
-      @interval = 6
-    else
-      @interval = (@prev_interval * @prev_ef).to_i
-    end
+  def calculate_interval
+    @calculated_interval = if @prev_interval.zero?
+                             1
+                           elsif @prev_interval == 1
+                             6
+                           else
+                             (@prev_interval * @prev_ef).to_i
+                           end
   end
 
-  def calculate_easiness_factor!
-    @easiness_factor = @prev_ef + (0.1 - (3 - @quality_response) * ((3 - @quality_response) * 0.1))
-    @easiness_factor = 1.3 if @easiness_factor < 1.3
-    @easiness_factor
+  def calculate_easiness_factor
+    @calculated_ef = @prev_ef + (0.1 - (5 - @quality_response) * (0.08 + (5 - @quality_response) * 0.02))
+    @calculated_ef = 1.3 if @calculated_ef < 1.3
+    @calculated_ef.round(2)
+  end
+
+  def calculate_date
+    @repetition_date = Date.today + @calculated_interval
   end
 end

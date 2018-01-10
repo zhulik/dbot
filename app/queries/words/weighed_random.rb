@@ -9,8 +9,9 @@ class Words::WeighedRandom
   def get
     return nil if @scope.empty?
     weights = @scope.map { |w| [w, w.send("#{@practice}_success") - w.send("#{@practice}_fail")] }
+                    .sort_by(&:second)
     max = weights.max_by(&:second).second
-    weights = weights.to_h
+    weights = weights[0..50].to_h
     Pickup.new(weights) { |v| max * 3 + 1 - v }.pick
   end
 end

@@ -30,7 +30,7 @@ namespace :deploy do
   desc 'Swift config'
   task :restart do
     on roles(:web) do
-      execute 'sudo systemctl restart dbot_rails'
+      execute 'sudo systemctl reload dbot_rails'
     end
     on roles(:worker) do
       execute 'sudo systemctl restart dbot_sidekiq'

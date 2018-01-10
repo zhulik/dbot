@@ -30,7 +30,7 @@ class Word < ApplicationRecord
   %i[wordsfrom wordsto].each do |practice|
     %i[success fail].each do |result|
       define_method "#{practice}_#{result}!" do
-        increment!("#{practice}_#{result}")
+        update_attributes!("#{practice}_#{result}" => send("#{practice}_#{result}") + 1)
       end
     end
   end

@@ -41,14 +41,17 @@ module PracticeCommand
 
   def handle_practice_callback_query(query, type)
     w1, w2 = query.split(':')
-    word = current_user.words.find(w1)
+    w1 = current_user.words.find(w1)
+    w2 = current_user.words.find(w2)
     if w1 == w2 # right answer
-      word.send("#{type}_success!")
-      answer_callback_query t('common.right', word: word.word, translation: word.translation)
+      w1.send("#{type}_success!")
+      answer_callback_query t('common.right', word: w1.word, translation: w1.translation)
       return send("start_#{type}_practice")
     end
-    word.send("#{type}_fail!")
-    answer_callback_query t('common.wrong', word: word.word, translation: word.translation)
+    w1.send("#{type}_fail!")
+    w2.send("#{type}_fail!")
+    answer_callback_query t('common.wrong', right_word: w1.word, right_translation: w1.translation,
+                                            wrong_word: w2.word, wrong_translation: w2.translation)
     send("start_#{type}_practice")
   end
 end

@@ -22,7 +22,8 @@ describe DbotController do
       end
 
       context 'with word added' do
-        let!(:word) { create :word, user: user, language: language, word: 'word', translation: 'translation', pos: 'noun', gen: 'm' }
+        let!(:w1) { create :word, user: user, language: language, word: 'word1', translation: 'translation', pos: 'noun', gen: 'm' }
+        let!(:w2) { create :word, user: user, language: language, word: 'word2', translation: 'translation', pos: 'verb' }
 
         it 'words as expected' do
           expect { dispatch_message '/practice' }.to send_telegram_message(bot,
@@ -32,20 +33,20 @@ describe DbotController do
                                                                                { text: 'Native -> foreign practice', callback_data: 'practice:wordsto' }
                                                                              ]]
                                                                            })
-          expect { dispatch_callback_query('practice:wordsfrom') }.to edit_current_message(:text, text: 'der Word', reply_markup: {
+          expect { dispatch_callback_query('practice:wordsfrom') }.to edit_current_message(:text, text: 'der Word1', reply_markup: {
                                                                                              inline_keyboard: [[
                                                                                                { text: 'translation', callback_data: 'wordsfrom_practice:1:1' },
                                                                                                { text: '✅ Finish', callback_data: 'wordsfrom_practice:finish' }
                                                                                              ]]
                                                                                            })
           # Just the same, we have only one word
-          expect { dispatch_callback_query('wordsfrom_practice:1:1') }.to edit_current_message(:text, text: 'der Word', reply_markup: {
+          expect { dispatch_callback_query('wordsfrom_practice:1:1') }.to edit_current_message(:text, text: 'word1', reply_markup: {
                                                                                                  inline_keyboard: [[
                                                                                                    { text: 'translation', callback_data: 'wordsfrom_practice:1:1' },
                                                                                                    { text: '✅ Finish', callback_data: 'wordsfrom_practice:finish' }
                                                                                                  ]]
                                                                                                })
-          expect(word.reload.wordsfrom_success).to eq(1)
+          expect(w1.reload.wordsfrom_success).to eq(1)
           expect { dispatch_callback_query('wordsfrom_practice:1:1') }.to answer_callback_query_with('✅ word - translation')
           expect(word.reload.wordsfrom_success).to eq(2)
           expect { dispatch_callback_query('wordsfrom_practice:1:2') }.to answer_callback_query_with('❎ word - translation')
@@ -70,7 +71,8 @@ describe DbotController do
       end
 
       context 'with word added' do
-        let!(:word) { create :word, user: user, language: language, word: 'word', translation: 'translation', pos: 'noun', gen: 'm' }
+        let!(:w1) { create :word, user: user, language: language, word: 'word1', translation: 'translation', pos: 'noun', gen: 'm' }
+        let!(:w2) { create :word, user: user, language: language, word: 'word2', translation: 'translation', pos: 'verb' }
 
         it 'words as expected' do
           expect { dispatch_message '/practice' }.to send_telegram_message(bot,
@@ -82,14 +84,14 @@ describe DbotController do
                                                                            })
           expect { dispatch_callback_query('practice:wordsto') }.to edit_current_message(:text, text: 'translation', reply_markup: {
                                                                                            inline_keyboard: [[
-                                                                                             { text: 'der Word', callback_data: 'wordsto_practice:1:1' },
+                                                                                             { text: 'der Word1', callback_data: 'wordsto_practice:1:1' },
                                                                                              { text: '✅ Finish', callback_data: 'wordsto_practice:finish' }
                                                                                            ]]
                                                                                          })
           # Just the same, we have only one word
           expect { dispatch_callback_query('wordsto_practice:1:1') }.to edit_current_message(:text, text: 'translation', reply_markup: {
                                                                                                inline_keyboard: [[
-                                                                                                 { text: 'der Word', callback_data: 'wordsto_practice:1:1' },
+                                                                                                 { text: 'der Word1', callback_data: 'wordsto_practice:1:1' },
                                                                                                  { text: '✅ Finish', callback_data: 'wordsto_practice:finish' }
                                                                                                ]]
                                                                                              })

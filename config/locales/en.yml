@@ -65,6 +65,6 @@ en:
     your_saved_words: 'Your saved words:'
     pagination: 'Page %{page} of %{total_pages}. Total count: %{total_count}'
     right: ✅ %{word} - %{translation}
-    wrong: ❎ %{word} - %{translation}
+    wrong: ❎ %{right_word} - %{right_translation}   ❎ %{wrong_word} - %{wrong_translation}
     finish: ✅ Finish
     finished: Finished!

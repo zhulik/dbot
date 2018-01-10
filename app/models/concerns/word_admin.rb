@@ -15,6 +15,8 @@ module WordAdmin
         field :gen
         field :wordsfrom_success
         field :wordsfrom_fail
+        field :wordsto_success
+        field :wordsto_fail
       end
     end
   end

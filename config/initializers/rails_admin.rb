@@ -11,7 +11,7 @@ RailsAdmin.config do |config|
       end
     end
   end
-  config.total_columns_width = 1200
+  config.total_columns_width = 1300
 
   config.show_gravatar = true
 

@@ -43,6 +43,7 @@ group :development, :test do
   gem 'pry-rescue'
   gem 'pry-rails'
   gem 'simplecov', require: false
+  gem 'timecop'
 end
 
 group :test do

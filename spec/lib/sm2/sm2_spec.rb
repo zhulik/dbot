@@ -63,6 +63,11 @@ describe SM2::SM2 do
         expect(sm2.next_repetition_date).to eq(Date.today)
         expect(sm2.easiness_factor).to eq(1.96)
 
+        sm2 = described_class.new(3, 1, 1.96)
+        expect(sm2.interval).to eq(6)
+        expect(sm2.next_repetition_date).to eq('16.01.2018'.to_date)
+        expect(sm2.easiness_factor).to eq(1.82)
+
         sm2 = described_class.new(4, 0, 1)
         expect(sm2.interval).to eq(1)
         expect(sm2.next_repetition_date).to eq(Date.tomorrow)

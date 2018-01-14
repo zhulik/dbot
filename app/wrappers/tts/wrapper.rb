@@ -8,6 +8,8 @@ class TTS::Wrapper
 
   # Subclasses should implement this method and return binary data with mp3
   def pronounce
+    #:nocov:
     raise NotImplementedError
+    #:nocov:
   end
 end

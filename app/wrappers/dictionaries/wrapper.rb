@@ -18,11 +18,15 @@ class Dictionaries::Wrapper
   #   }
   # ]
   def variants
+    #:nocov:
     raise NotImplementedError
+    #:nocov:
   end
 
   # Subclasses should implement this method and return raw dictionary output
   def raw
+    #:nocov:
     raise NotImplementedError
+    #:nocov:
   end
 end

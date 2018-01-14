@@ -6,12 +6,12 @@ module ApplicationHelper
                            total_count: scope.total_count)
   end
 
-  def respond_message(**args)
+  def respond_message(**params)
     case payload
     when Telegram::Bot::Types::CallbackQuery
-      edit_message :text, **args
+      edit_message :text, **params
     when Telegram::Bot::Types::Message
-      respond_with :message, **args
+      respond_with :message, **params
     end
   end
 end

@@ -22,7 +22,8 @@ module AddwordCommand
     return respond_message text: t('common.already_added', word: ws[0]) if current_user.word?(ws[0])
     return addword_full if ws.empty?
     return addword_short(ws.first) if ws.one?
-    addword_direct(ws)
+    word = { word: ws[0], translation: ws[1], pos: ws[2], gen: ws[3] }
+    create_word(word)
   end
 
   def addword_choose_callback_query(query)
@@ -48,11 +49,6 @@ module AddwordCommand
 
   private
 
-  def addword_direct(ws)
-    word = { word: ws[0], translation: ws[1], pos: ws[2], gen: ws[3] }
-    create_word(word)
-  end
-
   def create_word(w)
     return unknown_pos(w[:pos]) unless Word.pos.keys.include?(w[:pos])
     return unknown_gen(w[:gen]) if w[:gen].present? && !Word.gens.keys.include?(w[:gen])
@@ -75,16 +71,16 @@ module AddwordCommand
 
   def prepare_addword_worflow(word)
     inverse = Translators::YandexWrapper.new(word).detect == 'ru'
-    variants = if inverse # If source language is russian use native addword workflow, otherwise user target lang
-                 Dictionaries::YandexWrapper.new(word, from: 'ru', to: current_language,
-                                                       inverse: inverse).variants
-               else
-                 Dictionaries::YandexWrapper.new(word, from: current_language, to: 'ru').variants
-               end
-    session[:addword_variants] = variants
-    session[:addword_word] = word
-    session[:addword_inverse] = inverse
-    variants
+    if inverse # If source language is russian use native addword workflow, otherwise user target lang
+      Dictionaries::YandexWrapper.new(word, from: 'ru', to: current_language,
+                                            inverse: inverse).variants
+    else
+      Dictionaries::YandexWrapper.new(word, from: current_language, to: 'ru').variants
+    end.tap do |variants|
+      session[:addword_variants] = variants
+      session[:addword_word] = word
+      session[:addword_inverse] = inverse
+    end
   end
 
   def unknown_gen(gen)

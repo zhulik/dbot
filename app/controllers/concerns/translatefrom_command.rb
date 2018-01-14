@@ -17,19 +17,19 @@ module TranslatefromCommand
   def translatefrom_callback_query(*)
     message = session.delete(:message_to_handle)
     reply_markup, text = prepare_translatefrom_workflow(message)
-    edit_message :text, text: text, reply_markup: reply_markup
+    respond_message text: text, reply_markup: reply_markup
   end
 
   private
 
   def translatefrom_full
     save_context :translatefrom_send_sentence
-    respond_with :message, text: t('common.send_sentence')
+    respond_message text: t('common.send_sentence')
   end
 
   def translatefrom_direct(sentence)
     reply_markup, text = prepare_translatefrom_workflow(sentence)
-    respond_with :message, text: text, reply_markup: reply_markup
+    respond_message text: text, reply_markup: reply_markup
   end
 
   def prepare_translatefrom_workflow(sentence)

@@ -8,15 +8,15 @@ module WordsCommand
     return unless query == 'page'
     scope = current_user.current_words.order(:word).page(page)
     ws = scope.map { |w| "#{w.word} - #{w.translation} #{w.pos} #{w.gen}" }.join("\n")
-    edit_message :text, text: "#{t('common.your_saved_words')}\n#{ws}\n#{pagination_info(scope)}",
-                        reply_markup: { inline_keyboard: pagination_keyboard(scope, 'words') }
+    respond_message text: "#{t('common.your_saved_words')}\n#{ws}\n#{pagination_info(scope)}",
+                    reply_markup: { inline_keyboard: pagination_keyboard(scope, 'words') }
   end
 
   def words(*)
     scope = current_user.current_words.order(:word).page(1)
-    return respond_with :message, text: t('.no_words_added') if scope.empty?
+    return respond_message text: t('.no_words_added') if scope.empty?
     ws = scope.map { |w| "#{w.word} - #{w.translation} #{w.pos} #{w.gen}" }.join("\n")
-    respond_with :message, text: "#{t('common.your_saved_words')}\n#{ws}\n#{pagination_info(scope)}",
-                           reply_markup: { inline_keyboard: pagination_keyboard(scope, 'words') }
+    respond_message text: "#{t('common.your_saved_words')}\n#{ws}\n#{pagination_info(scope)}",
+                    reply_markup: { inline_keyboard: pagination_keyboard(scope, 'words') }
   end
 end

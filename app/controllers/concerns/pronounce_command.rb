@@ -18,7 +18,7 @@ module PronounceCommand
 
   def pronounce_full
     save_context :pronounce_send_sentence
-    respond_with :message, text: t('common.send_sentence')
+    respond_message text: t('common.send_sentence')
   end
 
   def pronounce_direct(phrase)

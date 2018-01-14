@@ -36,7 +36,7 @@ class DbotController < Telegram::Bot::UpdatesController
   rescue_from LanguageNotSetError, with: :send_select_language
 
   def _handle_action_missing(*)
-    respond_with :message, text: t('common.unknown_command')
+    respond_message text: t('common.unknown_command')
   end
 
   private
@@ -49,14 +49,14 @@ class DbotController < Telegram::Bot::UpdatesController
 
   def send_not_authorized
     return answer_callback_query t('common.not_authorized') if payload.is_a? Telegram::Bot::Types::CallbackQuery
-    respond_with :message, text: t('common.not_authorized')
+    respond_message text: t('common.not_authorized')
   end
 
   def send_error_and_raise(e)
     if payload.is_a? Telegram::Bot::Types::CallbackQuery
       answer_callback_query t('common.something_went_wrong')
     else
-      respond_with :message, text: t('common.something_went_wrong')
+      respond_message text: t('common.something_went_wrong')
     end
     raise e
   end
@@ -70,6 +70,6 @@ class DbotController < Telegram::Bot::UpdatesController
   end
 
   def send_select_language
-    respond_with :message, text: t('common.select_language')
+    respond_message text: t('common.select_language')
   end
 end

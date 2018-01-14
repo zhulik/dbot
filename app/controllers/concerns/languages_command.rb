@@ -2,8 +2,8 @@
 
 module LanguagesCommand
   def languages(*)
-    return respond_with :message, text: t('.no_languages') if Language.all.empty?
-    respond_with :message, text: t('.choose_language'), reply_markup: { inline_keyboard: languages_inline_keyboard }
+    return respond_message text: t('.no_languages') if Language.all.empty?
+    respond_message text: t('.choose_language'), reply_markup: { inline_keyboard: languages_inline_keyboard }
   end
 
   def languages_callback_query(query)

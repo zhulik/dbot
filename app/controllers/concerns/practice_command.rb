@@ -2,7 +2,7 @@
 
 module PracticeCommand
   def practice(*)
-    respond_with :message, text: t('.what_practice'), reply_markup: { inline_keyboard: practices_keyboard }
+    respond_message text: t('.what_practice'), reply_markup: { inline_keyboard: practices_keyboard }
   end
 
   def practice_callback_query(type)
@@ -10,12 +10,12 @@ module PracticeCommand
   end
 
   def wordsfrom_practice_callback_query(query)
-    return edit_message :text, text: t('common.finished') if query == 'finish'
+    return respond_message text: t('common.finished') if query == 'finish'
     handle_practice_callback_query(query, :wordsfrom)
   end
 
   def wordsto_practice_callback_query(query)
-    return edit_message :text, text: t('common.finished') if query == 'finish'
+    return respond_message text: t('common.finished') if query == 'finish'
     handle_practice_callback_query(query, :wordsto)
   end
 
@@ -23,18 +23,18 @@ module PracticeCommand
 
   def start_wordsfrom_practice
     word = Words::WeighedRandom.new(current_user.current_words, :wordsfrom).get
-    return edit_message :text, text: t('dbot.words.no_words_added') if word.nil?
+    return respond_message text: t('dbot.words.no_words_added') if word.nil?
     variants = Words::Variants.new(current_user, word).get
-    edit_message :text, text: with_article(word), reply_markup: {
+    respond_message text: with_article(word), reply_markup: {
       inline_keyboard: wordsfrom_keyboard(word, variants)
     }
   end
 
   def start_wordsto_practice
     word = Words::WeighedRandom.new(current_user.current_words, :wordsto).get
-    return edit_message :text, text: t('dbot.words.no_words_added') if word.nil?
+    return respond_message text: t('dbot.words.no_words_added') if word.nil?
     variants = Words::Variants.new(current_user, word).get
-    edit_message :text, text: word.translation, reply_markup: {
+    respond_message text: word.translation, reply_markup: {
       inline_keyboard: wordsto_keyboard(word, variants)
     }
   end

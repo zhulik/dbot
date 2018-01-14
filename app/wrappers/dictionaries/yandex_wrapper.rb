@@ -6,6 +6,7 @@ class Dictionaries::YandexWrapper < Dictionaries::Wrapper
     'ж' => 'f',
     'ср' => 'n'
   }.freeze
+
   def variants
     @variants ||= raw.each_with_object([]) do |v, ary|
       v['tr'][0..1].each do |tr|

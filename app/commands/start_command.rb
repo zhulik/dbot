@@ -5,8 +5,7 @@ class StartCommand < Command
   help -> { I18n.t('dbot.start.help') }
   arguments 0
 
-  def message(*args)
-    return respond_message text: self.class.usage if args.any?
+  def message_0
     return start_with_existing_user if current_user.present?
     User.create!(user_id: from.id, username: from.username)
     respond_message text: t('dbot.start.hi', name: user_greeting(from))

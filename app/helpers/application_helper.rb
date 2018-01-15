@@ -1,11 +1,6 @@
 # frozen_string_literal: true
 
 module ApplicationHelper
-  def pagination_info(scope)
-    t('common.pagination', page: scope.current_page, total_pages: scope.total_pages,
-                           total_count: scope.total_count)
-  end
-
   def respond_message(**params)
     case payload
     when Telegram::Bot::Types::CallbackQuery
@@ -15,15 +10,38 @@ module ApplicationHelper
     end
   end
 
-  def save_context(ctx)
-    session[:context] = ctx
-  end
-
   def chat
-    @_chat ||= payload.try! { |x| x['chat'] || x['message'] && x['message']['chat'] }
+    @_chat ||= payload&.chat || x&.message&.chat
   end
 
   def from
-    @_from ||= payload && payload['from']
+    @_from ||= payload&.from
+  end
+
+  def user_greeting(u)
+    return "#{u.first_name} #{u.last_name}" if u.first_name.present? && u.last_name.present?
+    return u.username if u.username.present?
+    t('common.my_friend')
+  end
+
+  def current_user
+    @current_user ||= User.find_by(user_id: from.id)
+  end
+
+  def current_language
+    @current_language ||= current_user.language&.code
+  end
+
+  def cancel_button(ctx)
+    { text: t('common.cancel'), callback_data: "#{ctx}:cancel" }
+  end
+
+  def addword_keyboard(word, ctx)
+    [
+      [
+        { text: t('common.add_word', word: word), callback_data: "#{ctx}:#{word}" },
+        cancel_button(ctx)
+      ]
+    ]
   end
 end

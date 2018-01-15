@@ -5,8 +5,7 @@ class LanguagesCommand < Command
   help -> { I18n.t('dbot.languages.help') }
   arguments 0
 
-  def message(*args)
-    return respond_message text: self.class.usage if args.any?
+  def message_0
     return respond_message text: t('dbot.languages.no_languages') if Language.all.empty?
     respond_message text: t('dbot.languages.choose_language'), reply_markup: {
       inline_keyboard: languages_inline_keyboard

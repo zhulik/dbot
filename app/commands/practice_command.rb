@@ -1,15 +1,18 @@
 # frozen_string_literal: true
 
 class PracticeCommand < Command
-  include ButtonsHelper
-  include WordsHelper
-
   usage -> { I18n.t('dbot.practice.usage') }
   help -> { I18n.t('dbot.practice.help') }
   arguments 0
 
-  def message(*args)
-    return respond_message text: self.class.usage if args.any?
+  ARTICLES = {
+    'f' => 'die',
+    'm' => 'der',
+    'n' => 'das',
+    nil: 'unk'
+  }.freeze
+
+  def message_0
     respond_message text: t('dbot.practice.what_practice'), reply_markup: { inline_keyboard: practices_keyboard }
   end
 
@@ -78,11 +81,20 @@ class PracticeCommand < Command
     vars.each_slice(2).to_a
   end
 
+  def finish_button(ctx)
+    { text: t('common.finish'), callback_data: "#{ctx}:finish" }
+  end
+
   def wordsto_keyboard(word, variants)
     vars = variants.map do |w|
       { text: with_article(w), callback_data: "practice_wordsto:#{word.id}:#{w.id}" }
     end
     vars << finish_button(:practice_wordsto)
     vars.each_slice(2).to_a
+  end
+
+  def with_article(word)
+    return word.word unless word.noun?
+    "#{ARTICLES[word.gen]} #{word.word.capitalize}"
   end
 end

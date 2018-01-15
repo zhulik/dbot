@@ -5,8 +5,7 @@ class WordsCommand < Command
   help -> { I18n.t('dbot.words.help') }
   arguments 0
 
-  def message(*args)
-    return respond_message text: self.class.usage if args.any?
+  def message_0
     scope = current_user.current_words.order(:word).page(1)
     return respond_message text: t('dbot.words.no_words_added') if scope.empty?
     ws = scope.map { |w| "#{w.word} - #{w.translation} #{w.pos} #{w.gen}" }.join("\n")
@@ -30,5 +29,10 @@ class WordsCommand < Command
       keys << { text: t('common.prev_page'), callback_data: "#{ctx}:page:#{scope.prev_page}" } unless scope.first_page?
       keys << { text: t('common.next_page'), callback_data: "#{ctx}:page:#{scope.next_page}" } unless scope.last_page?
     end.each_slice(2).to_a
+  end
+
+  def pagination_info(scope)
+    t('common.pagination', page: scope.current_page, total_pages: scope.total_pages,
+                           total_count: scope.total_count)
   end
 end

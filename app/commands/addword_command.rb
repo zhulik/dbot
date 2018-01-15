@@ -1,25 +1,33 @@
 # frozen_string_literal: true
 
 class AddwordCommand < Command
-  include ButtonsHelper
-
   usage -> { I18n.t('dbot.addword.usage') }
-  help -> { I18n.t('dbot.assword.help') }
-  arguments 0, 1, 3
+  help -> { I18n.t('dbot.addword.help') }
+  arguments 0, 1, 3, 4
 
-  def message(*args)
-    return respond_message text: self.class.usage if args.count == 2 || args.count > 4
-    return respond_message text: t('common.already_added', word: args[0]) if current_user.word?(args[0])
-    return addword_full if args.empty?
-    return addword_short(args.first) if args.one?
-    word = { word: args[0], translation: args[1], pos: args[2], gen: args[3] }
+  def message_0
+    save_context :addword_send_word
+    respond_message text: t('common.send_word')
+  end
+
+  def message_1(word)
+    short(word)
+  end
+  alias send_word message_1
+
+  def message_3(word, translation, pos)
+    word = { word: word, translation: translation, pos: pos }
     create_word(word)
   end
-  alias send_word message
+
+  def message_4(word, translation, pos, gen)
+    word = { word: word, translation: translation, pos: pos, gen: gen }
+    create_word(word)
+  end
 
   def callback_query(query)
     return respond_message text: t('common.canceled') if query == 'cancel'
-    variants = prepare_addword_worflow(query)
+    variants = prepare_workflow(query)
     respond_message text: t('dbot.addword.choose_right_variant'),
                     reply_markup: { inline_keyboard: variants_keyboard(variants, :addword_choose) }
   end
@@ -57,13 +65,8 @@ class AddwordCommand < Command
     session.clear
   end
 
-  def addword_full
-    save_context :addword_send_word
-    respond_message text: t('common.send_word')
-  end
-
-  def addword_short(word)
-    variants = prepare_addword_worflow(word)
+  def short(word)
+    variants = prepare_workflow(word)
     respond_message text: t('dbot.addword.choose_right_variant'),
                     reply_markup: { inline_keyboard: variants_keyboard(variants, :addword_choose) }
   end
@@ -76,7 +79,7 @@ class AddwordCommand < Command
     respond_message text: t('common.unknown_pos', pos: pos, valid: Word.pos.keys.join(', '))
   end
 
-  def prepare_addword_worflow(word)
+  def prepare_workflow(word)
     inverse = Translators::YandexWrapper.new(word).detect == 'ru'
     if inverse # If source language is russian use native addword workflow, otherwise user target lang
       Dictionaries::YandexWrapper.new(word, from: 'ru', to: current_language,
@@ -88,6 +91,10 @@ class AddwordCommand < Command
       session[:addword_word] = word
       session[:addword_inverse] = inverse
     end
+  end
+
+  def custom_variant_button(ctx)
+    { text: t('common.custom_variant'), callback_data: "#{ctx}:custom_variant" }
   end
 
   def variants_keyboard(variants, ctx)

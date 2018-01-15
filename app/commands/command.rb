@@ -1,11 +1,6 @@
 # frozen_string_literal: true
 
-class Command
-  include Telegram::Bot::UpdatesController::ReplyHelpers
-  include UsersHelper
-  include ApplicationHelper
-  include ActionView::Helpers::TranslationHelper
-
+class Command < Handler
   class << self
     %i[help usage arguments].each do |name|
       define_method name do |*args|
@@ -22,19 +17,16 @@ class Command
     end
   end
 
-  attr_reader :bot, :session, :payload
-
-  def initialize(bot, session, payload)
-    @bot = bot
-    @session = session
-    @payload = payload
+  def validate_and_handle_message(*args)
+    arity = self.class.arguments
+    return respond_message text: self.class.usage if arity != :any && ![arity].flatten.include?(args.count)
+    return message(*args) if arity == :any
+    send("message_#{args.count}", *args)
   end
 
-  def message(*args)
-    # do nothing, abstract
-  end
+  protected
 
-  def callback_query(query)
-    # do nothing, abstract
+  def save_context(ctx)
+    session[:context] = ctx
   end
 end

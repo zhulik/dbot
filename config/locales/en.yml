@@ -1,15 +1,20 @@
 en:
   dbot:
     start:
+      help: 'Start working with bot'
+      usage: 'Wrong arguments count. Usage: /start'
       hi: Hi, %{name}! Use /languages to choose target language.
       already_started: We have already started!
       reactivated: Your subscription has been reactivated!
     languages:
+      help: 'List and select languages.'
+      usage: 'Wrong arguments count. Usage: /languages'
       no_languages: Sorry, languages are not created yet!
       choose_language: 'Choose the language you will work with:'
       language_accepted: 'Language changed: %{name}'
       unknown_language: 'Unknown language: %{code}'
     addword:
+      help: 'Add word to the dictionary'
       choose_right_variant: 'Choose right variant:'
       usage: |
               Wrong arguments count. Usage:
@@ -21,8 +26,11 @@ en:
       is_it_right_translation: 'Is it right translation: %{translation}?'
       send_translation: 'Send me the valid translation'
     words:
+      help: 'List saved words.'
+      usage: 'Wrong arguments count. Usage: /words'
       no_words_added: You haven't added any words. Use /addword
     delword:
+      help: Delete word from dictionary
       usage: |
               Wrong arguments count. Usage:
               /delword
@@ -36,9 +44,17 @@ en:
       translate: Translate
       pronounce: Pronounce
     practice:
+      usage: 'Wrong arguments count. Usage: /practice'
+      help: 'Start practicing'
       what_practice: 'What practice do you want?'
       wordsfrom: 'Foreign -> native practice'
       wordsto: 'Native -> foreign practice'
+    translateto:
+      help: 'Translate to foreign language'
+    translatefrom:
+      help: 'Translate from foreign language'
+    pronounce:
+      pronounce: 'Pronounce text'
   common:
     my_friend: my friend
     not_authorized: 'Sorry, you are not authorized, use /start'

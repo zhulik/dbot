@@ -38,24 +38,24 @@ describe DbotController do
                                                                            })
           expect { dispatch_callback_query('practice:wordsfrom') }.to edit_current_message(:text, text: 'der Word1', reply_markup: {
                                                                                              inline_keyboard: [[
-                                                                                               { text: 'translation', callback_data: 'wordsfrom_practice:1:1' },
-                                                                                               { text: '✅ Finish', callback_data: 'wordsfrom_practice:finish' }
+                                                                                               { text: 'translation', callback_data: 'practice_wordsfrom:1:1' },
+                                                                                               { text: '✅ Finish', callback_data: 'practice_wordsfrom:finish' }
                                                                                              ]]
                                                                                            })
           # Just the same, we have only one word
-          expect { dispatch_callback_query('wordsfrom_practice:1:1') }.to edit_current_message(:text, text: 'der Word1', reply_markup: {
+          expect { dispatch_callback_query('practice_wordsfrom:1:1') }.to edit_current_message(:text, text: 'der Word1', reply_markup: {
                                                                                                  inline_keyboard: [[
-                                                                                                   { text: 'translation', callback_data: 'wordsfrom_practice:1:1' },
-                                                                                                   { text: '✅ Finish', callback_data: 'wordsfrom_practice:finish' }
+                                                                                                   { text: 'translation', callback_data: 'practice_wordsfrom:1:1' },
+                                                                                                   { text: '✅ Finish', callback_data: 'practice_wordsfrom:finish' }
                                                                                                  ]]
                                                                                                })
           expect(w1.reload.wordsfrom_success).to eq(1)
-          expect { dispatch_callback_query('wordsfrom_practice:1:1') }.to answer_callback_query_with('✅ word1 - translation')
+          expect { dispatch_callback_query('practice_wordsfrom:1:1') }.to answer_callback_query_with('✅ word1 - translation')
           expect(w1.reload.wordsfrom_success).to eq(2)
-          expect { dispatch_callback_query('wordsfrom_practice:1:2') }.to answer_callback_query_with('❎ word1 - translation   ❎ word2 - translation')
+          expect { dispatch_callback_query('practice_wordsfrom:1:2') }.to answer_callback_query_with('❎ word1 - translation   ❎ word2 - translation')
           expect(w1.reload.wordsfrom_fail).to eq(1)
           expect(w2.reload.wordsfrom_fail).to eq(1)
-          expect { dispatch_callback_query('wordsfrom_practice:finish') }.to edit_current_message(:text, text: 'Finished!')
+          expect { dispatch_callback_query('practice_wordsfrom:finish') }.to edit_current_message(:text, text: 'Finished!')
         end
       end
     end
@@ -87,20 +87,20 @@ describe DbotController do
                                                                            })
           expect { dispatch_callback_query('practice:wordsto') }.to edit_current_message(:text, text: 'translation', reply_markup: {
                                                                                            inline_keyboard: [[
-                                                                                             { text: 'der Word1', callback_data: 'wordsto_practice:1:1' },
-                                                                                             { text: '✅ Finish', callback_data: 'wordsto_practice:finish' }
+                                                                                             { text: 'der Word1', callback_data: 'practice_wordsto:1:1' },
+                                                                                             { text: '✅ Finish', callback_data: 'practice_wordsto:finish' }
                                                                                            ]]
                                                                                          })
           # Just the same, we have only one word
-          expect { dispatch_callback_query('wordsto_practice:1:1') }.to edit_current_message(:text, text: 'translation', reply_markup: {
+          expect { dispatch_callback_query('practice_wordsto:1:1') }.to edit_current_message(:text, text: 'translation', reply_markup: {
                                                                                                inline_keyboard: [[
-                                                                                                 { text: 'der Word1', callback_data: 'wordsto_practice:1:1' },
-                                                                                                 { text: '✅ Finish', callback_data: 'wordsto_practice:finish' }
+                                                                                                 { text: 'der Word1', callback_data: 'practice_wordsto:1:1' },
+                                                                                                 { text: '✅ Finish', callback_data: 'practice_wordsto:finish' }
                                                                                                ]]
                                                                                              })
           expect(w1.reload.wordsto_success).to eq(1)
-          expect { dispatch_callback_query('wordsto_practice:1:1') }.to answer_callback_query_with('✅ word1 - translation')
-          expect { dispatch_callback_query('wordsto_practice:finish') }.to edit_current_message(:text, text: 'Finished!')
+          expect { dispatch_callback_query('practice_wordsto:1:1') }.to answer_callback_query_with('✅ word1 - translation')
+          expect { dispatch_callback_query('practice_wordsto:finish') }.to edit_current_message(:text, text: 'Finished!')
         end
       end
     end

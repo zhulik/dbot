@@ -1,20 +1,19 @@
 # frozen_string_literal: true
 
-module TranslatefromCommand
-  extend ActiveSupport::Concern
+class TranslatefromCommand < Command
+  include ButtonsHelper
 
-  included do
-    context_handler :translatefrom_send_sentence do |*ws|
-      translatefrom_direct(ws.join(' '))
-    end
+  help -> { I18n.t('dbot.translatefrom.help') }
+  arguments :any
+
+  def message(*args)
+    return translatefrom_full if args.empty?
+    translatefrom_direct(args.join(' '))
   end
 
-  def translatefrom(*ws)
-    return translatefrom_full if ws.empty?
-    translatefrom_direct(ws.join(' '))
-  end
+  alias send_sentence message
 
-  def translatefrom_callback_query(*)
+  def callback_query(_query)
     message = session.delete(:message_to_handle)
     reply_markup, text = prepare_translatefrom_workflow(message)
     respond_message text: text, reply_markup: reply_markup

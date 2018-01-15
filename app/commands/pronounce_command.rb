@@ -1,18 +1,15 @@
 # frozen_string_literal: true
 
-module PronounceCommand
-  extend ActiveSupport::Concern
+class PronounceCommand < Command
+  help -> { I18n.t('dbot.pronounce.help') }
+  arguments :any
 
-  included do
-    context_handler :pronounce_send_sentence do |*ws|
-      pronounce_direct(ws.join(' '))
-    end
+  def message(*args)
+    return pronounce_full if args.empty?
+    pronounce_direct(args.join(' '))
   end
 
-  def pronounce(*ws)
-    return pronounce_full if ws.empty?
-    pronounce_direct(ws.join(' '))
-  end
+  alias send_sentence message
 
   private
 

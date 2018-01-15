@@ -1,32 +1,30 @@
 # frozen_string_literal: true
 
-module AddwordCommand
-  extend ActiveSupport::Concern
+class AddwordCommand < Command
+  include ButtonsHelper
 
-  included do
-    context_handler :addword_send_word do |*ws|
-      addword_short(ws.first)
-    end
+  usage -> { I18n.t('dbot.addword.usage') }
+  help -> { I18n.t('dbot.assword.help') }
+  arguments 0, 1, 3
 
-    context_handler :addword_custom_variant do |*ws|
-      save_context :addword_custom_variant
-      return respond_message text: t('.usage') if ws.count < 2 || ws.count > 3
-      word = { word: session[:addword_word], translation: ws.first, pos: ws.second, gen: ws.third }
-      word[:word], word[:translation] = word[:translation], word[:word] if session.delete(:addword_inverse)
-      create_word(word)
-    end
-  end
-
-  def addword(*ws)
-    return respond_message text: t('.usage') if ws.count == 2 || ws.count > 4
-    return respond_message text: t('common.already_added', word: ws[0]) if current_user.word?(ws[0])
-    return addword_full if ws.empty?
-    return addword_short(ws.first) if ws.one?
-    word = { word: ws[0], translation: ws[1], pos: ws[2], gen: ws[3] }
+  def message(*args)
+    return respond_message text: self.class.usage if args.count == 2 || args.count > 4
+    return respond_message text: t('common.already_added', word: args[0]) if current_user.word?(args[0])
+    return addword_full if args.empty?
+    return addword_short(args.first) if args.one?
+    word = { word: args[0], translation: args[1], pos: args[2], gen: args[3] }
     create_word(word)
   end
+  alias send_word message
 
-  def addword_choose_callback_query(query)
+  def callback_query(query)
+    return respond_message text: t('common.canceled') if query == 'cancel'
+    variants = prepare_addword_worflow(query)
+    respond_message text: t('dbot.addword.choose_right_variant'),
+                    reply_markup: { inline_keyboard: variants_keyboard(variants, :addword_choose) }
+  end
+
+  def choose_callback_query(query)
     if query == 'custom_variant'
       save_context :addword_custom_variant
       return respond_message text: t('dbot.addword.send_translation')
@@ -40,11 +38,12 @@ module AddwordCommand
     respond_message text: t('dbot.addword.word_added', word: w.word, translation: w.translation)
   end
 
-  def addword_callback_query(query)
-    return respond_message text: t('common.canceled') if query == 'cancel'
-    variants = prepare_addword_worflow(query)
-    respond_message text: t('dbot.addword.choose_right_variant'),
-                    reply_markup: { inline_keyboard: variants_keyboard(variants, :addword_choose) }
+  def custom_variant(*args)
+    save_context :addword_custom_variant
+    return respond_message text: self.class.usage if args.count < 2 || args.count > 3
+    word = { word: session[:addword_word], translation: args.first, pos: args.second, gen: args.third }
+    word[:word], word[:translation] = word[:translation], word[:word] if session.delete(:addword_inverse)
+    create_word(word)
   end
 
   private
@@ -69,6 +68,14 @@ module AddwordCommand
                     reply_markup: { inline_keyboard: variants_keyboard(variants, :addword_choose) }
   end
 
+  def unknown_gen(gen)
+    respond_message text: t('common.unknown_gen', gen: gen, valid: Word.gens.keys.join(', '))
+  end
+
+  def unknown_pos(pos)
+    respond_message text: t('common.unknown_pos', pos: pos, valid: Word.pos.keys.join(', '))
+  end
+
   def prepare_addword_worflow(word)
     inverse = Translators::YandexWrapper.new(word).detect == 'ru'
     if inverse # If source language is russian use native addword workflow, otherwise user target lang
@@ -83,11 +90,13 @@ module AddwordCommand
     end
   end
 
-  def unknown_gen(gen)
-    respond_message text: t('common.unknown_gen', gen: gen, valid: Word.gens.keys.join(', '))
-  end
-
-  def unknown_pos(pos)
-    respond_message text: t('common.unknown_pos', pos: pos, valid: Word.pos.keys.join(', '))
+  def variants_keyboard(variants, ctx)
+    keys = variants.map.with_index do |var, index|
+      {
+        text: "#{var[:word]} - #{var[:translation]} #{var[:pos]} #{var[:gen]}",
+        callback_data: "#{ctx}:#{index}"
+      }
+    end.each_slice(1).to_a
+    keys + [[cancel_button(ctx), custom_variant_button(ctx)]]
   end
 end

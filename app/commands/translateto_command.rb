@@ -1,22 +1,21 @@
 # frozen_string_literal: true
 
-module TranslatetoCommand
-  extend ActiveSupport::Concern
+class TranslatetoCommand < Command
+  include ButtonsHelper
 
-  included do
-    context_handler :translateto_send_sentence do |*ws|
-      translateto_direct(ws.join(' '))
-    end
+  help -> { I18n.t('dbot.translateto.help') }
+  arguments :any
+
+  def message(*args)
+    return translateto_full if args.empty?
+    translateto_direct(args.join(' '))
   end
 
-  def translateto(*ws)
-    return translateto_full if ws.empty?
-    translateto_direct(ws.join(' '))
-  end
+  alias send_sentence message
 
-  def translateto_callback_query(_query)
+  def callback_query(_query)
     message = session.delete(:message_to_handle)
-    reply_markup, text = prepare_translateto_worflow(message)
+    reply_markup, text = prepare_translateto_workflow(message)
     respond_message text: text, reply_markup: reply_markup
   end
 
@@ -28,11 +27,11 @@ module TranslatetoCommand
   end
 
   def translateto_direct(sentence)
-    reply_markup, text = prepare_translateto_worflow(sentence)
+    reply_markup, text = prepare_translateto_workflow(sentence)
     respond_message text: text, reply_markup: reply_markup
   end
 
-  def prepare_translateto_worflow(sentence)
+  def prepare_translateto_workflow(sentence)
     text = Translators::YandexWrapper.new(sentence).translate('ru', current_language)
     clean = text.tr('.', ' ').strip
     reply_markup = nil

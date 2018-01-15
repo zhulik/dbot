@@ -14,4 +14,16 @@ module ApplicationHelper
       respond_with :message, **params
     end
   end
+
+  def save_context(ctx)
+    session[:context] = ctx
+  end
+
+  def chat
+    @_chat ||= payload.try! { |x| x['chat'] || x['message'] && x['message']['chat'] }
+  end
+
+  def from
+    @_from ||= payload && payload['from']
+  end
 end

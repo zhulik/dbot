@@ -13,10 +13,6 @@ module WordAdmin
         field :translation
         field :pos
         field :gen
-        field :wordsfrom_success
-        field :wordsfrom_fail
-        field :wordsto_success
-        field :wordsto_fail
       end
     end
   end

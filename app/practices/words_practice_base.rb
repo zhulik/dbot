@@ -15,12 +15,12 @@ class WordsPracticeBase < Practice
     w1 = current_user.words.find(w1)
     w2 = current_user.words.find(w2)
     if w1 == w2 # right answer
-      w1.send("#{self.class.context}_success!")
+      w1.inc_stat!("#{self.class.context}_success")
       answer_callback_query t('common.right', word: w1.word, translation: w1.translation)
       return start
     end
-    w1.send("#{self.class.context}_fail!")
-    w2.send("#{self.class.context}_fail!")
+    w1.inc_stat!("#{self.class.context}_fail")
+    w2.inc_stat!("#{self.class.context}_fail")
     answer_callback_query t('common.wrong', right_word: w1.word, right_translation: w1.translation,
                                             wrong_word: w2.word, wrong_translation: w2.translation)
     start

@@ -51,12 +51,12 @@ describe DbotController do
                                                                                                    { text: '✅ Finish', callback_data: 'practice_wordsfrom:finish' }
                                                                                                  ]]
                                                                                                })
-          expect(w1.reload.wordsfrom_success).to eq(1)
+          expect(w1.reload.practice_stats[:wordsfrom_success]).to eq(1)
           expect { dispatch_callback_query('practice_wordsfrom:1:1') }.to answer_callback_query_with('✅ word1 - translation')
-          expect(w1.reload.wordsfrom_success).to eq(2)
+          expect(w1.reload.practice_stats[:wordsfrom_success]).to eq(2)
           expect { dispatch_callback_query('practice_wordsfrom:1:2') }.to answer_callback_query_with('❎ word1 - translation ✅ word2 - translation')
-          expect(w1.reload.wordsfrom_fail).to eq(1)
-          expect(w2.reload.wordsfrom_fail).to eq(1)
+          expect(w1.reload.practice_stats[:wordsfrom_fail]).to eq(1)
+          expect(w2.reload.practice_stats[:wordsfrom_fail]).to eq(1)
           expect { dispatch_callback_query('practice_wordsfrom:finish') }.to edit_current_message(:text, text: 'Finished!')
         end
       end
@@ -94,7 +94,7 @@ describe DbotController do
                                                                                                  { text: '✅ Finish', callback_data: 'practice_wordsto:finish' }
                                                                                                ]]
                                                                                              })
-          expect(w1.reload.wordsto_success).to eq(1)
+          expect(w1.reload.practice_stats[:wordsto_success]).to eq(1)
           expect { dispatch_callback_query('practice_wordsto:1:1') }.to answer_callback_query_with('✅ word1 - translation')
           expect { dispatch_callback_query('practice_wordsto:finish') }.to edit_current_message(:text, text: 'Finished!')
         end
@@ -121,10 +121,10 @@ describe DbotController do
                                                                                                })
         expect {
           expect { dispatch_callback_query('practice_articles:1:der') }.to answer_callback_query_with('✅ der Word1 - translation')
-        }.to change { w1.reload.articles_success }.by(1)
+        }.to change { w1.reload.practice_stats[:articles_success] }.by(1)
         expect {
           expect { dispatch_callback_query('practice_articles:1:das') }.to answer_callback_query_with('❎ das is wrong ✅ der Word1 - translation')
-        }.to change { w1.reload.articles_fail }.by(1)
+        }.to change { w1.reload.practice_stats[:articles_fail] }.by(1)
       end
     end
 

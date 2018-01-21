@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180121013640) do
+ActiveRecord::Schema.define(version: 20180121224937) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,15 +54,11 @@ ActiveRecord::Schema.define(version: 20180121013640) do
     t.datetime "updated_at", null: false
     t.string "pos", null: false
     t.string "gen"
-    t.integer "wordsfrom_success", default: 0, null: false
-    t.integer "wordsfrom_fail", default: 0, null: false
-    t.integer "wordsto_success", default: 0, null: false
-    t.integer "wordsto_fail", default: 0, null: false
     t.float "sm2_easiness_factor", default: 2.5
     t.date "sm2_practice_date"
-    t.integer "articles_success", default: 0, null: false
-    t.integer "articles_fail", default: 0, null: false
+    t.jsonb "practice_stats", default: {}, null: false
     t.index ["language_id"], name: "index_words_on_language_id"
+    t.index ["practice_stats"], name: "index_words_on_practice_stats", using: :gin
     t.index ["user_id", "language_id", "word"], name: "index_words_on_user_id_and_language_id_and_word", unique: true
     t.index ["user_id"], name: "index_words_on_user_id"
   end

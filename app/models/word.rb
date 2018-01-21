@@ -12,6 +12,8 @@ class Word < ApplicationRecord
 
   paginates_per 20
 
+  serialize :practice_stats, DefaultHashSerializer
+
   enum pos: {
     noun: 'noun',
     verb: 'verb',
@@ -30,11 +32,8 @@ class Word < ApplicationRecord
     n: 'n'
   }
 
-  %i[wordsfrom wordsto articles].each do |practice|
-    %i[success fail].each do |result|
-      define_method "#{practice}_#{result}!" do
-        update_attributes!("#{practice}_#{result}" => send("#{practice}_#{result}") + 1)
-      end
-    end
+  def inc_stat!(name)
+    practice_stats[name] += 1
+    save!
   end
 end

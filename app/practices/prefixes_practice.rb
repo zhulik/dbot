@@ -4,7 +4,6 @@ class PrefixesPractice < Practice
   practice_name -> { I18n.t('dbot.practice.prefixes') }
 
   def start
-    prefix = Constants::PREFIXES.values.flatten.sample
     respond_message text: prefix, reply_markup: {
       inline_keyboard: keyboard(prefix)
     }
@@ -13,14 +12,14 @@ class PrefixesPractice < Practice
   def callback_query(query)
     prefix, type = query.split(':')
     if Constants::PREFIXES[type].include?(prefix)
-      answer_callback_query t('common.right_article', word: prefix)
+      answer_callback_query t('common.right_prefix', prefix: prefix, right_type: type)
       return start
     end
     right_type = nil
     Constants::PREFIXES.each do |t, prefixes|
       right_type = t if prefixes.include?(prefix)
     end
-    answer_callback_query t('common.wrong_article', article: type, word: "#{prefix} - #{right_type}")
+    answer_callback_query t('common.wrong_prefix', type: type, prefix: prefix, right_type: right_type)
     start
   end
 
@@ -32,5 +31,9 @@ class PrefixesPractice < Practice
     end
     vars << finish_button(self.class.practice_context)
     vars.each_slice(3).to_a
+  end
+
+  def prefix
+    @prefix ||= Constants::PREFIXES.values.flatten.sample
   end
 end

@@ -127,5 +127,25 @@ describe DbotController do
         }.to change { w1.reload.articles_fail }.by(1)
       end
     end
+
+    context 'with prefixes practice' do
+      it 'words as expected' do
+        expect { dispatch_message '/practice' }.to send_telegram_message(bot,
+                                                                         'What practice do you want?', reply_markup: {
+                                                                           inline_keyboard: practices_keyboard
+                                                                         })
+        allow_any_instance_of(PrefixesPractice).to receive(:prefix).and_return('ein')
+        expect { dispatch_callback_query('practice:prefixes') }.to edit_current_message(:text, text: 'ein',
+                                                                                               reply_markup: { inline_keyboard:
+                                                                                                                 [[
+                                                                                                                   { text: 'detachable', callback_data: 'practice_prefixes:ein:detachable' },
+                                                                                                                   { text: 'undetachable', callback_data: 'practice_prefixes:ein:undetachable' },
+                                                                                                                   { text: 'semi-detachable', callback_data: 'practice_prefixes:ein:semi-detachable' }
+                                                                                                                 ],
+                                                                                                                  [{ text: '✅ Finish', callback_data: 'practice_prefixes:finish' }]] })
+        expect { dispatch_callback_query('practice_prefixes:ein:detachable') }.to answer_callback_query_with('✅ ein - detachable')
+        expect { dispatch_callback_query('practice_prefixes:ein:undetachable') }.to answer_callback_query_with('❎ undetachable is wrong ✅ ein - detachable')
+      end
+    end
   end
 end

@@ -88,3 +88,5 @@ en:
     finished: Finished!
     right_article: ✅ %{word} - %{translation}
     wrong_article: ❎ %{article} is wrong ✅ %{word} - %{translation}
+    right_prefix: ✅ %{prefix} - %{right_type}
+    wrong_prefix: ❎ %{type} is wrong ✅ %{prefix} - %{right_type}

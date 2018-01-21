@@ -33,6 +33,11 @@ class Practice < Handler
     # do nothing, abstract
   end
 
+  def handle_callback_query(query)
+    return respond_message text: t('common.finished') if query == 'finish'
+    callback_query(query)
+  end
+
   protected
 
   def random_word(scope = nil)

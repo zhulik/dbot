@@ -12,7 +12,6 @@ class ArticlesPractice < Practice
   end
 
   def callback_query(query)
-    return respond_message text: t('common.finished') if query == 'finish'
     word, article = query.split(':')
     word = current_user.words.find(word)
     if Constants::ARTICLES[word.gen] == article

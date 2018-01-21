@@ -11,7 +11,6 @@ class PrefixesPractice < Practice
   end
 
   def callback_query(query)
-    return respond_message text: t('common.finished') if query == 'finish'
     prefix, type = query.split(':')
     if Constants::PREFIXES[type].include?(prefix)
       answer_callback_query t('common.right_article', word: prefix)

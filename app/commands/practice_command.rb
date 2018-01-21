@@ -14,7 +14,7 @@ class PracticeCommand < Command
   end
 
   def context_callback_query(ctx, query)
-    practice(ctx).callback_query(query)
+    practice(ctx).handle_callback_query(query)
   end
 
   private

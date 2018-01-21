@@ -11,13 +11,6 @@ class WordsPracticeBase < Practice
   end
 
   def callback_query(query)
-    return respond_message text: t('common.finished') if query == 'finish'
-    handle_practice_callback_query(query)
-  end
-
-  protected
-
-  def handle_practice_callback_query(query)
     w1, w2 = query.split(':')
     w1 = current_user.words.find(w1)
     w2 = current_user.words.find(w2)

@@ -54,7 +54,7 @@ describe DbotController do
           expect(w1.reload.wordsfrom_success).to eq(1)
           expect { dispatch_callback_query('practice_wordsfrom:1:1') }.to answer_callback_query_with('✅ word1 - translation')
           expect(w1.reload.wordsfrom_success).to eq(2)
-          expect { dispatch_callback_query('practice_wordsfrom:1:2') }.to answer_callback_query_with('❎ word1 - translation   ❎ word2 - translation')
+          expect { dispatch_callback_query('practice_wordsfrom:1:2') }.to answer_callback_query_with('❎ word1 - translation ✅ word2 - translation')
           expect(w1.reload.wordsfrom_fail).to eq(1)
           expect(w2.reload.wordsfrom_fail).to eq(1)
           expect { dispatch_callback_query('practice_wordsfrom:finish') }.to edit_current_message(:text, text: 'Finished!')

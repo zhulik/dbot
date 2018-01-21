@@ -30,7 +30,10 @@ class Router
     sub_ctx = ctx_tokens[1..-1]
     sub_ctx = sub_ctx.any? ? sub_ctx.join('_') + '_' : ''
     return message_handler.send("#{sub_ctx}callback_query", tokens[1..-1].join(':')) if ctx_tokens.first == 'message'
-    command_for(ctx_tokens.first).send("#{sub_ctx}callback_query", tokens[1..-1].join(':'))
+    m = "#{sub_ctx}callback_query"
+    cmd = command_for(ctx_tokens.first)
+    return cmd.send(m, tokens[1..-1].join(':')) if cmd.respond_to?(m)
+    cmd.context_callback_query(sub_ctx, tokens[1..-1].join(':'))
   end
 
   def handle_message!

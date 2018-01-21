@@ -20,4 +20,8 @@ class Handler
   def callback_query(query)
     # do nothing, abstract
   end
+
+  def context_callback_query(ctx, query)
+    # do nothing, abstract
+  end
 end

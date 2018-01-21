@@ -17,11 +17,13 @@ class ArticlesPractice < Practice
     word = current_user.words.find(word)
     if Constants::ARTICLES[word.gen] == article
       word.articles_success!
-      answer_callback_query t('common.right_article', word: with_article(word))
+      answer_callback_query t('common.right_article', word: with_article(word), translation: word.translation)
       return start
     end
     word.articles_fail!
-    answer_callback_query t('common.wrong_article', article: article, word: with_article(word))
+    answer_callback_query t('common.wrong_article', article: article,
+                                                    word: with_article(word),
+                                                    translation: word.translation)
     start
   end
 

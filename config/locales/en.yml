@@ -86,5 +86,5 @@ en:
     wrong: ❎ %{right_word} - %{right_translation} ✅ %{wrong_word} - %{wrong_translation}
     finish: ✅ Finish
     finished: Finished!
-    right_article: ✅ %{word}
-    wrong_article: ❎ %{article} is wrong ✅ %{word}
+    right_article: ✅ %{word} - %{translation}
+    wrong_article: ❎ %{article} is wrong ✅ %{word} - %{translation}

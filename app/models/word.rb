@@ -27,7 +27,7 @@ class Word < ApplicationRecord
     n: 'n'
   }
 
-  %i[wordsfrom wordsto].each do |practice|
+  %i[wordsfrom wordsto articles].each do |practice|
     %i[success fail].each do |result|
       define_method "#{practice}_#{result}!" do
         update_attributes!("#{practice}_#{result}" => send("#{practice}_#{result}") + 1)

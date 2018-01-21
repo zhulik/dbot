@@ -49,6 +49,7 @@ en:
       what_practice: 'What practice do you want?'
       wordsfrom: 'Foreign -> native practice'
       wordsto: 'Native -> foreign practice'
+      articles: 'Articles'
     translateto:
       help: 'Translate to foreign language'
     translatefrom:
@@ -81,6 +82,8 @@ en:
     your_saved_words: 'Your saved words:'
     pagination: 'Page %{page} of %{total_pages}. Total count: %{total_count}'
     right: ✅ %{word} - %{translation}
-    wrong: ❎ %{right_word} - %{right_translation}   ❎ %{wrong_word} - %{wrong_translation}
+    wrong: ❎ %{right_word} - %{right_translation} ✅ %{wrong_word} - %{wrong_translation}
     finish: ✅ Finish
     finished: Finished!
+    right_article: ✅ %{word}
+    wrong_article: ❎ %{article} is wrong ✅ %{word}

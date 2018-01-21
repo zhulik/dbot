@@ -2,7 +2,7 @@
 
 class WordsPracticeBase < Practice
   def start
-    word = Words::WeighedRandom.new(current_user.current_words, self.class.context).get
+    word = random_word
     return respond_message text: t('dbot.words.no_words_added') if word.nil?
     variants = Words::Variants.new(current_user, word).get
     respond_message text: word_text(word), reply_markup: {
@@ -16,10 +16,6 @@ class WordsPracticeBase < Practice
   end
 
   protected
-
-  def finish_button(ctx)
-    { text: t('common.finish'), callback_data: "#{ctx}:finish" }
-  end
 
   def handle_practice_callback_query(query)
     w1, w2 = query.split(':')
@@ -35,11 +31,6 @@ class WordsPracticeBase < Practice
     answer_callback_query t('common.wrong', right_word: w1.word, right_translation: w1.translation,
                                             wrong_word: w2.word, wrong_translation: w2.translation)
     start
-  end
-
-  def with_article(word)
-    return word.word unless word.noun?
-    "#{Constants::ARTICLES[word.gen]} #{word.word.capitalize}"
   end
 
   private

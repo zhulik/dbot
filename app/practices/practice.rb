@@ -28,4 +28,24 @@ class Practice < Handler
       descendants.select { |klass| klass.descendants.empty? }
     end
   end
+
+  def start
+    # do nothing, abstract
+  end
+
+  protected
+
+  def random_word(scope = nil)
+    scope ||= current_user.current_words
+    Words::WeighedRandom.new(scope, self.class.context).get
+  end
+
+  def finish_button(ctx)
+    { text: t('common.finish'), callback_data: "#{ctx}:finish" }
+  end
+
+  def with_article(word)
+    return word.word unless word.noun?
+    "#{Constants::ARTICLES[word.gen] || 'unk'} #{word.word.capitalize}"
+  end
 end

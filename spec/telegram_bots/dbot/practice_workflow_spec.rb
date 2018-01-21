@@ -12,10 +12,11 @@ describe DbotController do
         it 'works as expected' do
           expect { dispatch_message '/practice' }.to send_telegram_message(bot,
                                                                            'What practice do you want?', reply_markup: {
-                                                                             inline_keyboard: [[
-                                                                               { text: 'Foreign -> native practice', callback_data: 'practice:wordsfrom' },
-                                                                               { text: 'Native -> foreign practice', callback_data: 'practice:wordsto' }
-                                                                             ]]
+                                                                             inline_keyboard: [
+                                                                               [{ text: 'Articles', callback_data: 'practice:articles' },
+                                                                                { text: 'Foreign -> native practice', callback_data: 'practice:wordsfrom' }],
+                                                                               [{ text: 'Native -> foreign practice', callback_data: 'practice:wordsto' }]
+                                                                             ]
                                                                            })
           expect { dispatch_callback_query('practice:wordsfrom') }.to edit_current_message(:text, text: "You haven't added any words. Use /addword")
         end
@@ -31,10 +32,11 @@ describe DbotController do
         it 'words as expected' do
           expect { dispatch_message '/practice' }.to send_telegram_message(bot,
                                                                            'What practice do you want?', reply_markup: {
-                                                                             inline_keyboard: [[
-                                                                               { text: 'Foreign -> native practice', callback_data: 'practice:wordsfrom' },
-                                                                               { text: 'Native -> foreign practice', callback_data: 'practice:wordsto' }
-                                                                             ]]
+                                                                             inline_keyboard: [
+                                                                               [{ text: 'Articles', callback_data: 'practice:articles' },
+                                                                                { text: 'Foreign -> native practice', callback_data: 'practice:wordsfrom' }],
+                                                                               [{ text: 'Native -> foreign practice', callback_data: 'practice:wordsto' }]
+                                                                             ]
                                                                            })
           expect { dispatch_callback_query('practice:wordsfrom') }.to edit_current_message(:text, text: 'der Word1', reply_markup: {
                                                                                              inline_keyboard: [[
@@ -65,10 +67,11 @@ describe DbotController do
         it 'works as expected' do
           expect { dispatch_message '/practice' }.to send_telegram_message(bot,
                                                                            'What practice do you want?', reply_markup: {
-                                                                             inline_keyboard: [[
-                                                                               { text: 'Foreign -> native practice', callback_data: 'practice:wordsfrom' },
-                                                                               { text: 'Native -> foreign practice', callback_data: 'practice:wordsto' }
-                                                                             ]]
+                                                                             inline_keyboard: [
+                                                                               [{ text: 'Articles', callback_data: 'practice:articles' },
+                                                                                { text: 'Foreign -> native practice', callback_data: 'practice:wordsfrom' }],
+                                                                               [{ text: 'Native -> foreign practice', callback_data: 'practice:wordsto' }]
+                                                                             ]
                                                                            })
           expect { dispatch_callback_query('practice:wordsto') }.to edit_current_message(:text, text: "You haven't added any words. Use /addword")
         end
@@ -80,10 +83,11 @@ describe DbotController do
         it 'words as expected' do
           expect { dispatch_message '/practice' }.to send_telegram_message(bot,
                                                                            'What practice do you want?', reply_markup: {
-                                                                             inline_keyboard: [[
-                                                                               { text: 'Foreign -> native practice', callback_data: 'practice:wordsfrom' },
-                                                                               { text: 'Native -> foreign practice', callback_data: 'practice:wordsto' }
-                                                                             ]]
+                                                                             inline_keyboard: [
+                                                                               [{ text: 'Articles', callback_data: 'practice:articles' },
+                                                                                { text: 'Foreign -> native practice', callback_data: 'practice:wordsfrom' }],
+                                                                               [{ text: 'Native -> foreign practice', callback_data: 'practice:wordsto' }]
+                                                                             ]
                                                                            })
           expect { dispatch_callback_query('practice:wordsto') }.to edit_current_message(:text, text: 'translation', reply_markup: {
                                                                                            inline_keyboard: [[

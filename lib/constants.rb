@@ -4,7 +4,6 @@ module Constants
   ARTICLES = {
     'f' => 'die',
     'm' => 'der',
-    'n' => 'das',
-    nil: 'unk'
+    'n' => 'das'
   }.freeze
 end

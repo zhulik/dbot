@@ -100,5 +100,32 @@ describe DbotController do
         end
       end
     end
+
+    context 'with articles practice' do
+      let!(:w1) { create :word, user: user, language: language, word: 'word1', translation: 'translation', pos: 'noun', gen: 'm' }
+
+      it 'works as expected' do
+        expect { dispatch_message '/practice' }.to send_telegram_message(bot,
+                                                                         'What practice do you want?', reply_markup: {
+                                                                           inline_keyboard: practices_keyboard
+                                                                         })
+        expect { dispatch_callback_query('practice:articles') }.to edit_current_message(:text, text: 'word1',
+                                                                                               reply_markup: {
+                                                                                                 inline_keyboard:
+                                                                                                   [[
+                                                                                                     { text: 'die', callback_data: 'practice_articles:1:die' },
+                                                                                                     { text: 'der', callback_data: 'practice_articles:1:der' },
+                                                                                                     { text: 'das', callback_data: 'practice_articles:1:das' }
+                                                                                                   ],
+                                                                                                    [{ text: '✅ Finish', callback_data: 'practice_articles:finish' }]]
+                                                                                               })
+        expect {
+          expect { dispatch_callback_query('practice_articles:1:der') }.to answer_callback_query_with('✅ der Word1 - translation')
+        }.to change { w1.reload.articles_success }.by(1)
+        expect {
+          expect { dispatch_callback_query('practice_articles:1:das') }.to answer_callback_query_with('❎ das is wrong ✅ der Word1 - translation')
+        }.to change { w1.reload.articles_fail }.by(1)
+      end
+    end
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180121224937) do
+ActiveRecord::Schema.define(version: 20180121234643) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,17 @@ ActiveRecord::Schema.define(version: 20180121224937) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["code"], name: "index_languages_on_code", unique: true
+  end
+
+  create_table "practice_stats", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "practice", null: false
+    t.string "status", default: "in_progress", null: false
+    t.jsonb "stats", default: {}, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["stats"], name: "index_practice_stats_on_stats", using: :gin
+    t.index ["user_id"], name: "index_practice_stats_on_user_id"
   end
 
   create_table "tts_phrases", force: :cascade do |t|
@@ -63,6 +74,7 @@ ActiveRecord::Schema.define(version: 20180121224937) do
     t.index ["user_id"], name: "index_words_on_user_id"
   end
 
+  add_foreign_key "practice_stats", "users"
   add_foreign_key "tts_phrases", "languages"
   add_foreign_key "users", "languages", on_delete: :nullify
   add_foreign_key "words", "languages", on_delete: :cascade

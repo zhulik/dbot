@@ -8,7 +8,7 @@ class Word < ApplicationRecord
   validates :word, :translation, :pos, presence: true
   validates :word, uniqueness: { scope: %i[user_id language_id] }
   # TODO: validate gen presence for nouns and nil gen for others
-  # TODO: rework work uniqueness validation
+  # TODO: rework uniqueness validation
 
   paginates_per 20
 

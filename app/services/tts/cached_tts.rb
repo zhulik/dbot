@@ -31,6 +31,7 @@ class TTS::CachedTTS
     @data ||= TTS::OggConverter.new.convert(TTS::VoiceRSS.new(@phrase, @language.code).pronounce)
   end
 
+  #:nocov:
   def with_tempfile
     f = Tempfile.new('voice.ogg')
     f.binmode
@@ -46,4 +47,5 @@ class TTS::CachedTTS
       yield f
     end
   end
+  #:nocov:
 end

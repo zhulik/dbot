@@ -21,7 +21,7 @@ class PracticeCommand < Command
 
   def practices_keyboard
     Rails.application.eager_load! if Rails.env.development?
-    Practice.practices.map do |klass|
+    Practice.all.map do |klass|
       { text: klass.practice_name, callback_data: "practice:#{klass.context}" }
     end.each_slice(2).to_a
   end

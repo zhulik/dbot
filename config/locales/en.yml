@@ -50,6 +50,7 @@ en:
       wordsfrom: 'Foreign -> native practice'
       wordsto: 'Native -> foreign practice'
       articles: 'Articles'
+      prefixes: 'Prefixes'
     translateto:
       help: 'Translate to foreign language'
     translatefrom:

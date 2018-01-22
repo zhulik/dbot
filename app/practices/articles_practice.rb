@@ -16,15 +16,16 @@ class ArticlesPractice < Practice
   def callback_query(query)
     word, article = query.split(':')
     word = current_user.words.find(word)
-    if Constants::ARTICLES[word.gen] == article
-      word.inc_stat!('articles_success')
-      answer_callback_query t('common.right_article', word: with_article(word), translation: word.translation)
-      return start
-    end
-    word.inc_stat!('articles_fail')
-    answer_callback_query t('common.wrong_article', article: article,
-                                                    word: with_article(word),
-                                                    translation: word.translation)
+    answer = if Constants::ARTICLES[word.gen] == article
+               word.inc_stat!('articles_success')
+               t('common.right_article', word: with_article(word), translation: word.translation)
+             else
+               word.inc_stat!('articles_fail')
+               t('common.wrong_article', article: article,
+                                         word: with_article(word),
+                                         translation: word.translation)
+             end
+    answer_callback_query answer
     start
   end
 

@@ -16,7 +16,7 @@ class Practice < Handler
     end
 
     def all
-      descendants.select { |klass| klass.descendants.empty? }
+      descendants.select { |klass| klass.descendants.empty? }.sort_by(&:name)
     end
   end
 

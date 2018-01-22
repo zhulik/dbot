@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180122000228) do
+ActiveRecord::Schema.define(version: 20180122005420) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(version: 20180122000228) do
     t.bigint "user_id"
     t.string "practice", null: false
     t.string "status", default: "in_progress", null: false
-    t.jsonb "stats", default: {}, null: false
+    t.jsonb "stats", default: {}
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "message_id", null: false

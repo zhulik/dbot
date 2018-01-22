@@ -12,7 +12,7 @@ class Word < ApplicationRecord
 
   paginates_per 20
 
-  serialize :practice_stats, DefaultHashSerializer
+  serialize :practice_stats, DefaultHashSerializer.new { 0 }
 
   enum pos: {
     noun: 'noun',

@@ -33,7 +33,7 @@ describe DbotController do
           allow_any_instance_of(Words::WeighedRandom).to receive(:get).and_return(w1)
         end
 
-        it 'words as expected' do
+        it 'works as expected' do
           expect { dispatch_message '/practice' }.to send_telegram_message(bot,
                                                                            'What practice do you want?', reply_markup: {
                                                                              inline_keyboard: practices_keyboard
@@ -78,7 +78,7 @@ describe DbotController do
       context 'with word added' do
         let!(:w1) { create :word, user: user, language: language, word: 'word1', translation: 'translation', pos: 'noun', gen: 'm' }
 
-        it 'words as expected' do
+        it 'works as expected' do
           expect { dispatch_message '/practice' }.to send_telegram_message(bot,
                                                                            'What practice do you want?', reply_markup: {
                                                                              inline_keyboard: practices_keyboard
@@ -137,7 +137,7 @@ describe DbotController do
     end
 
     context 'with prefixes practice' do
-      it 'words as expected' do
+      it 'works as expected' do
         expect { dispatch_message '/practice' }.to send_telegram_message(bot,
                                                                          'What practice do you want?', reply_markup: {
                                                                            inline_keyboard: practices_keyboard
@@ -155,7 +155,7 @@ describe DbotController do
         }.to change(PracticeStat, :count).by(1)
         expect { dispatch_callback_query('practice_prefixes:ein:detachable') }.to answer_callback_query_with('✅ ein - detachable')
         expect { dispatch_callback_query('practice_prefixes:ein:undetachable') }.to answer_callback_query_with('❎ undetachable is wrong ✅ ein - detachable')
-        expect { dispatch_callback_query('practice_prefixes:finish') }.to edit_current_message(:text, text: 'Finished!')
+        expect { dispatch_callback_query('practice_prefixes:finish') }.to edit_current_message(:text, text: "✅ Successes:\nein - 1\n❎ Fails:\nein - 1")
       end
     end
   end

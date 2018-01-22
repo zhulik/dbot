@@ -90,3 +90,5 @@ en:
     wrong_article: ❎ %{article} is wrong ✅ %{word} - %{translation}
     right_prefix: ✅ %{prefix} - %{right_type}
     wrong_prefix: ❎ %{type} is wrong ✅ %{prefix} - %{right_type}
+    successes: '✅ Successes:'
+    fails: '❎ Fails:'

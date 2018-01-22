@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180121234643) do
+ActiveRecord::Schema.define(version: 20180122000228) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,6 +32,9 @@ ActiveRecord::Schema.define(version: 20180121234643) do
     t.jsonb "stats", default: {}, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "message_id", null: false
+    t.bigint "chat_id", null: false
+    t.index ["message_id", "chat_id"], name: "index_practice_stats_on_message_id_and_chat_id", unique: true
     t.index ["stats"], name: "index_practice_stats_on_stats", using: :gin
     t.index ["user_id"], name: "index_practice_stats_on_user_id"
   end

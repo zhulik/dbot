@@ -3,6 +3,8 @@
 class ArticlesPractice < Practice
   practice_name -> { I18n.t('dbot.practice.articles') }
 
+  protected
+
   def start
     word = random_word(current_user.current_words.noun)
     return respond_message text: t('dbot.words.no_words_added') if word.nil?

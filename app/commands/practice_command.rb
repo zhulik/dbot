@@ -10,7 +10,7 @@ class PracticeCommand < Command
   end
 
   def callback_query(type)
-    practice(type).start
+    practice(type).handle_start
   end
 
   def context_callback_query(ctx, query)

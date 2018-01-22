@@ -3,6 +3,8 @@
 class PrefixesPractice < Practice
   practice_name -> { I18n.t('dbot.practice.prefixes') }
 
+  protected
+
   def start
     respond_message text: prefix, reply_markup: {
       inline_keyboard: keyboard(prefix)

@@ -4,6 +4,8 @@ class Practice < Handler
   extend HasAttributes
   attributes :practice_name
 
+  attr_accessor :stat
+
   class << self
     def context
       name.underscore.split('_')[0..-2].join('_')
@@ -18,16 +20,28 @@ class Practice < Handler
     end
   end
 
+  def handle_start
+    with_practice_stat do
+      start
+    end
+  end
+
+  def handle_callback_query(query)
+    with_practice_stat do
+      return Practices::Finish.call(bot, stat) if query == 'finish' # print stats
+      callback_query(query)
+    end
+  end
+
+  protected
+
   def start
     # do nothing, abstract
   end
 
-  def handle_callback_query(query)
-    return respond_message text: t('common.finished') if query == 'finish'
-    callback_query(query)
+  def callback_query(query)
+    # do nothing, abstract
   end
-
-  protected
 
   def random_word(scope = nil)
     scope ||= current_user.current_words
@@ -41,5 +55,28 @@ class Practice < Handler
   def with_article(word)
     return word.word unless word.noun?
     "#{Constants::ARTICLES[word.gen] || 'unk'} #{word.word.capitalize}"
+  end
+
+  private
+
+  def with_practice_stat
+    # TODO: force finish practice stats if there is no activity in 5 minutes, notify user.
+    existing = current_user.practice_stats.find_by(status: 'in_progress')
+    @stat = if existing.nil?
+              new_stat
+            elsif existing.practice == self.class.context
+              existing
+            else
+              Practices::Finish.call(bot, existing)
+              new_stat
+            end
+    yield
+    stat.save!
+  end
+
+  def new_stat
+    current_user.practice_stats.create!(practice: self.class.context,
+                                        message_id: payload.message.message_id,
+                                        chat_id: payload.message.chat.id)
   end
 end

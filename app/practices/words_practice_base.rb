@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class WordsPracticeBase < Practice
+  protected
+
   def start
     word = random_word
     return respond_message text: t('dbot.words.no_words_added') if word.nil?

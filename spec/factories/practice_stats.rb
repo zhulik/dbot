@@ -5,7 +5,7 @@ FactoryBot.define do
     user nil
     practice 'wordsto'
     status 'in_progress'
-    stats { { a: 1 } }
+    stats { {} }
     sequence(:message_id)
     sequence(:chat_id)
   end

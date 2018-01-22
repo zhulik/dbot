@@ -17,11 +17,10 @@ class WordsPracticeBase < Practice
     w1 = current_user.words.find(w1)
     w2 = current_user.words.find(w2)
     answer = if w1 == w2 # right answer
-               w1.inc_stat!("#{self.class.context}_success")
+               inc_stat(w1)
                t('common.right', word: w1.word, translation: w1.translation)
              else
-               w1.inc_stat!("#{self.class.context}_fail")
-               w2.inc_stat!("#{self.class.context}_fail")
+               dec_stat(w1, w2)
                t('common.wrong', right_word: w1.word, right_translation: w1.translation,
                                  wrong_word: w2.word, wrong_translation: w2.translation)
              end
@@ -29,11 +28,30 @@ class WordsPracticeBase < Practice
     start
   end
 
-  def finish
-    edit_message :text, text: t('common.finished')
+  def send_stats(data)
+    response = [t('common.successes')]
+    data[:success].each do |s|
+      response << "#{with_article(Word.find(s.first))} - #{s.second}"
+    end
+    response << t('common.fails')
+    data[:fail].each do |s|
+      response << "#{with_article(Word.find(s.first))} - #{s.second}"
+    end
+    edit_message :text, text: response.join("\n")
   end
 
   private
+
+  def dec_stat(w1, w2)
+    w1.inc_stat!("#{self.class.context}_fail")
+    w2.inc_stat!("#{self.class.context}_fail")
+    update_stat(w1.id, :fail)
+  end
+
+  def inc_stat(w1)
+    w1.inc_stat!("#{self.class.context}_success")
+    update_stat(w1.id, :success)
+  end
 
   def keyboard(word, variants)
     vars = variants.map do |w|

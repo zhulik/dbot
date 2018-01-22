@@ -59,7 +59,7 @@ describe DbotController do
           expect { dispatch_callback_query('practice_wordsfrom:1:2') }.to answer_callback_query_with('❎ word1 - translation ✅ word2 - translation')
           expect(w1.reload.practice_stats[:wordsfrom_fail]).to eq(1)
           expect(w2.reload.practice_stats[:wordsfrom_fail]).to eq(1)
-          expect { dispatch_callback_query('practice_wordsfrom:finish') }.to edit_current_message(:text, text: 'Finished!')
+          expect { dispatch_callback_query('practice_wordsfrom:finish') }.to edit_current_message(:text, text: "✅ Successes:\nder Word1 - 2\n❎ Fails:\nder Word1 - 1")
         end
       end
     end
@@ -101,7 +101,7 @@ describe DbotController do
                                                                                              })
           expect(w1.reload.practice_stats[:wordsto_success]).to eq(1)
           expect { dispatch_callback_query('practice_wordsto:1:1') }.to answer_callback_query_with('✅ word1 - translation')
-          expect { dispatch_callback_query('practice_wordsto:finish') }.to edit_current_message(:text, text: 'Finished!')
+          expect { dispatch_callback_query('practice_wordsto:finish') }.to edit_current_message(:text, text: "✅ Successes:\nder Word1 - 2\n❎ Fails:\nder Word1 - 0")
         end
       end
     end

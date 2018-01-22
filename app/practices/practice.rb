@@ -51,9 +51,9 @@ class Practice < Handler
   end
 
   def finish
-    data = stat.stats.each_with_object({}) do |(k, v), res|
-      res[:success] = (res[:success] || []).push([k, v[:success] || 0])
-      res[:fail] = (res[:fail] || []).push([k, v[:fail] || 0])
+    data = stat.stats.each_with_object(Hash.new { [] }) do |(k, v), res|
+      res[:success] = res[:success].push([k, v[:success] || 0])
+      res[:fail] = res[:fail].push([k, v[:fail] || 0])
     end
     data[:success] = data[:success].sort_by(&:second).reverse[0..2]
     data[:fail] = data[:fail].sort_by(&:second).reverse[0..2]

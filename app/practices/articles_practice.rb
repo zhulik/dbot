@@ -18,9 +18,11 @@ class ArticlesPractice < Practice
     word = current_user.words.find(word)
     answer = if Constants::ARTICLES[word.gen] == article
                word.inc_stat!('articles_success')
+               update_stat(word.id, :success)
                t('common.right_article', word: with_article(word), translation: word.translation)
              else
                word.inc_stat!('articles_fail')
+               update_stat(word.id, :fail)
                t('common.wrong_article', article: article,
                                          word: with_article(word),
                                          translation: word.translation)
@@ -29,8 +31,16 @@ class ArticlesPractice < Practice
     start
   end
 
-  def finish
-    edit_message :text, text: t('common.finished')
+  def send_stats(data)
+    response = [t('common.successes')]
+    data[:success].each do |s|
+      response << "#{with_article(Word.find(s.first))} - #{s.second}"
+    end
+    response << t('common.fails')
+    data[:fail].each do |s|
+      response << "#{with_article(Word.find(s.first))} - #{s.second}"
+    end
+    edit_message :text, text: response.join("\n")
   end
 
   private

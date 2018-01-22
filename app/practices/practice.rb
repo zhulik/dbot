@@ -51,7 +51,13 @@ class Practice < Handler
   end
 
   def finish
-    # do nothing, abstract
+    data = stat.stats.each_with_object({}) do |(k, v), res|
+      res[:success] = (res[:success] || []).push([k, v[:success] || 0])
+      res[:fail] = (res[:fail] || []).push([k, v[:fail] || 0])
+    end
+    data[:success] = data[:success].sort_by(&:second).reverse[0..2]
+    data[:fail] = data[:fail].sort_by(&:second).reverse[0..2]
+    send_stats(data)
   end
 
   def random_word(scope = nil)
@@ -66,6 +72,10 @@ class Practice < Handler
   def with_article(word)
     return word.word unless word.noun?
     "#{Constants::ARTICLES[word.gen] || 'unk'} #{word.word.capitalize}"
+  end
+
+  def update_stat(entity, name)
+    stat.stats[entity.to_s] = stat.stats[entity.to_s].merge(name => (stat.stats[entity.to_s][name] || 0) + 1)
   end
 
   private

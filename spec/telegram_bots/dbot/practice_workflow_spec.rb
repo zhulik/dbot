@@ -132,7 +132,7 @@ describe DbotController do
         expect {
           expect { dispatch_callback_query('practice_articles:1:das') }.to answer_callback_query_with('❎ das is wrong ✅ der Word1 - translation')
         }.to change { w1.reload.practice_stats[:articles_fail] }.by(1)
-        expect { dispatch_callback_query('practice_articles:finish') }.to edit_current_message(:text, text: 'Finished!')
+        expect { dispatch_callback_query('practice_articles:finish') }.to edit_current_message(:text, text: "✅ Successes:\nder Word1 - 1\n❎ Fails:\nder Word1 - 1")
       end
     end
 

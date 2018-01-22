@@ -25,6 +25,7 @@ gem 'german_numbers'
 gem 'pickup'
 gem 'voicerss2017'
 gem 'carrierwave'
+gem 'whenever'
 
 group :development do
   gem 'rubocop', require: false

@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+#
+require 'whenever/capistrano'
+
 set :migration_role, :app
 set :rails_env, 'production'
 

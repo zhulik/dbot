@@ -71,7 +71,6 @@ class Practice < Handler
   private
 
   def with_practice_stat
-    # TODO: force finish practice stats if there is no activity in 5 minutes, notify user.
     existing = PracticeStat.find_by(chat_id: payload.message.chat.id, status: 'in_progress')
     @stat = if existing.nil?
               new_stat

@@ -38,12 +38,14 @@ describe DbotController do
                                                                            'What practice do you want?', reply_markup: {
                                                                              inline_keyboard: practices_keyboard
                                                                            })
-          expect { dispatch_callback_query('practice:wordsfrom') }.to edit_current_message(:text, text: 'der Word1', reply_markup: {
-                                                                                             inline_keyboard: [[
-                                                                                               { text: 'translation', callback_data: 'practice_wordsfrom:1:1' },
-                                                                                               { text: '✅ Finish', callback_data: 'practice_wordsfrom:finish' }
-                                                                                             ]]
-                                                                                           })
+          expect {
+            expect { dispatch_callback_query('practice:wordsfrom') }.to edit_current_message(:text, text: 'der Word1', reply_markup: {
+                                                                                               inline_keyboard: [[
+                                                                                                 { text: 'translation', callback_data: 'practice_wordsfrom:1:1' },
+                                                                                                 { text: '✅ Finish', callback_data: 'practice_wordsfrom:finish' }
+                                                                                               ]]
+                                                                                             })
+          }.to change(PracticeStat, :count).by(1)
           # Just the same, we have only one word
           expect { dispatch_callback_query('practice_wordsfrom:1:1') }.to edit_current_message(:text, text: 'der Word1', reply_markup: {
                                                                                                  inline_keyboard: [[
@@ -81,12 +83,15 @@ describe DbotController do
                                                                            'What practice do you want?', reply_markup: {
                                                                              inline_keyboard: practices_keyboard
                                                                            })
-          expect { dispatch_callback_query('practice:wordsto') }.to edit_current_message(:text, text: 'translation', reply_markup: {
-                                                                                           inline_keyboard: [[
-                                                                                             { text: 'der Word1', callback_data: 'practice_wordsto:1:1' },
-                                                                                             { text: '✅ Finish', callback_data: 'practice_wordsto:finish' }
-                                                                                           ]]
-                                                                                         })
+          expect {
+            expect { dispatch_callback_query('practice:wordsto') }.to edit_current_message(:text, text: 'translation', reply_markup: {
+                                                                                             inline_keyboard: [[
+                                                                                               { text: 'der Word1', callback_data: 'practice_wordsto:1:1' },
+                                                                                               { text: '✅ Finish', callback_data: 'practice_wordsto:finish' }
+                                                                                             ]]
+                                                                                           })
+          }.to change(PracticeStat, :count).by(1)
+
           # Just the same, we have only one word
           expect { dispatch_callback_query('practice_wordsto:1:1') }.to edit_current_message(:text, text: 'translation', reply_markup: {
                                                                                                inline_keyboard: [[
@@ -109,22 +114,25 @@ describe DbotController do
                                                                          'What practice do you want?', reply_markup: {
                                                                            inline_keyboard: practices_keyboard
                                                                          })
-        expect { dispatch_callback_query('practice:articles') }.to edit_current_message(:text, text: 'word1',
-                                                                                               reply_markup: {
-                                                                                                 inline_keyboard:
-                                                                                                   [[
-                                                                                                     { text: 'die', callback_data: 'practice_articles:1:die' },
-                                                                                                     { text: 'der', callback_data: 'practice_articles:1:der' },
-                                                                                                     { text: 'das', callback_data: 'practice_articles:1:das' }
-                                                                                                   ],
-                                                                                                    [{ text: '✅ Finish', callback_data: 'practice_articles:finish' }]]
-                                                                                               })
+        expect {
+          expect { dispatch_callback_query('practice:articles') }.to edit_current_message(:text, text: 'word1',
+                                                                                                 reply_markup: {
+                                                                                                   inline_keyboard:
+                                                                                                     [[
+                                                                                                       { text: 'die', callback_data: 'practice_articles:1:die' },
+                                                                                                       { text: 'der', callback_data: 'practice_articles:1:der' },
+                                                                                                       { text: 'das', callback_data: 'practice_articles:1:das' }
+                                                                                                     ],
+                                                                                                      [{ text: '✅ Finish', callback_data: 'practice_articles:finish' }]]
+                                                                                                 })
+        }.to change(PracticeStat, :count).by(1)
         expect {
           expect { dispatch_callback_query('practice_articles:1:der') }.to answer_callback_query_with('✅ der Word1 - translation')
         }.to change { w1.reload.practice_stats[:articles_success] }.by(1)
         expect {
           expect { dispatch_callback_query('practice_articles:1:das') }.to answer_callback_query_with('❎ das is wrong ✅ der Word1 - translation')
         }.to change { w1.reload.practice_stats[:articles_fail] }.by(1)
+        expect { dispatch_callback_query('practice_articles:finish') }.to edit_current_message(:text, text: 'Finished!')
       end
     end
 
@@ -135,16 +143,19 @@ describe DbotController do
                                                                            inline_keyboard: practices_keyboard
                                                                          })
         allow_any_instance_of(PrefixesPractice).to receive(:prefix).and_return('ein')
-        expect { dispatch_callback_query('practice:prefixes') }.to edit_current_message(:text, text: 'ein',
-                                                                                               reply_markup: { inline_keyboard:
-                                                                                                                 [[
-                                                                                                                   { text: 'detachable', callback_data: 'practice_prefixes:ein:detachable' },
-                                                                                                                   { text: 'undetachable', callback_data: 'practice_prefixes:ein:undetachable' },
-                                                                                                                   { text: 'semi-detachable', callback_data: 'practice_prefixes:ein:semi-detachable' }
-                                                                                                                 ],
-                                                                                                                  [{ text: '✅ Finish', callback_data: 'practice_prefixes:finish' }]] })
+        expect {
+          expect { dispatch_callback_query('practice:prefixes') }.to edit_current_message(:text, text: 'ein',
+                                                                                                 reply_markup: { inline_keyboard:
+                                                                                                                   [[
+                                                                                                                     { text: 'detachable', callback_data: 'practice_prefixes:ein:detachable' },
+                                                                                                                     { text: 'undetachable', callback_data: 'practice_prefixes:ein:undetachable' },
+                                                                                                                     { text: 'semi-detachable', callback_data: 'practice_prefixes:ein:semi-detachable' }
+                                                                                                                   ],
+                                                                                                                    [{ text: '✅ Finish', callback_data: 'practice_prefixes:finish' }]] })
+        }.to change(PracticeStat, :count).by(1)
         expect { dispatch_callback_query('practice_prefixes:ein:detachable') }.to answer_callback_query_with('✅ ein - detachable')
         expect { dispatch_callback_query('practice_prefixes:ein:undetachable') }.to answer_callback_query_with('❎ undetachable is wrong ✅ ein - detachable')
+        expect { dispatch_callback_query('practice_prefixes:finish') }.to edit_current_message(:text, text: 'Finished!')
       end
     end
   end

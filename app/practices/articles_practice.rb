@@ -31,18 +31,6 @@ class ArticlesPractice < Practice
     start
   end
 
-  def send_stats(data)
-    response = [t('common.successes')]
-    data[:success].each do |s|
-      response << "#{with_article(Word.find(s.first))} - #{s.second}"
-    end
-    response << t('common.fails')
-    data[:fail].each do |s|
-      response << "#{with_article(Word.find(s.first))} - #{s.second}"
-    end
-    edit_message :text, text: response.join("\n")
-  end
-
   private
 
   def keyboard(word)

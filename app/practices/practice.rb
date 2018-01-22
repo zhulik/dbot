@@ -33,6 +33,13 @@ class Practice < Handler
     end
   end
 
+  def handle_finish
+    with_practice_stat do
+      stat.finished!
+      finish
+    end
+  end
+
   protected
 
   def start
@@ -40,6 +47,10 @@ class Practice < Handler
   end
 
   def callback_query(query)
+    # do nothing, abstract
+  end
+
+  def finish
     # do nothing, abstract
   end
 
@@ -61,7 +72,7 @@ class Practice < Handler
 
   def with_practice_stat
     # TODO: force finish practice stats if there is no activity in 5 minutes, notify user.
-    existing = current_user.practice_stats.find_by(status: 'in_progress')
+    existing = PracticeStat.find_by(chat_id: payload.message.chat.id, status: 'in_progress')
     @stat = if existing.nil?
               new_stat
             elsif existing.practice == self.class.context

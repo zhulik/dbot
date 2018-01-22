@@ -25,6 +25,10 @@ class PrefixesPractice < Practice
     start
   end
 
+  def finish
+    edit_message :text, text: t('common.finished')
+  end
+
   private
 
   def keyboard(prefix)

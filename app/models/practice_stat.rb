@@ -6,7 +6,7 @@ class PracticeStat < ApplicationRecord
   validates :practice, :message_id, :chat_id, :status, presence: true
   validates :message_id, uniqueness: { scope: :chat_id }
 
-  validates :user_id, uniqueness: { condition: -> { in_progress } }
+  validates :chat_id, uniqueness: { conditions: -> { in_progress } }
   serialize :stats, DefaultHashSerializer
 
   enum status: {

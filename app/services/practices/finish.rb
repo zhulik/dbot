@@ -13,9 +13,20 @@ class Practices::Finish
   end
 
   def call
-    @practice_stat.finished!
-    @bot.edit_message_text(message_id: @practice_stat.message_id,
-                           text: I18n.t('common.finished'),
-                           chat_id: @practice_stat.chat_id)
+    practice.handle_finish
+  end
+
+  private
+
+  def practice
+    "#{@practice_stat.practice}_practice".camelize.constantize.new(@bot, {}, payload) # session is not available here
+  end
+
+  def payload
+    Telegram::Bot::Types::CallbackQuery.new(message:
+                                              Telegram::Bot::Types::Message.new(
+                                                message_id: @practice_stat.message_id,
+                                                chat: Telegram::Bot::Types::Chat.new(id: @practice_stat.chat_id)
+                                              ))
   end
 end

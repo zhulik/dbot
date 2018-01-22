@@ -26,20 +26,20 @@ class Router
 
   def handle_callback_query!
     tokens = payload.data.split(':')
-    ctx_tokens = tokens.first.split('_')
-    sub_ctx = ctx_tokens[1..-1]
+    c_tokens = tokens.first.split('_')
+    sub_ctx = c_tokens[1..-1]
     sub_ctx = sub_ctx.any? ? sub_ctx.join('_') + '_' : ''
-    return message_handler.send("#{sub_ctx}callback_query", tokens[1..-1].join(':')) if ctx_tokens.first == 'message'
+    return message_handler.public_send("#{sub_ctx}callback_query", tokens[1..-1].join(':')) if c_tokens[0] == 'message'
     m = "#{sub_ctx}callback_query"
-    cmd = command_for(ctx_tokens.first)
-    return cmd.send(m, tokens[1..-1].join(':')) if cmd.respond_to?(m)
+    cmd = command_for(c_tokens.first)
+    return cmd.public_send(m, tokens[1..-1].join(':')) if cmd.respond_to?(m)
     cmd.context_callback_query(sub_ctx, tokens[1..-1].join(':'))
   end
 
   def handle_message!
     if context.present?
       ctx_tokens = context.to_s.split('_')
-      return command_for(ctx_tokens.first).send(ctx_tokens[1..-1].join('_'), *payload.text&.split)
+      return command_for(ctx_tokens.first).public_send(ctx_tokens[1..-1].join('_'), *payload.text&.split)
     end
     return message_handler.message(*payload.text.split) if action_name == 'message'
     command_for(action_name).validate_and_handle_message(*payload.text.split[1..-1])

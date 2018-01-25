@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-class WordsfromPractice < WordsPracticeBase
+class WordsfromPractice < WordsTranslationPracticeBase
   practice_name -> { I18n.t('dbot.practice.wordsfrom') }
 
   protected
 
   def word_text(word)
-    with_article(word)
+    word.with_article
   end
 
   def variant_text(w)

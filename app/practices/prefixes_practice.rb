@@ -5,23 +5,20 @@ class PrefixesPractice < Practice
 
   protected
 
-  def start
-    respond_message text: prefix, reply_markup: {
-      inline_keyboard: keyboard(prefix)
-    }
+  def word_text(word)
+    word
   end
 
-  def callback_query(query)
-    prefix, type = query.split(':')
-    answer = if Constants::PREFIXES[type].include?(prefix)
-               update_stat(prefix, :success)
-               t('common.right_prefix', prefix: prefix, right_type: type)
-             else
-               update_stat(prefix, :fail)
-               t('common.wrong_prefix', type: type, prefix: prefix, right_type: right_type(prefix))
-             end
-    answer_callback_query answer
-    start
+  def valid_answer?(prefix, type)
+    [Constants::PREFIXES[type].include?(prefix), prefix, type]
+  end
+
+  def success_answer(prefix, type)
+    t('common.right_prefix', prefix: prefix, right_type: type)
+  end
+
+  def fail_answer(prefix, type)
+    t('common.wrong_prefix', type: type, prefix: prefix, right_type: right_type(prefix))
   end
 
   def send_stats(data)
@@ -36,6 +33,10 @@ class PrefixesPractice < Practice
     edit_message :text, text: response.join("\n")
   end
 
+  def random_word
+    Constants::PREFIXES.values.flatten.sample
+  end
+
   private
 
   def right_type(prefix)
@@ -47,14 +48,10 @@ class PrefixesPractice < Practice
   end
 
   def keyboard(prefix)
-    vars = Constants::PREFIXES.map do |type, _|
+    vars = Constants::PREFIXES.keys.map do |type|
       { text: type, callback_data: "#{self.class.practice_context}:#{prefix}:#{type}" }
     end
     vars << finish_button(self.class.practice_context)
     vars.each_slice(3).to_a
-  end
-
-  def prefix
-    @prefix ||= Constants::PREFIXES.values.flatten.sample
   end
 end

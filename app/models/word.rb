@@ -36,4 +36,9 @@ class Word < ApplicationRecord
     practice_stats[name] += 1
     save!
   end
+
+  def with_article
+    return word unless noun?
+    "#{Constants::ARTICLES[gen] || 'unk'} #{word.capitalize}"
+  end
 end

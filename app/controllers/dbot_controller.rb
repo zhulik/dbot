@@ -20,6 +20,7 @@ class DbotController < Telegram::Bot::UpdatesController
   rescue_from NotStartedError, with: :send_not_authorized
   rescue_from LanguageNotSetError, with: :send_select_language
   rescue_from UnknownCommandError, with: :send_unknown_command
+  rescue_from NoWordsAddedError, with: :send_no_words_added
 
   def _handle_action_missing(*)
     Router.new(bot, session, payload, action_name, context).handle!
@@ -61,5 +62,9 @@ class DbotController < Telegram::Bot::UpdatesController
 
   def send_unknown_command
     respond_message text: t('common.unknown_command')
+  end
+
+  def send_no_words_added
+    respond_message text: t('dbot.words.no_words_added')
   end
 end

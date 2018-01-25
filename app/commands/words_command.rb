@@ -7,7 +7,7 @@ class WordsCommand < Command
 
   def message_0
     scope = current_user.current_words.order(:word).page(1)
-    return respond_message text: t('dbot.words.no_words_added') if scope.empty?
+    raise NoWordsAddedError if scope.empty?
     ws = scope.map { |w| "#{w.word} - #{w.translation} #{w.pos} #{w.gen}" }.join("\n")
     respond_message text: "#{t('common.your_saved_words')}\n#{ws}\n#{pagination_info(scope)}",
                     reply_markup: { inline_keyboard: pagination_keyboard(scope, 'words') }

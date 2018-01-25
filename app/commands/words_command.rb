@@ -25,10 +25,11 @@ class WordsCommand < Command
   private
 
   def pagination_keyboard(scope, ctx)
-    [].tap do |keys|
-      keys << { text: t('common.prev_page'), callback_data: "#{ctx}:page:#{scope.prev_page}" } unless scope.first_page?
-      keys << { text: t('common.next_page'), callback_data: "#{ctx}:page:#{scope.next_page}" } unless scope.last_page?
-    end.each_slice(2).to_a
+    InlineKeyboard.render do |k|
+      k.columns 2
+      k.button t('common.prev_page'), ctx, :page, scope.prev_page unless scope.first_page?
+      k.button t('common.next_page'), ctx, :page, scope.next_page unless scope.last_page?
+    end
   end
 
   def pagination_info(scope)

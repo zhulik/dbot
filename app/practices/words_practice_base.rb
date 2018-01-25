@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class WordsPracticeBase < Practice
-  protected
+  private
 
   def random_word
     Words::WeighedRandom.new(current_user.current_words, self.class.context).get

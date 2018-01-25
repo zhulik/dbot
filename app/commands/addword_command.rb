@@ -93,17 +93,17 @@ class AddwordCommand < Command
     end
   end
 
-  def custom_variant_button(ctx)
-    { text: t('common.custom_variant'), callback_data: "#{ctx}:custom_variant" }
-  end
-
   def variants_keyboard(variants, ctx)
-    keys = variants.map.with_index do |var, index|
-      {
-        text: "#{var[:word]} - #{var[:translation]} #{var[:pos]} #{var[:gen]}",
-        callback_data: "#{ctx}:#{index}"
-      }
-    end.each_slice(1).to_a
-    keys + [[cancel_button(ctx), custom_variant_button(ctx)]]
+    InlineKeyboard.render do |k|
+      variants.map.with_index do |var, index|
+        k.row do |r|
+          r.button "#{var[:word]} - #{var[:translation]} #{var[:pos]} #{var[:gen]}", ctx, index
+        end
+      end
+      k.row do |r|
+        r.button InlineKeyboard::Buttons.cancel(ctx)
+        r.button t('common.custom_variant'), ctx, :custom_variant
+      end
+    end
   end
 end

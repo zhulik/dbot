@@ -14,7 +14,7 @@ class TranslateCommandBase < Command
     respond_message text: text, reply_markup: reply_markup
   end
 
-  protected
+  private
 
   def full
     save_context context_name

@@ -3,7 +3,7 @@
 class PrefixesPractice < Practice
   practice_name -> { I18n.t('dbot.practice.prefixes') }
 
-  protected
+  private
 
   def word_text(word)
     word
@@ -37,8 +37,6 @@ class PrefixesPractice < Practice
     Constants::PREFIXES.values.flatten.sample
   end
 
-  private
-
   def right_type(prefix)
     right_type = nil
     Constants::PREFIXES.each do |t, prefixes|
@@ -48,10 +46,11 @@ class PrefixesPractice < Practice
   end
 
   def keyboard(prefix)
-    vars = Constants::PREFIXES.keys.map do |type|
-      { text: type, callback_data: "#{self.class.practice_context}:#{prefix}:#{type}" }
+    InlineKeyboard.render do |k|
+      Constants::PREFIXES.keys.map do |type|
+        k.button type, self.class.practice_context, prefix, type
+      end
+      k.button InlineKeyboard::Buttons.finish(self.class.practice_context)
     end
-    vars << finish_button(self.class.practice_context)
-    vars.each_slice(3).to_a
   end
 end

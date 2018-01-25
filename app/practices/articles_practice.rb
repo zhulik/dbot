@@ -3,7 +3,7 @@
 class ArticlesPractice < WordsPracticeBase
   practice_name -> { I18n.t('dbot.practice.articles') }
 
-  protected
+  private
 
   def word_text(word)
     word.word
@@ -28,13 +28,12 @@ class ArticlesPractice < WordsPracticeBase
     Words::WeighedRandom.new(current_user.current_words.noun, self.class.context).get
   end
 
-  private
-
   def keyboard(word)
-    vars = Constants::ARTICLES.values.map do |art|
-      { text: art, callback_data: "#{self.class.practice_context}:#{word.id}:#{art}" }
+    InlineKeyboard.render do |k|
+      Constants::ARTICLES.values.map do |art|
+        k.button art, self.class.practice_context, word.id, art
+      end
+      k.button InlineKeyboard::Buttons.finish(self.class.practice_context)
     end
-    vars << finish_button(self.class.practice_context)
-    vars.each_slice(3).to_a
   end
 end

@@ -11,7 +11,7 @@ class Command < Handler
     send("message_#{args.count}", *args)
   end
 
-  protected
+  private
 
   def save_context(ctx)
     session[:context] = ctx

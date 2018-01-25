@@ -4,7 +4,7 @@ class TranslatefromCommand < TranslateCommandBase
   help -> { I18n.t('dbot.translatefrom.help') }
   arguments :any
 
-  protected
+  private
 
   def context_name
     :translatefrom_send_sentence

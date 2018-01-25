@@ -42,7 +42,7 @@ class Practice < Handler
     end
   end
 
-  protected
+  private
 
   def start
     word = random_word
@@ -87,17 +87,11 @@ class Practice < Handler
     send_stats(data)
   end
 
-  def finish_button(ctx)
-    { text: t('common.finish'), callback_data: "#{ctx}:finish" }
-  end
-
   def update_stat(name, *entities)
     entities.each do |entity|
       stat.stats[entity.to_s] = stat.stats[entity.to_s].merge(name => (stat.stats[entity.to_s][name] || 0) + 1)
     end
   end
-
-  private
 
   def with_practice_stat
     existing = PracticeStat.find_by(chat_id: payload.message.chat.id, status: 'in_progress')

@@ -31,15 +31,16 @@ class MessageHandler < Handler
   end
 
   def message_keyboard(text, translate_context)
-    [
-      { text: t('dbot.message.feedback'), callback_data: 'feedback:message' },
-      { text: t('dbot.message.translate'), callback_data: "#{translate_context}:message" },
-      { text: t('dbot.message.pronounce'), callback_data: 'pronounce:message' },
-      cancel_button(:message)
-    ].tap do |keys|
+    InlineKeyboard.render do |k|
+      k.columns 2
+      k.button t('dbot.message.feedback'), :feedback, :message
+      k.button t('dbot.message.translate'), translate_context, :message
+      k.button t('dbot.message.pronounce'), :pronounce, :message
+      k.button InlineKeyboard::Buttons.cancel(:message)
+
       clean = text.tr('.', ' ').strip
-      keys << { text: t('common.add_word', word: clean), callback_data: "addword:#{clean}" } if clean.split.one?
-    end.each_slice(2).to_a
+      k.button t('common.add_word', word: clean), :addword, clean if clean.split.one?
+    end
   end
 
   def language_supported?(lang)

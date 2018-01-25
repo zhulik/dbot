@@ -3,7 +3,7 @@
 class WordstoPractice < WordsTranslationPracticeBase
   practice_name -> { I18n.t('dbot.practice.wordsto') }
 
-  protected
+  private
 
   def word_text(word)
     word.translation

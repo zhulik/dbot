@@ -32,16 +32,10 @@ module ApplicationHelper
     @current_language ||= current_user.language&.code
   end
 
-  def cancel_button(ctx)
-    { text: t('common.cancel'), callback_data: "#{ctx}:cancel" }
-  end
-
   def addword_keyboard(word, ctx)
-    [
-      [
-        { text: t('common.add_word', word: word), callback_data: "#{ctx}:#{word}" },
-        cancel_button(ctx)
-      ]
-    ]
+    InlineKeyboard.render do |k|
+      k.button t('common.add_word', word: word), ctx, word
+      k.button InlineKeyboard::Buttons.cancel(ctx)
+    end
   end
 end

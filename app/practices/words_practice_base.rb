@@ -19,7 +19,7 @@ class WordsPracticeBase < Practice
     edit_message :text, text: response.join("\n")
   end
 
-  def update_stat(name, *words)
+  def update_stat!(name, *words)
     words.each do |word|
       word.inc_stat!("#{self.class.context}_#{name}")
       super(name, word.id)

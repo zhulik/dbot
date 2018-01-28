@@ -6,6 +6,12 @@ GIT
       httparty
 
 GIT
+  remote: https://github.com/zhulik/enum_attributes_validation.git
+  revision: c733af7086b72cfa03a1cd007d80cf03319f6c08
+  specs:
+    enum_attributes_validation (0.1.6)
+
+GIT
   remote: https://github.com/zhulik/opie.git
   revision: e3a5905dd692ac84268fbcc70729f3a64787c831
   specs:
@@ -363,6 +369,7 @@ DEPENDENCIES
   capistrano-rvm
   carrierwave
   database_cleaner
+  enum_attributes_validation!
   factory_bot_rails
   faker
   german_numbers

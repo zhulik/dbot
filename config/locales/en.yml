@@ -1,4 +1,15 @@
 en:
+  activerecord:
+    errors:
+      models:
+        word:
+          attributes:
+            word:
+              taken: '%{value} is already added!'
+            pos:
+              invalid_enum: '"%{value}" is invalid, valid values: %{valid_values}!'
+            gen:
+              invalid_enum: '"%{value}" is invalid, valid values: %{valid_values}!'
   dbot:
     start:
       help: 'Start working with bot'
@@ -29,6 +40,7 @@ en:
       help: 'List saved words.'
       usage: 'Wrong arguments count. Usage: /words'
       no_words_added: You haven't added any words. Use /addword
+      unknown_error: 'Oops, unknown error is occurred while saving your word!'
     delword:
       help: Delete word from dictionary
       usage: |

@@ -26,6 +26,7 @@ gem 'pickup'
 gem 'voicerss2017'
 gem 'carrierwave'
 gem 'whenever'
+gem 'enum_attributes_validation', github: 'zhulik/enum_attributes_validation'
 
 group :development do
   gem 'rubocop', require: false

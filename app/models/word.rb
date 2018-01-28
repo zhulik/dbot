@@ -5,8 +5,8 @@ class Word < ApplicationRecord
   belongs_to :user
   belongs_to :language
 
-  validates :word, :translation, :pos, presence: true
-  validates :word, uniqueness: { scope: %i[user_id language_id] }
+  validates :word, :translation, presence: true
+  validates :word, uniqueness: { scope: %i[user_id language_id translation] }
   # TODO: validate gen presence for nouns and nil gen for others
   # TODO: rework uniqueness validation
 
@@ -31,6 +31,8 @@ class Word < ApplicationRecord
     m: 'm',
     n: 'n'
   }
+  validate_enum_attributes :gen
+  validate_enum_attributes :pos
 
   def inc_stat!(name)
     practice_stats[name] += 1

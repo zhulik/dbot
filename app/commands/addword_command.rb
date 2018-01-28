@@ -16,13 +16,11 @@ class AddwordCommand < Command
   alias send_word message_1
 
   def message_3(word, translation, pos)
-    word = { word: word, translation: translation, pos: pos }
-    create_word(word)
+    create_word(word: word, translation: translation, pos: pos)
   end
 
   def message_4(word, translation, pos, gen)
-    word = { word: word, translation: translation, pos: pos, gen: gen }
-    create_word(word)
+    create_word(word: word, translation: translation, pos: pos, gen: gen)
   end
 
   def callback_query(query)
@@ -51,19 +49,22 @@ class AddwordCommand < Command
     return respond_message text: self.class.usage if args.count < 2 || args.count > 3
     word = { word: session[:addword_word], translation: args.first, pos: args.second, gen: args.third }
     word[:word], word[:translation] = word[:translation], word[:word] if session.delete(:addword_inverse)
-    create_word(word)
+    create_word(**word)
   end
 
   private
 
-  def create_word(w)
+  def create_word(**w)
     session.clear
     Words::Create.call([current_user, w]) do |res|
       res.on_success do
         return respond_message text: t('dbot.addword.word_added', w)
       end
       res.on_fail do |error|
-        send(error.type, error.data)
+        case error.type
+        when :invalid_record then respond_message text: error.data
+        else respond_message text: t('dbot.words.unknown_error')
+        end
       end
     end
   end
@@ -72,18 +73,6 @@ class AddwordCommand < Command
     variants = prepare_workflow(word)
     respond_message text: t('dbot.addword.choose_right_variant'),
                     reply_markup: { inline_keyboard: variants_keyboard(variants, :addword_choose) }
-  end
-
-  def unknown_gen(w)
-    respond_message text: t('common.unknown_gen', gen: w[:gen], valid: Word.gens.keys.join(', '))
-  end
-
-  def unknown_pos(w)
-    respond_message text: t('common.unknown_pos', pos: w[:pos], valid: Word.pos.keys.join(', '))
-  end
-
-  def already_added(w)
-    respond_message text: t('common.already_added', word: w[:word])
   end
 
   def prepare_workflow(word)

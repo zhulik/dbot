@@ -56,17 +56,10 @@ class AddwordCommand < Command
 
   def create_word(**w)
     session.clear
-    Words::Create.call([current_user, w]) do |res|
-      res.on_success do
-        return respond_message text: t('dbot.addword.word_added', w)
-      end
-      res.on_fail do |error|
-        case error.type
-        when :invalid_record then respond_message text: error.data
-        else respond_message text: t('dbot.words.unknown_error')
-        end
-      end
-    end
+    current_user.current_words.create!(w)
+    respond_message text: t('dbot.addword.word_added', w)
+  rescue ActiveRecord::RecordInvalid => e
+    respond_message text: e.record.errors.full_messages.join("\n")
   end
 
   def short(word)

@@ -31,11 +31,4 @@ module ApplicationHelper
   def current_language
     @current_language ||= current_user.language&.code
   end
-
-  def addword_keyboard(word, ctx)
-    InlineKeyboard.render do |k|
-      k.button t('common.add_word', word: word), ctx, word
-      k.button InlineKeyboard::Buttons.cancel(ctx)
-    end
-  end
 end

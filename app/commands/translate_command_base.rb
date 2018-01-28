@@ -35,4 +35,11 @@ class TranslateCommandBase < Command
     end
     [reply_markup, text]
   end
+
+  def addword_keyboard(word, ctx)
+    InlineKeyboard.render do |k|
+      k.button t('common.add_word', word: word), ctx, word
+      k.button InlineKeyboard::Buttons.cancel(ctx)
+    end
+  end
 end

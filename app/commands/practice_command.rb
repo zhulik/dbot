@@ -21,9 +21,12 @@ class PracticeCommand < Command
 
   def practices_keyboard
     Rails.application.eager_load! if Rails.env.development?
-    InlinePractice.all.map do |klass|
-      { text: klass.practice_name, callback_data: "practice:#{klass.context}" }
-    end.each_slice(2).to_a
+    InlineKeyboard.render do |k|
+      k.columns 2
+      Practice.all.map do |klass|
+        k.button klass.practice_name, "practice:#{klass.context}"
+      end
+    end
   end
 
   def practice(type)

@@ -27,6 +27,6 @@ class PracticeCommand < Command
   end
 
   def practice(type)
-    "#{type}_practice".camelize.constantize.new(bot, session, payload)
+    Practice.all.find { |p| p.context == type }.new(bot, session, payload)
   end
 end

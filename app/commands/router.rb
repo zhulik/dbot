@@ -33,7 +33,7 @@ class Router
     m = "#{sub_ctx}callback_query"
     cmd = command_for(c_tokens.first)
     return cmd.public_send(m, tokens[1..-1].join(':')) if cmd.respond_to?(m)
-    cmd.context_callback_query(sub_ctx, tokens[1..-1].join(':'))
+    cmd.context_callback_query(c_tokens.second, tokens[1..-1].join(':'))
   end
 
   def handle_message!

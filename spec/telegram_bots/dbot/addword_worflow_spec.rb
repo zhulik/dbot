@@ -150,6 +150,7 @@ describe DbotController do
           expect(session[:context]).to be_nil
           expect(session[:addword_variants]).to be_nil
           expect(session[:addword_word]).to be_nil
+          expect { dispatch_message '/addword Stuhl стул noun' }.to respond_with_message 'Word Stuhl is already added!'
         end
       end
 

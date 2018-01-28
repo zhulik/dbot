@@ -57,12 +57,15 @@ class AddwordCommand < Command
   private
 
   def create_word(w)
-    return unknown_pos(w[:pos]) unless Word.pos.keys.include?(w[:pos])
-    return unknown_gen(w[:gen]) if w[:gen].present? && !Word.gens.keys.include?(w[:gen])
-    return respond_message text: t('common.already_added', word: w[:word]) if current_user.word?(w[:word])
-    current_user.current_words.create!(w)
-    respond_message text: t('dbot.addword.word_added', w)
     session.clear
+    Words::Create.call([current_user, w]) do |res|
+      res.on_success do
+        return respond_message text: t('dbot.addword.word_added', w)
+      end
+      res.on_fail do |error|
+        send(error.type, error.data)
+      end
+    end
   end
 
   def short(word)
@@ -71,12 +74,16 @@ class AddwordCommand < Command
                     reply_markup: { inline_keyboard: variants_keyboard(variants, :addword_choose) }
   end
 
-  def unknown_gen(gen)
-    respond_message text: t('common.unknown_gen', gen: gen, valid: Word.gens.keys.join(', '))
+  def unknown_gen(w)
+    respond_message text: t('common.unknown_gen', gen: w[:gen], valid: Word.gens.keys.join(', '))
   end
 
-  def unknown_pos(pos)
-    respond_message text: t('common.unknown_pos', pos: pos, valid: Word.pos.keys.join(', '))
+  def unknown_pos(w)
+    respond_message text: t('common.unknown_pos', pos: w[:pos], valid: Word.pos.keys.join(', '))
+  end
+
+  def already_added(w)
+    respond_message text: t('common.already_added', word: w[:word])
   end
 
   def prepare_workflow(word)

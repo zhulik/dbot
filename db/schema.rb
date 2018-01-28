@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180122005420) do
+ActiveRecord::Schema.define(version: 20180128185109) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -73,7 +73,7 @@ ActiveRecord::Schema.define(version: 20180122005420) do
     t.jsonb "practice_stats", default: {}, null: false
     t.index ["language_id"], name: "index_words_on_language_id"
     t.index ["practice_stats"], name: "index_words_on_practice_stats", using: :gin
-    t.index ["user_id", "language_id", "word"], name: "index_words_on_user_id_and_language_id_and_word", unique: true
+    t.index ["user_id", "language_id", "word", "translation"], name: "index_words_on_user_id_and_language_id_and_word_and_translation", unique: true
     t.index ["user_id"], name: "index_words_on_user_id"
   end
 

@@ -2,6 +2,8 @@
 
 class Practice < Handler
   extend HasAttributes
+  extend HasDescendants
+
   attributes :practice_name
 
   attr_accessor :stat
@@ -13,10 +15,6 @@ class Practice < Handler
 
     def practice_context
       "practice_#{context}"
-    end
-
-    def all
-      descendants.select { |klass| klass.descendants.empty? }.sort_by(&:name)
     end
   end
 
@@ -36,9 +34,11 @@ class Practice < Handler
   private
 
   def start
-    word = random_word
-    raise NoWordsAddedError if word.nil?
-    respond_message text: word_text(word), reply_markup: { inline_keyboard: keyboard(word) }
+    raise NotImplementedError
+  end
+
+  def word_text(_word)
+    raise NotImplementedError
   end
 
   def finish

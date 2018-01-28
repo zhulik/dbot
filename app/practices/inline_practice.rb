@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Practice < Handler
+class InlinePractice < Handler
   extend HasAttributes
   attributes :practice_name
 

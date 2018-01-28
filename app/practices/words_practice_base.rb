@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class WordsPracticeBase < Practice
+class WordsPracticeBase < InlinePractice
   private
 
   def random_word

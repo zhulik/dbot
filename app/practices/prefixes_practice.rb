@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class PrefixesPractice < Practice
+class PrefixesPractice < InlinePractice
   practice_name -> { I18n.t('dbot.practice.prefixes') }
 
   private

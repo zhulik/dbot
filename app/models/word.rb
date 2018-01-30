@@ -32,7 +32,7 @@ class Word < ApplicationRecord
     n: 'n'
   }
   validate_enum_attributes :gen
-  validate_enum_attributes :pos
+  # validate_enum_attributes :pos, if: -> (a){a.pos.present?}
 
   def inc_stat!(name)
     practice_stats[name] += 1

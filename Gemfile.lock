@@ -11,12 +11,6 @@ GIT
   specs:
     enum_attributes_validation (0.1.6)
 
-GIT
-  remote: https://github.com/zhulik/opie.git
-  revision: e3a5905dd692ac84268fbcc70729f3a64787c831
-  specs:
-    opie (1.0.0)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -377,7 +371,6 @@ DEPENDENCIES
   language_list
   listen (>= 3.0.5, < 3.2)
   nokogiri
-  opie!
   pg (~> 0.18)
   pickup
   pry

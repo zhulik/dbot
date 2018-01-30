@@ -45,7 +45,7 @@ class DbotController < Telegram::Bot::UpdatesController
     else
       respond_message text: t('common.something_went_wrong')
     end
-    raise e # TODO: don't raise, only send to Errbit
+    Airbrake.notify(e)
   end
 
   def authenticate!

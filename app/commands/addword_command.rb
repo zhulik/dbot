@@ -39,7 +39,7 @@ class AddwordCommand < Command
     session.clear
     return respond_message text: t('common.canceled') if query == 'cancel'
     word = variants[query.to_i]
-    return respond_message, text: t('common.already_added', word: word[:word]) if current_user.word?(word[:word])
+    return respond_message text: t('common.already_added', word: word[:word]) if current_user.word?(word[:word])
     w = current_user.current_words.create!(word)
     respond_message text: t('dbot.addword.word_added', word: w.word, translation: w.translation)
   end

@@ -52,8 +52,8 @@ describe DbotController do
             expect { dispatch_callback_query('addword:Стул') }.to edit_current_message(:text, text: 'Choose right variant:',
                                                                                               reply_markup: {
                                                                                                 inline_keyboard: [
-                                                                                                  [{ text: 'Stuhl - стул noun m', callback_data: 'addword_choose:0' }],
-                                                                                                  [{ text: 'Stuhlgang - стул noun m', callback_data: 'addword_choose:1' }],
+                                                                                                  [{ text: 'der Stuhl - стул noun m', callback_data: 'addword_choose:0' }],
+                                                                                                  [{ text: 'der Stuhlgang - стул noun m', callback_data: 'addword_choose:1' }],
                                                                                                   [{ text: '❌ Cancel', callback_data: 'addword_choose:cancel' }, { text: 'Custom variant', callback_data: 'addword_choose:custom_variant' }]
                                                                                                 ]
                                                                                               })

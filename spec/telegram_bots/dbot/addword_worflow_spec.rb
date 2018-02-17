@@ -26,8 +26,8 @@ describe DbotController do
                                                                            'Choose right variant:',
                                                                            reply_markup: {
                                                                              inline_keyboard: [
-                                                                               [{ text: 'Stuhl - стул noun m', callback_data: 'addword_choose:0' }],
-                                                                               [{ text: 'Stuhl - Святой Престол noun m', callback_data: 'addword_choose:1' }],
+                                                                               [{ text: 'der Stuhl - стул noun m', callback_data: 'addword_choose:0' }],
+                                                                               [{ text: 'der Stuhl - Святой Престол noun m', callback_data: 'addword_choose:1' }],
                                                                                [{ text: '❌ Cancel', callback_data: 'addword_choose:cancel' }, { text: 'Custom variant', callback_data: 'addword_choose:custom_variant' }]
                                                                              ]
                                                                            })
@@ -54,8 +54,8 @@ describe DbotController do
                                                                           'Choose right variant:',
                                                                           reply_markup: {
                                                                             inline_keyboard: [
-                                                                              [{ text: 'Stuhl - стул noun m', callback_data: 'addword_choose:0' }],
-                                                                              [{ text: 'Stuhlgang - стул noun m', callback_data: 'addword_choose:1' }],
+                                                                              [{ text: 'der Stuhl - стул noun m', callback_data: 'addword_choose:0' }],
+                                                                              [{ text: 'der Stuhlgang - стул noun m', callback_data: 'addword_choose:1' }],
                                                                               [{ text: '❌ Cancel', callback_data: 'addword_choose:cancel' }, { text: 'Custom variant', callback_data: 'addword_choose:custom_variant' }]
                                                                             ]
                                                                           })
@@ -83,8 +83,8 @@ describe DbotController do
                                                                                      'Choose right variant:',
                                                                                      reply_markup: {
                                                                                        inline_keyboard: [
-                                                                                         [{ text: 'Stuhl - стул noun m', callback_data: 'addword_choose:0' }],
-                                                                                         [{ text: 'Stuhlgang - стул noun m', callback_data: 'addword_choose:1' }],
+                                                                                         [{ text: 'der Stuhl - стул noun m', callback_data: 'addword_choose:0' }],
+                                                                                         [{ text: 'der Stuhlgang - стул noun m', callback_data: 'addword_choose:1' }],
                                                                                          [{ text: '❌ Cancel', callback_data: 'addword_choose:cancel' }, { text: 'Custom variant', callback_data: 'addword_choose:custom_variant' }]
                                                                                        ]
                                                                                      })
@@ -113,8 +113,8 @@ describe DbotController do
                                                                                     'Choose right variant:',
                                                                                     reply_markup: {
                                                                                       inline_keyboard: [
-                                                                                        [{ text: 'Stuhl - стул noun m', callback_data: 'addword_choose:0' }],
-                                                                                        [{ text: 'Stuhl - Святой Престол noun m', callback_data: 'addword_choose:1' }],
+                                                                                        [{ text: 'der Stuhl - стул noun m', callback_data: 'addword_choose:0' }],
+                                                                                        [{ text: 'der Stuhl - Святой Престол noun m', callback_data: 'addword_choose:1' }],
                                                                                         [{ text: '❌ Cancel', callback_data: 'addword_choose:cancel' }, { text: 'Custom variant', callback_data: 'addword_choose:custom_variant' }]
                                                                                       ]
                                                                                     })

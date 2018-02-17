@@ -31,4 +31,13 @@ module ApplicationHelper
   def current_language
     @current_language ||= current_user.language&.code
   end
+
+  def with_article(word, pos, gen)
+    return word unless pos == 'noun'
+    "#{Constants::ARTICLES[gen] || 'unk'} #{word.capitalize}"
+  end
+
+  def word_variant(word, translation, pos, gen)
+    "#{with_article(word, pos, gen)} - #{translation} #{pos} #{gen}"
+  end
 end

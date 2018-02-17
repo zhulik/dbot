@@ -35,4 +35,8 @@ module ApplicationHelper
   def with_article(word)
     WordPresenter.new(word.word, word.translation, word.pos, word.gen).with_article
   end
+
+  def full_description(word)
+    WordPresenter.new(word.word, word.translation, word.pos, word.gen).full_description
+  end
 end

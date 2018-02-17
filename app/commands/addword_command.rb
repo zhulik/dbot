@@ -41,7 +41,7 @@ class AddwordCommand < Command
     word = variants[query.to_i]
     return respond_message text: t('common.already_added', word: word[:word]) if current_user.word?(word[:word])
     w = current_user.current_words.create!(word)
-    respond_message text: t('dbot.addword.word_added', word: w.word, translation: w.translation)
+    respond_message text: t('dbot.addword.word_added', word: with_article(w), translation: w.translation)
   end
 
   def custom_variant(*args)
@@ -57,7 +57,9 @@ class AddwordCommand < Command
   def create_word(**w)
     session.clear
     current_user.current_words.create!(w)
-    respond_message text: t('dbot.addword.word_added', w)
+    respond_message text: t('dbot.addword.word_added',
+                            word: WordPresenter.new(w[:word], w[:translation], w[:pos], w[:gen]).with_article,
+                            translation: w[:translation])
   rescue ActiveRecord::RecordInvalid => e
     respond_message text: e.record.errors.full_messages.join("\n")
   end

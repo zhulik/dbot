@@ -36,7 +36,7 @@ describe DbotController do
             expect(session[:addword_variants]).to eq([{ word: 'Stuhl', translation: 'стул', gen: 'm', pos: 'noun' },
                                                       { word: 'Stuhl', translation: 'Святой Престол', gen: 'm', pos: 'noun' }])
             expect {
-              expect { dispatch_callback_query('addword_choose:0') }.to edit_current_message(:text, text: 'Word has been successfully added: Stuhl - стул')
+              expect { dispatch_callback_query('addword_choose:0') }.to edit_current_message(:text, text: 'Word has been successfully added: der Stuhl - стул')
               expect(session[:context]).to be_nil
               expect(session[:addword_variants]).to be_nil
               expect(session[:addword_word]).to be_nil
@@ -64,7 +64,7 @@ describe DbotController do
             expect(session[:addword_variants]).to eq([{ word: 'Stuhl', translation: 'стул', gen: 'm', pos: 'noun' },
                                                       { word: 'Stuhlgang', translation: 'стул', gen: 'm', pos: 'noun' }])
             expect {
-              expect { dispatch_callback_query('addword_choose:0') }.to edit_current_message(:text, text: 'Word has been successfully added: Stuhl - стул')
+              expect { dispatch_callback_query('addword_choose:0') }.to edit_current_message(:text, text: 'Word has been successfully added: der Stuhl - стул')
               expect(session[:context]).to be_nil
               expect(session[:addword_variants]).to be_nil
               expect(session[:addword_word]).to be_nil
@@ -95,7 +95,7 @@ describe DbotController do
                 expect { dispatch_callback_query('addword_choose:custom_variant') }.to edit_current_message(:text, text: 'Send me the valid translation')
                 expect(session[:context]).to eq(:addword_custom_variant)
                 expect {
-                  expect { dispatch_message 'Stuhl noun m' }.to respond_with_message 'Word has been successfully added: Stuhl - стул'
+                  expect { dispatch_message 'Stuhl noun m' }.to respond_with_message 'Word has been successfully added: der Stuhl - стул'
                   expect(session[:context]).to be_nil
                   expect(session[:addword_variants]).to be_nil
                   expect(session[:addword_word]).to be_nil
@@ -143,7 +143,7 @@ describe DbotController do
         it 'works as expected' do
           expect {
             expect { dispatch_message '/addword Stuhl стул noun' }.to respond_with_message 'Word has been successfully added: Stuhl - стул'
-            expect { dispatch_message '/addword Tisch стол noun m' }.to respond_with_message 'Word has been successfully added: Tisch - стол'
+            expect { dispatch_message '/addword Tisch стол noun m' }.to respond_with_message 'Word has been successfully added: der Tisch - стол'
             expect { dispatch_message '/addword Katze кошка wrong' }.to respond_with_message 'Pos "wrong" is invalid, valid values: adjective, adverb, conjunction, noun, numeral, participle, preposition, pronoun, verb!'
             expect { dispatch_message '/addword Katze кошка noun x' }.to respond_with_message 'Gen "x" is invalid, valid values: f, m, n!'
           }.to change(Word, :count).by(2)

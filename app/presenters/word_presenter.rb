@@ -11,7 +11,8 @@ class WordPresenter
 
   def with_article
     return @word unless @pos == 'noun'
-    "#{Constants::ARTICLES[@gen] || 'unk'} #{@word.capitalize}"
+    return "#{Constants::ARTICLES[@gen] || 'unk'} #{@word.capitalize}" if @gen.present?
+    @word.capitalize
   end
 
   def full_description

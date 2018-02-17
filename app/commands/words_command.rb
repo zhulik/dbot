@@ -6,20 +6,13 @@ class WordsCommand < Command
   arguments 0
 
   def message_0
-    scope = current_user.current_words.order(:word).page(1)
-    raise NoWordsAddedError if scope.empty?
-    ws = scope.map { |w| "#{w.word} - #{w.translation} #{w.pos} #{w.gen}" }.join("\n")
-    respond_message text: "#{t('common.your_saved_words')}\n#{ws}\n#{pagination_info(scope)}",
-                    reply_markup: { inline_keyboard: pagination_keyboard(scope, 'words') }
+    respond_page
   end
 
   def callback_query(query)
     query, page = query.split(':')
     return unless query == 'page'
-    scope = current_user.current_words.order(:word).page(page)
-    ws = scope.map { |w| "#{w.word} - #{w.translation} #{w.pos} #{w.gen}" }.join("\n")
-    respond_message text: "#{t('common.your_saved_words')}\n#{ws}\n#{pagination_info(scope)}",
-                    reply_markup: { inline_keyboard: pagination_keyboard(scope, 'words') }
+    respond_page(page)
   end
 
   private
@@ -35,5 +28,13 @@ class WordsCommand < Command
   def pagination_info(scope)
     t('common.pagination', page: scope.current_page, total_pages: scope.total_pages,
                            total_count: scope.total_count)
+  end
+
+  def respond_page(page = 1)
+    scope = current_user.current_words.order(:word).page(page)
+    raise NoWordsAddedError if scope.empty? && page == 1
+    ws = scope.map { |w| "#{w.word} - #{w.translation} #{w.pos} #{w.gen}" }.join("\n")
+    respond_message text: "#{t('common.your_saved_words')}\n#{ws}\n#{pagination_info(scope)}",
+                    reply_markup: { inline_keyboard: pagination_keyboard(scope, 'words') }
   end
 end

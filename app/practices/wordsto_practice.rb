@@ -10,6 +10,6 @@ class WordstoPractice < WordsTranslationPracticeBase
   end
 
   def variant_text(w)
-    w.with_article
+    with_article(w)
   end
 end

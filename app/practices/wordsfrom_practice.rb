@@ -6,7 +6,7 @@ class WordsfromPractice < WordsTranslationPracticeBase
   private
 
   def word_text(word)
-    word.with_article
+    with_article(word)
   end
 
   def variant_text(w)

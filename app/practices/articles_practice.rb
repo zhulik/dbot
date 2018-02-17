@@ -15,12 +15,12 @@ class ArticlesPractice < WordsPracticeBase
   end
 
   def success_answer(word, _article)
-    t('common.right_article', word: word.with_article, translation: word.translation)
+    t('common.right_article', word: with_article(word), translation: word.translation)
   end
 
   def fail_answer(word, article)
     t('common.wrong_article', article: article,
-                              word: word.with_article,
+                              word: with_article(word),
                               translation: word.translation)
   end
 

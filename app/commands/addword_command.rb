@@ -86,7 +86,7 @@ class AddwordCommand < Command
     InlineKeyboard.render do |k|
       variants.map.with_index do |var, index|
         k.row do |r|
-          r.button word_variant(var[:word], var[:translation], var[:pos], var[:gen]), ctx, index
+          r.button WordPresenter.new(var[:word], var[:translation], var[:pos], var[:gen]).full_description, ctx, index
         end
       end
       k.row do |r|

@@ -4,6 +4,7 @@ RailsAdmin.config do |config|
   AUTH_HASH = 'a86cbc3d8a195be4e39bb4ef5493cae7587747f6f76848646817e19710d14719'
 
   config.authenticate_with do
+    next Struct.new(:email).new('zhulik.gleb@gmail.com') unless Rails.env.production?
     authenticate_or_request_with_http_basic('Login required') do |username, password|
       salt = Rails.application.secrets.rails_admin_salt
       if ActiveSupport::SecurityUtils.secure_compare(Digest::SHA256.hexdigest("#{username}:#{password}:#{salt}"),

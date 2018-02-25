@@ -14,6 +14,15 @@ module WordAdmin
         field :pos
         field :gen
       end
+
+      edit do
+        field :user
+        field :language
+        field :word
+        field :translation
+        field :pos
+        field :gen
+      end
     end
   end
 end

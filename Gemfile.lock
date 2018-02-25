@@ -1,15 +1,17 @@
 GIT
+  remote: https://github.com/CristiRazvi/enum_attributes_validation.git
+  revision: 22b343814727cb314ea86523f13b2961486b948f
+  specs:
+    enum_attributes_validation (0.1.7)
+      activerecord
+      activesupport
+
+GIT
   remote: https://github.com/s-mage/yandex-dictionary.git
   revision: 6158524a1b27a203cc180d398cd5d8594fca38e6
   specs:
     yandex-dictionary (0.2.0)
       httparty
-
-GIT
-  remote: https://github.com/zhulik/enum_attributes_validation.git
-  revision: c733af7086b72cfa03a1cd007d80cf03319f6c08
-  specs:
-    enum_attributes_validation (0.1.6)
 
 GEM
   remote: https://rubygems.org/

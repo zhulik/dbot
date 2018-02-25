@@ -144,8 +144,8 @@ describe DbotController do
           expect {
             expect { dispatch_message '/addword Stuhl стул noun' }.to respond_with_message 'Word has been successfully added: Stuhl - стул'
             expect { dispatch_message '/addword Tisch стол noun m' }.to respond_with_message 'Word has been successfully added: der Tisch - стол'
-            expect { dispatch_message '/addword Katze кошка wrong' }.to respond_with_message 'Pos "wrong" is invalid, valid values: adjective, adverb, conjunction, noun, numeral, participle, preposition, pronoun, verb!'
             expect { dispatch_message '/addword Katze кошка noun x' }.to respond_with_message 'Gen "x" is invalid, valid values: f, m, n!'
+            expect { dispatch_message '/addword Katze кошка wrong' }.to respond_with_message 'Pos "wrong" is invalid, valid values: adjective, adverb, conjunction, noun, numeral, participle, preposition, pronoun, verb!'
           }.to change(Word, :count).by(2)
           expect(session[:context]).to be_nil
           expect(session[:addword_variants]).to be_nil

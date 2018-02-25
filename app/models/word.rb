@@ -31,7 +31,7 @@ class Word < ApplicationRecord
     m: 'm',
     n: 'n'
   }
-  # validate_enum_attributes :gen
+  validate_enum_attributes :gen
   validate_enum_attributes :pos
 
   def inc_stat!(name)

@@ -87,5 +87,19 @@ describe DbotController do
         end
       end
     end
+
+    context 'with number passed' do
+      it 'works as expected' do
+        VCR.use_cassette('pronounce_number', match_requests_on: [VCR.request_matchers.uri_without_param(:key)]) do
+          expect { dispatch_message '12345' }.to make_telegram_request(bot, :sendVoice)
+        end
+      end
+    end
+
+    context 'with number string passed' do
+      it 'works as expected' do
+        expect { dispatch_message 'zwölftausenddreihundertfünfundvierzig' }.to respond_with_message 12_345
+      end
+    end
   end
 end

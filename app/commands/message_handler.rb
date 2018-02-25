@@ -15,6 +15,8 @@ class MessageHandler < Handler
   private
 
   def handle_text
+    return handle_number if int?(payload.text)
+    return handle_number_string if GermanNumbers.valid?(payload.text)
     lang = Translators::YandexWrapper.new(payload.text).detect
 
     unless language_supported?(lang)
@@ -45,5 +47,23 @@ class MessageHandler < Handler
 
   def language_supported?(lang)
     ['ru', current_language].include?(lang)
+  end
+
+  def int?(str)
+    Integer(str)
+    true
+  rescue ArgumentError
+    false
+  end
+
+  def handle_number
+    text = GermanNumbers.stringify(payload.text.to_i)
+    TTS::CachedTTS.new(text, current_user.language).get do |payload|
+      respond_with :voice, voice: payload, caption: text
+    end
+  end
+
+  def handle_number_string
+    respond_message text: GermanNumbers.parse(payload.text)
   end
 end

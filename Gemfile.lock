@@ -120,7 +120,7 @@ GEM
     ffi (1.9.18)
     font-awesome-rails (4.7.0.2)
       railties (>= 3.2, < 5.2)
-    german_numbers (0.1)
+    german_numbers (0.5)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
     haml (5.0.4)

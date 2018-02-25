@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class DbotController < Telegram::Bot::UpdatesController
-  include ActiveSupport::Rescuable
-
   include Telegram::Bot::UpdatesController::CallbackQueryContext
   include Telegram::Bot::UpdatesController::TypedUpdate
   include Telegram::Bot::UpdatesController::MessageContext
@@ -27,12 +25,6 @@ class DbotController < Telegram::Bot::UpdatesController
   end
 
   private
-
-  def process_action(*args)
-    super
-  rescue StandardError => exception
-    rescue_with_handler(exception) || raise
-  end
 
   def send_not_authorized
     return answer_callback_query t('common.not_authorized') if payload.is_a? Telegram::Bot::Types::CallbackQuery

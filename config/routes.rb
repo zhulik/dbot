@@ -11,5 +11,5 @@ Rails.application.routes.draw do
   mount Sidekiq::Web => '/admin/sidekiq'
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
 
-  telegram_webhooks DbotController
+  telegram_webhook DbotController
 end

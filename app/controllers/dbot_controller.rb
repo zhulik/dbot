@@ -16,7 +16,7 @@ class DbotController < Telegram::Bot::UpdatesController
   before_action :check_language!, only: %i[addword delword words practice translateto translatefrom message]
   # rubocop:enable Rails/LexicallyScopedActionFilter
 
-  rescue_from StandardError, with: :send_error_and_raise
+  rescue_from StandardError, with: :send_error_and_raise if Rails.env.production?
   rescue_from NotStartedError, with: :send_not_authorized
   rescue_from LanguageNotSetError, with: :send_select_language
   rescue_from UnknownCommandError, with: :send_unknown_command

@@ -2,7 +2,14 @@
 
 class Command < Handler
   extend HasAttributes
+  extend HasDescendants
   attributes :help, :usage, :arguments
+
+  class << self
+    def command
+      "/#{name.underscore.split('_').first}"
+    end
+  end
 
   def validate_and_handle_message(*args)
     arity = self.class.arguments

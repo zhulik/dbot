@@ -33,7 +33,9 @@ class WordsCommand < Command
   def respond_page(page = 1)
     scope = current_user.current_words.order(:word).page(page)
     raise NoWordsAddedError if scope.empty? && page == 1
-    ws = scope.map(&method(:full_description)).join("\n")
+    ws = scope.map do |w|
+      "#{w.id} #{full_description(w)}"
+    end.join("\n")
     respond_message text: "#{t('common.your_saved_words')}\n#{ws}\n#{pagination_info(scope)}",
                     reply_markup: { inline_keyboard: pagination_keyboard(scope, 'words') }
   end

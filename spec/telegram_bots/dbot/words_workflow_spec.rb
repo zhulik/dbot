@@ -9,8 +9,8 @@ describe DbotController do
       let!(:word) { create :word, language: language, user: user, word: 'word', translation: 'translation', pos: 'noun', gen: 'm' }
 
       it 'works as expected' do
-        expect { dispatch_message '/words' }.to respond_with_message "Your saved words:\nder Word - translation noun m\nPage 1 of 1. Total count: 1"
-        expect { dispatch_callback_query('words:page:1') }.to edit_current_message :text, text: "Your saved words:\nder Word - translation noun m\nPage 1 of 1. Total count: 1"
+        expect { dispatch_message '/words' }.to respond_with_message "Your saved words:\n1 der Word - translation noun m\nPage 1 of 1. Total count: 1"
+        expect { dispatch_callback_query('words:page:1') }.to edit_current_message :text, text: "Your saved words:\n1 der Word - translation noun m\nPage 1 of 1. Total count: 1"
       end
     end
 

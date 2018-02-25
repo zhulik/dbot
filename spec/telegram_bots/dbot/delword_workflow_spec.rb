@@ -10,13 +10,13 @@ describe DbotController do
 
     context 'without parameters' do
       it 'works as expected' do
-        expect { dispatch_message '/delword' }.to respond_with_message 'Send me the word'
+        expect { dispatch_message '/delword' }.to respond_with_message "Send me the word's id"
         expect(session[:context]).to eq(:delword_send_word)
         expect {
-          expect { dispatch_message 'eins' }.to respond_with_message 'Word deleted: eins.'
+          expect { dispatch_message word.id }.to respond_with_message 'Word deleted: eins.'
           expect(session[:context]).to be_nil
         }.to change(Word, :count).by(-1)
-        expect { dispatch_message '/delword eins' }.to respond_with_message 'Unknown word: eins!'
+        expect { dispatch_message "/delword #{word.id}" }.to respond_with_message "Word with id #{word.id} is not found!"
       end
     end
 
@@ -24,7 +24,7 @@ describe DbotController do
       context 'with known word' do
         it 'works as expected' do
           expect {
-            expect { dispatch_message '/delword eins' }.to respond_with_message 'Word deleted: eins.'
+            expect { dispatch_message "/delword #{word.id}" }.to respond_with_message 'Word deleted: eins.'
           }.to change(Word, :count).by(-1)
         end
       end
@@ -33,7 +33,7 @@ describe DbotController do
     context 'with two parameters' do
       context 'with known word' do
         it 'works as expected' do
-          expect { dispatch_message '/delword eins zvei' }.to respond_with_message "Wrong arguments count. Usage:\n/delword\n/delword <word>\n"
+          expect { dispatch_message '/delword eins zvei' }.to respond_with_message "Wrong arguments count. Usage:\n/delword\n/delword <word_id>\n"
         end
       end
     end

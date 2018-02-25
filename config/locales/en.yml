@@ -51,8 +51,8 @@ en:
       usage: |
               Wrong arguments count. Usage:
               /delword
-              /delword <word>
-      unknown_word: 'Unknown word: %{word}!'
+              /delword <word_id>
+      unknown_word: 'Word with id %{word_id} is not found!'
     _context_handler_addword_custom_variant:
       usage: 'Wrong format. Example: <word> <pos> [gen]'
     message:
@@ -109,3 +109,4 @@ en:
     wrong_prefix: ❎ %{type} is wrong ✅ %{prefix} - %{right_type}
     successes: '✅ Successes:'
     fails: '❎ Fails:'
+    send_word_id: Send me the word's id

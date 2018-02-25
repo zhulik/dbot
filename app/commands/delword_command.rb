@@ -7,19 +7,19 @@ class DelwordCommand < Command
 
   def message_0
     save_context :delword_send_word
-    respond_message text: t('common.send_word')
+    respond_message text: t('common.send_word_id')
   end
 
-  def message_1(word)
-    short(word)
+  def message_1(id)
+    short(id)
   end
   alias send_word message_1
 
   private
 
-  def short(w)
-    word = current_user.current_words.find_by(word: w)
-    return respond_message text: t('dbot.delword.unknown_word', word: w) if word.nil?
+  def short(id)
+    word = current_user.current_words.find_by(id: id)
+    return respond_message text: t('dbot.delword.unknown_word', word_id: id) if word.nil?
     word.destroy
     respond_message text: t('common.word_deleted', word: word.word)
   end

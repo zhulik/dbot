@@ -2,6 +2,6 @@
 
 set :output, File.join(Whenever.path, 'log', 'cron.log')
 
-every 2.minutes do
+every 5.minutes do
   runner 'Practices::FinishOldJob.perform_later'
 end

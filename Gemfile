@@ -16,7 +16,6 @@ gem 'yandex-translator'
 gem 'rails_admin'
 gem 'redis-rails'
 gem 'listen', '>= 3.0.5', '< 3.2'
-gem 'airbrake', '~> 7'
 gem 'language_list'
 gem 'sidekiq'
 gem 'nokogiri'
@@ -32,6 +31,8 @@ group :development do
   gem 'capistrano', '~> 3.6'
   gem 'capistrano-rails', '~> 1.3'
   gem 'capistrano-rvm'
+  gem 'solargraph'
+  gem 'overcommit'
 end
 
 group :development, :test do

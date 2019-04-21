@@ -1,5 +1,7 @@
+require: rubocop-performance
+
 AllCops:
-  TargetRubyVersion: 2.4.1
+  TargetRubyVersion: 2.6.3
 
   Exclude:
     - ./**/schema.rb
@@ -82,4 +84,7 @@ Documentation:
   Enabled: false
 
 Rails/SkipsModelValidations:
+  Enabled: false
+
+Naming/UncommunicativeMethodParamName:
   Enabled: false

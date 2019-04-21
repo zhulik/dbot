@@ -3,6 +3,7 @@
 class TranslateCommandBase < Command
   def message(*args)
     return full if args.empty?
+
     short(args.join(' '))
   end
 

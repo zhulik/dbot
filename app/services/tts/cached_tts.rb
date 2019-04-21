@@ -13,6 +13,7 @@ class TTS::CachedTTS
 
   def get(&block)
     return development_get(&block) if Rails.env.development?
+
     tts = existing
     if tts.nil?
       io = NamedStringIO.new(data, 'voice.ogg')

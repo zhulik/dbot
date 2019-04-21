@@ -12,6 +12,7 @@ class WordsCommand < Command
   def callback_query(query)
     query, page = query.split(':')
     return unless query == 'page'
+
     respond_page(page)
   end
 
@@ -33,6 +34,7 @@ class WordsCommand < Command
   def respond_page(page = 1)
     scope = current_user.current_words.order(:word).page(page)
     raise NoWordsAddedError if scope.empty? && page == 1
+
     ws = scope.map do |w|
       "#{w.id} #{full_description(w)}"
     end.join("\n")

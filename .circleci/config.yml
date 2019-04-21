@@ -1,27 +1,21 @@
-# Ruby CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-ruby/ for more details
-#
 version: 2
 jobs:
   build:
     docker:
-      # specify the version you desire here
-       - image: circleci/ruby:2.4.2-node-browsers
+       - image: drecom/ubuntu-ruby:2.4.2
          environment:
            RAILS_ENV: test
-       - image: circleci/postgres:10
-       - image: redis:4.0
+       - image: circleci/postgres:11
+       - image: redis:5.0
 
     working_directory: ~/dbot
 
     steps:
-      - run: sudo apt-get update && sudo apt-get install -y ffmpeg
+      - run: apt-get update && apt-get install -y ffmpeg libpq-dev
       - checkout
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "Gemfile.lock" }}
-          - v1-dependencies-
       - run:
           name: install dependencies
           command: |

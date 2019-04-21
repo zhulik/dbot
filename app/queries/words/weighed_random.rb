@@ -8,6 +8,7 @@ class Words::WeighedRandom
 
   def get
     return nil if @scope.empty?
+
     weights = @scope.map { |w| [w, w.practice_stats["#{@practice}_success"] - w.practice_stats["#{@practice}_fail"]] }
                     .sort_by(&:second)
     max = weights.max_by(&:second).second

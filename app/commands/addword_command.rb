@@ -25,6 +25,7 @@ class AddwordCommand < Command
 
   def callback_query(query)
     return respond_message text: t('common.canceled') if query == 'cancel'
+
     variants = prepare_workflow(query)
     respond_message text: t('dbot.addword.choose_right_variant'),
                     reply_markup: { inline_keyboard: variants_keyboard(variants, :addword_choose) }
@@ -38,8 +39,10 @@ class AddwordCommand < Command
     variants = session[:addword_variants]
     session.clear
     return respond_message text: t('common.canceled') if query == 'cancel'
+
     word = variants[query.to_i]
     return respond_message text: t('common.already_added', word: word[:word]) if current_user.word?(word[:word])
+
     w = current_user.current_words.create!(word)
     respond_message text: t('dbot.addword.word_added', word: with_article(w), translation: w.translation)
   end
@@ -47,6 +50,7 @@ class AddwordCommand < Command
   def custom_variant(*args)
     save_context :addword_custom_variant
     return respond_message text: self.class.usage if args.count < 2 || args.count > 3
+
     word = { word: session[:addword_word], translation: args.first, pos: args.second, gen: args.third }
     word[:word], word[:translation] = word[:translation], word[:word] if session.delete(:addword_inverse)
     create_word(**word)

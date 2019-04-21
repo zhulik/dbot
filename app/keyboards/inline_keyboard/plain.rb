@@ -26,6 +26,7 @@ class InlineKeyboard::Plain
 
   def render
     return @rows.map(&:render) if @rows.any?
+
     @default_row.render.each_slice(@columns).to_a
   end
 

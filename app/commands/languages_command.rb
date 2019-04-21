@@ -7,6 +7,7 @@ class LanguagesCommand < Command
 
   def message_0
     return respond_message text: t('dbot.languages.no_languages') if Language.all.empty?
+
     respond_message text: t('dbot.languages.choose_language'), reply_markup: {
       inline_keyboard: languages_inline_keyboard
     }
@@ -15,7 +16,8 @@ class LanguagesCommand < Command
   def callback_query(query)
     language = Language.find_by(code: query)
     return answer_callback_query t('dbot.languages.unknown_language', code: query) if language.nil?
-    current_user.update_attributes!(language: language)
+
+    current_user.update!(language: language)
     answer_callback_query t('dbot.languages.language_accepted', name: language.name)
   end
 

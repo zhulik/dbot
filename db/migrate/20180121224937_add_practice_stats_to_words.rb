@@ -6,14 +6,14 @@ class AddPracticeStatsToWords < ActiveRecord::Migration[5.1]
   def change
     add_column :words, :practice_stats, :jsonb, default: {}, null: false
     Word.all.find_each do |w|
-      w.update_attributes(practice_stats: {
-                            wordsto_success: w.wordsto_success,
-                            wordsto_fail: w.wordsto_fail,
-                            wordsfrom_success: w.wordsfrom_success,
-                            wordsfrom_fail: w.wordsfrom_fail,
-                            articles_success: w.articles_success,
-                            articles_fail: w.articles_fail
-                          })
+      w.update(practice_stats: {
+                 wordsto_success: w.wordsto_success,
+                 wordsto_fail: w.wordsto_fail,
+                 wordsfrom_success: w.wordsfrom_success,
+                 wordsfrom_fail: w.wordsfrom_fail,
+                 articles_success: w.articles_success,
+                 articles_fail: w.articles_fail
+               })
     end
     add_index :words, :practice_stats, using: :gin
     remove_column :words, :wordsto_success

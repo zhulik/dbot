@@ -10,7 +10,7 @@ gem 'pg', '~> 0.18'
 gem 'puma', '~> 3.7'
 gem 'telegram-bot', require: false
 gem 'telegram-bot-types', require: false
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'tzinfo-data'
 gem 'yandex-dictionary', github: 's-mage/yandex-dictionary', require: 'yandex_dictionary'
 gem 'yandex-translator'
 gem 'rails_admin'
@@ -28,6 +28,7 @@ gem 'enum_attributes_validation', github: 'CristiRazvi/enum_attributes_validatio
 
 group :development do
   gem 'rubocop', require: false
+  gem 'rubocop-performance', require: false
   gem 'capistrano', '~> 3.6'
   gem 'capistrano-rails', '~> 1.3'
   gem 'capistrano-rvm'

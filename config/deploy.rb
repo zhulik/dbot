@@ -22,7 +22,7 @@ append :linked_files, 'config/database.yml', 'config/secrets.yml'
 
 set :ssh_options, forward_agent: true
 
-set :rvm_ruby_version, 'ruby-2.4.2@dbot --create'
+set :rvm_ruby_version, 'ruby-2.6.3@dbot --create'
 
 set :whenever_roles, %w(schedule)
 

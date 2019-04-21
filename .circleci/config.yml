@@ -11,7 +11,7 @@ jobs:
     working_directory: ~/dbot
 
     steps:
-      - run: apt-get update && apt-get install -y ffmpeg
+      - run: apt-get update && apt-get install -y ffmpeg libpq-dev
       - checkout
       - restore_cache:
           keys:

@@ -416,7 +416,6 @@ DEPENDENCIES
   telegram-bot
   telegram-bot-types
   timecop
-  tzinfo-data
   vcr
   voicerss2017
   webmock

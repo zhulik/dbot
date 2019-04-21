@@ -7,6 +7,7 @@ class StartCommand < Command
 
   def message_0
     return start_with_existing_user if current_user.present?
+
     User.create!(user_id: from.id, username: from.username)
     respond_message text: t('dbot.start.hi', name: user_greeting(from))
   end
@@ -16,7 +17,7 @@ class StartCommand < Command
   def start_with_existing_user
     return respond_message text: t('dbot.start.already_started') if current_user.active?
 
-    current_user.update_attributes(active: true)
+    current_user.update(active: true)
     respond_message text: t('dbot.start.reactivated')
   end
 end

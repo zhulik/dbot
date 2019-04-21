@@ -28,6 +28,7 @@ gem 'enum_attributes_validation', github: 'CristiRazvi/enum_attributes_validatio
 
 group :development do
   gem 'rubocop', require: false
+  gem 'rubocop-performance', require: false
   gem 'capistrano', '~> 3.6'
   gem 'capistrano-rails', '~> 1.3'
   gem 'capistrano-rvm'

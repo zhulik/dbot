@@ -3,11 +3,13 @@
 class MessageHandler < Handler
   def message(*)
     return handle_text if payload.text.present?
+
     respond_message text: t('common.i_dont_understand')
   end
 
   def callback_query(query)
     return if query != 'cancel'
+
     session.clear
     respond_message text: t('common.canceled')
   end
@@ -17,11 +19,13 @@ class MessageHandler < Handler
   def handle_text
     return handle_number if int?(payload.text)
     return handle_number_string if GermanNumbers.valid?(payload.text)
+
     lang = Translators::YandexWrapper.new(payload.text).detect
 
     unless language_supported?(lang)
       return respond_message text: t('common.unknown_language', lang: lang, current: current_language)
     end
+
     session[:message_to_handle] = payload.text
     ctx = lang == 'ru' ? :translateto : :translatefrom
     respond_to_message(payload.text, ctx)

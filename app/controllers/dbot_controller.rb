@@ -28,6 +28,7 @@ class DbotController < Telegram::Bot::UpdatesController
 
   def send_not_authorized
     return answer_callback_query t('common.not_authorized') if payload.is_a? Telegram::Bot::Types::CallbackQuery
+
     respond_message text: t('common.not_authorized')
   end
 

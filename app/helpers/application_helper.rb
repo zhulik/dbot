@@ -11,16 +11,17 @@ module ApplicationHelper
   end
 
   def chat
-    @_chat ||= payload&.chat || x&.message&.chat
+    @_chat ||= payload&.chat || x&.message&.chat # rubocop:disable Naming/MemoizedInstanceVariableName
   end
 
   def from
-    @_from ||= payload&.from
+    @_from ||= payload&.from # rubocop:disable Naming/MemoizedInstanceVariableName
   end
 
   def user_greeting(u)
     return "#{u.first_name} #{u.last_name}" if u.first_name.present? && u.last_name.present?
     return u.username if u.username.present?
+
     t('common.my_friend')
   end
 

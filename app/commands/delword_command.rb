@@ -20,6 +20,7 @@ class DelwordCommand < Command
   def short(id)
     word = current_user.current_words.find_by(id: id)
     return respond_message text: t('dbot.delword.unknown_word', word_id: id) if word.nil?
+
     word.destroy
     respond_message text: t('common.word_deleted', word: word.word)
   end

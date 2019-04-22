@@ -3,10 +3,10 @@
 FactoryBot.define do
   factory :user do
     sequence(:user_id)
-    active true
+    active { true }
 
     trait :inactive do
-      active false
+      active { false }
     end
   end
 end

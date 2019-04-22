@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :tts_phrase do
-    phrase 'MyString'
-    language nil
+    phrase { 'MyString' }
+    language { nil }
   end
 end

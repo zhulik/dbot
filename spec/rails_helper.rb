@@ -8,6 +8,8 @@ require 'telegram/bot'
 require 'telegram/bot/railtie'
 require 'telegram/bot/types'
 
+Telegram.bots_config = { default: { token: '123' } }
+
 require File.expand_path('../config/environment', __dir__)
 
 abort('The Rails environment is running in production mode!') if Rails.env.production?

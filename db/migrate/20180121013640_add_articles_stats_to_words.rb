@@ -2,7 +2,7 @@
 
 class AddArticlesStatsToWords < ActiveRecord::Migration[5.1]
   def change
-    add_column :words, :articles_success, :integer, null: false, default: 0
+    add_column :words, :articles_success, :integer, null: false, default: 0 # rubocop:disable Rails/BulkChangeTable
     add_column :words, :articles_fail, :integer, null: false, default: 0
   end
 end

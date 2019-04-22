@@ -16,7 +16,7 @@ class AddPracticeStatsToWords < ActiveRecord::Migration[5.1]
                })
     end
     add_index :words, :practice_stats, using: :gin
-    remove_column :words, :wordsto_success
+    remove_column :words, :wordsto_success # rubocop:disable Rails/BulkChangeTable
     remove_column :words, :wordsto_fail
     remove_column :words, :wordsfrom_success
     remove_column :words, :wordsfrom_fail

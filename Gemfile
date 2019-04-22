@@ -5,17 +5,16 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-gem 'rails', '~> 5.1.0'
-gem 'pg', '~> 0.18'
-gem 'puma', '~> 3.7'
-gem 'telegram-bot', require: false
-gem 'telegram-bot-types', require: false
+gem 'rails'
+gem 'pg'
+gem 'puma'
+gem 'telegram-bot', "= 0.13", require: false
+gem 'telegram-bot-types', "= 0.5", require: false
 gem 'tzinfo-data'
 gem 'yandex-dictionary', github: 's-mage/yandex-dictionary', require: 'yandex_dictionary'
 gem 'yandex-translator'
 gem 'rails_admin'
 gem 'redis-rails'
-gem 'listen', '>= 3.0.5', '< 3.2'
 gem 'language_list'
 gem 'sidekiq'
 gem 'nokogiri'
@@ -26,11 +25,13 @@ gem 'carrierwave'
 gem 'whenever'
 gem 'enum_attributes_validation', github: 'CristiRazvi/enum_attributes_validation'
 
+gem 'bootsnap', require: false
+
 group :development do
   gem 'rubocop', require: false
   gem 'rubocop-performance', require: false
-  gem 'capistrano', '~> 3.6'
-  gem 'capistrano-rails', '~> 1.3'
+  gem 'capistrano'
+  gem 'capistrano-rails'
   gem 'capistrano-rvm'
   gem 'solargraph'
   gem 'overcommit'
@@ -47,6 +48,7 @@ group :development, :test do
   gem 'pry-rails'
   gem 'simplecov', require: false
   gem 'timecop'
+  gem 'listen'
 end
 
 group :test do

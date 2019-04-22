@@ -88,3 +88,6 @@ Rails/SkipsModelValidations:
 
 Naming/UncommunicativeMethodParamName:
   Enabled: false
+
+Rails/BulkChangeTable:
+  Enabled: false

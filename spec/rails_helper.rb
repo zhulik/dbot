@@ -12,7 +12,7 @@ require File.expand_path('../config/environment', __dir__)
 
 abort('The Rails environment is running in production mode!') if Rails.env.production?
 require 'rspec/rails'
-require 'telegram/bot/rspec/integration'
+require 'telegram/bot/rspec/integration/rails'
 require 'vcr'
 require 'sidekiq/testing'
 
@@ -48,6 +48,6 @@ RSpec.configure do |config|
   config.include_context 'telegram/bot/session', type: :telegram_bot
   config.include_context 'telegram/bot/callback_query_helpers', type: :telegram_bot
   config.include_context 'telegram/bot/callback_query', type: :telegram_bot
-  config.include_context 'telegram/bot/integration', type: :telegram_bot
+  config.include_context 'telegram/bot/integration/rails', type: :telegram_bot
   config.include RSpec::Rails::RequestExampleGroup, type: :telegram_bot
 end

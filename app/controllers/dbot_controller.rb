@@ -10,8 +10,8 @@ class DbotController < Telegram::Bot::UpdatesController
   self.session_store = :redis_store, { expires_in: 1.month }
 
   # rubocop:disable Rails/LexicallyScopedActionFilter
-  before_action :authenticate!, except: :start
-  before_action :check_language!, only: %i[addword delword words practice translateto translatefrom message]
+  before_action :authenticate!, except: :start!
+  before_action :check_language!, only: %i[addword! delword! words! practice! translateto! translatefrom! message!]
   # rubocop:enable Rails/LexicallyScopedActionFilter
 
   rescue_from StandardError, with: :send_error_and_raise if Rails.env.production?
@@ -20,8 +20,12 @@ class DbotController < Telegram::Bot::UpdatesController
   rescue_from UnknownCommandError, with: :send_unknown_command
   rescue_from NoWordsAddedError, with: :send_no_words_added
 
-  def _handle_action_missing(*)
-    Router.new(bot, session, payload, action_name, context).handle!
+  def action_missing(*)
+    Router.new(bot, session, payload, action_name, message_context_session[:context]).handle!
+  end
+
+  def action_for_message_context(context)
+    Router.new(bot, session, payload, context.to_s, context).handle!
   end
 
   private

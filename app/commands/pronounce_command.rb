@@ -22,6 +22,7 @@ class PronounceCommand < Command
   def short(phrase)
     TTS::CachedTTS.new(phrase, current_user.language).get do |payload|
       respond_with :voice, voice: payload
+      nil
     end
   end
 end

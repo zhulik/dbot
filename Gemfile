@@ -8,8 +8,8 @@ end
 gem 'rails'
 gem 'pg'
 gem 'puma'
-gem 'telegram-bot', "= 0.13", require: false
-gem 'telegram-bot-types', "= 0.5", require: false
+gem 'telegram-bot', require: false
+gem 'telegram-bot-types', require: false
 gem 'tzinfo-data'
 gem 'yandex-dictionary', github: 's-mage/yandex-dictionary', require: 'yandex_dictionary'
 gem 'yandex-translator'

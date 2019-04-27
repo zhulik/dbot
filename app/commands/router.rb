@@ -11,7 +11,7 @@ class Router
     @bot = bot
     @session = session
     @payload = payload
-    @action_name = action_name
+    @action_name = action_name.last == '!' ? action_name[0..-2] : action_name
     @context = context
   end
 

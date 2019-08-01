@@ -11,11 +11,11 @@ module ApplicationHelper
   end
 
   def chat
-    @_chat ||= payload&.chat || x&.message&.chat # rubocop:disable Naming/MemoizedInstanceVariableName
+    payload&.chat || x&.message&.chat
   end
 
   def from
-    @_from ||= payload&.from # rubocop:disable Naming/MemoizedInstanceVariableName
+    payload&.from
   end
 
   def user_greeting(u)
@@ -26,11 +26,11 @@ module ApplicationHelper
   end
 
   def current_user
-    @current_user ||= User.find_by(user_id: from.id)
+    User.find_by(user_id: from.id)
   end
 
   def current_language
-    @current_language ||= current_user.language&.code
+    current_user.language&.code
   end
 
   def with_article(word)

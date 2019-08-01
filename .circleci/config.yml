@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-       - image: drecom/ubuntu-ruby:2.6.0
+       - image: drecom/ubuntu-ruby:2.6.3
          environment:
            RAILS_ENV: test
        - image: circleci/postgres:11

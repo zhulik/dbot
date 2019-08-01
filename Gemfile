@@ -17,12 +17,12 @@ gem 'rails_admin'
 gem 'redis-rails'
 gem 'language_list'
 gem 'sidekiq'
+gem 'sidekiq-cron'
 gem 'nokogiri'
 gem 'german_numbers'
 gem 'pickup'
 gem 'voicerss2017'
 gem 'carrierwave'
-gem 'whenever'
 gem 'enum_attributes_validation', github: 'CristiRazvi/enum_attributes_validation'
 
 gem 'bootsnap', require: false

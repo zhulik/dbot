@@ -1,0 +1,4 @@
+finish_old_jobs:
+  cron: "*/5 * * * *"
+  class: "Practices::FinishOldJob"
+  queue: default

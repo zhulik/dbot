@@ -13,12 +13,12 @@ jobs:
       uses: actions/setup-ruby@v1
       with:
         ruby-version: 2.6.3
-    - uses: harmon758/postgresql-action@v1
+    - uses: harmon758/postgresql-action@v1.0.0
       with:
         postgresql version: '11'
         postgresql db: circle_test
         postgresql user: postgres
-    - uses: zhulik/redis-action@v1
+    - uses: zhulik/redis-action@v1.0.0
       with:
         redis version: '5'
     - name: Install dependencies

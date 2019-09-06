@@ -13,12 +13,23 @@ jobs:
       uses: actions/setup-ruby@v1
       with:
         ruby-version: 2.6.3
+    - uses: harmon758/postgresql-action@v1
+      with:
+        postgresql version: '11'
+        postgresql db: circle_test
+        postgresql user: postgres
     - name: Install dependencies
       run: |
+        sudo apt-get update
         sudo apt-get install -y ffmpeg libpq-dev
         gem install bundler:2.0.1
         bundle install --jobs 4 --retry 3
-    - name: Build and test with rspec
+    - name: Prepare configs
       run: |
+        mv config/database.ci.yml config/database.yml
+        mv config/secrets.ci.yml config/secrets.yml
+    - name: Test with rspec
+      run: |
+        bundle exec rake db:create db:schema:load
         bundle exec rubocop
         bundle exec rspec

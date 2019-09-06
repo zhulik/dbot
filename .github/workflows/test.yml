@@ -25,9 +25,9 @@ jobs:
         gem install bundler:2.0.1
         bundle install --jobs 4 --retry 3
     - name: Prepare
+      env:
+        RAILS_ENV: test
       run: |
-        env:
-          RAILS_ENV: test
         mv config/database.ci.yml config/database.yml
         mv config/secrets.ci.yml config/secrets.yml
         bundle exec rake db:create db:schema:load

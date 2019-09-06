@@ -18,6 +18,9 @@ jobs:
         postgresql version: '11'
         postgresql db: circle_test
         postgresql user: postgres
+    - uses: zhulik/redis-action@v1
+      with:
+        redis version: '5'
     - name: Install dependencies
       run: |
         sudo apt-get update

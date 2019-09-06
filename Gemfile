@@ -34,8 +34,8 @@ group :development do
   gem 'capistrano'
   gem 'capistrano-rails'
   gem 'capistrano-rvm'
-  gem 'solargraph'
-  gem 'overcommit'
+  gem 'solargraph', require: false
+  gem 'overcommit', require: false
 end
 
 group :development, :test do

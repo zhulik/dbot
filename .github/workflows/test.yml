@@ -24,14 +24,14 @@ jobs:
         sudo apt-get install -y ffmpeg libpq-dev
         gem install bundler:2.0.1
         bundle install --jobs 4 --retry 3
-    - name: Prepare configs
+    - name: Prepare
       run: |
         mv config/database.ci.yml config/database.yml
         mv config/secrets.ci.yml config/secrets.yml
+        bundle exec rake db:create db:schema:load
+    - name: Check with rubocop
+      run: bundle exec rubocop
     - name: Test with rspec
       env:
         RAILS_ENV: test
-      run: |
-        bundle exec rake db:create db:schema:load
-        bundle exec rubocop
-        bundle exec rspec
+      run: bundle exec rspec

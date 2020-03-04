@@ -214,7 +214,7 @@ GEM
       interception (>= 0.5)
       pry (>= 0.12.0)
     public_suffix (3.0.3)
-    puma (3.12.3)
+    puma (3.12.4)
     raabro (1.1.6)
     rack (2.2.2)
     rack-pjax (1.1.0)

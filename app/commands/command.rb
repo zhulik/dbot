@@ -13,7 +13,7 @@ class Command < Handler
 
   def validate_and_handle_message(*args)
     arity = self.class.arguments
-    return respond_message text: self.class.usage if arity != :any && ![arity].flatten.include?(args.count)
+    return respond_message text: self.class.usage if arity != :any && [arity].flatten.exclude?(args.count)
     return message(*args) if arity == :any
 
     send("message_#{args.count}", *args)

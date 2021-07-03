@@ -37,7 +37,7 @@ RSpec.configure do |config|
 
   config.before(:each) do
     DatabaseCleaner.strategy = :truncation
-    DatabaseCleaner.clean!
+    DatabaseCleaner.clean
   end
   config.after { Telegram.bot.reset }
 

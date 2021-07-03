@@ -24,13 +24,11 @@ jobs:
           postgresql version: "13"
           postgresql db: dbot_test
           postgresql user: postgres
+          postgresql password: password
 
       - uses: zhulik/redis-action@v1.0.0
         with:
           redis version: "5"
-
-      - name: Setup upterm session
-        uses: lhotari/action-upterm@v1
 
       - name: Prepare
         env:

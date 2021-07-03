@@ -6,4 +6,4 @@ test:
   user: postgres
   username: postgres
   database: dbot_test
-  password:
+  password: password

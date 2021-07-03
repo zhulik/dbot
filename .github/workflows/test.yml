@@ -8,33 +8,39 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg libpq-dev
+
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: 2.6.3 # Not needed with a .ruby-version file
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+
       - uses: harmon758/postgresql-action@v1.0.0
         with:
           postgresql version: "11"
           postgresql db: circle_test
           postgresql user: postgres
+
       - uses: zhulik/redis-action@v1.0.0
         with:
           redis version: "5"
-      - name: Install dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y ffmpeg libpq-dev
-          gem install bundler:2.0.1
-          bundle install --jobs 4 --retry 3
+
       - name: Prepare
         env:
           RAILS_ENV: test
         run: |
+          sleep 10
           mv config/database.ci.yml config/database.yml
           mv config/secrets.ci.yml config/secrets.yml
           bundle exec rake db:create db:schema:load
+
       - name: Check with rubocop
         run: bundle exec rubocop
+
       - name: Test with rspec
         env:
           RAILS_ENV: test

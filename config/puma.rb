@@ -3,11 +3,11 @@
 threads_count = 2
 threads threads_count, threads_count
 
-port        ENV.fetch('PORT') { 3000 }
+port        ENV.fetch('PORT', 3000)
 
-environment ENV.fetch('RAILS_ENV') { 'development' }
+environment ENV.fetch('RAILS_ENV', 'development')
 
-workers ENV.fetch('WEB_CONCURRENCY') { 2 }
+workers ENV.fetch('WEB_CONCURRENCY', 2)
 
 preload_app!
 

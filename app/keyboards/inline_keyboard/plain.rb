@@ -14,11 +14,9 @@ class InlineKeyboard::Plain
     yield self
   end
 
-  # rubocop:disable Style/TrivialAccessors
   def columns(c)
     @columns = c
   end
-  # rubocop:enable Style/TrivialAccessors
 
   def row(&block)
     @rows << InlineKeyboard::Row.new(&block)

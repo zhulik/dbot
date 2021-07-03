@@ -13,8 +13,16 @@ AllCops:
     - vendor/**/*
 
   DisplayCopNames: true
+  SuggestExtensions: false
+  NewCops: enable
 
-Metrics/LineLength:
+Naming/VariableNumber:
+  Enabled: false
+
+Lint/ConstantDefinitionInBlock:
+  Enabled: false
+
+Layout/LineLength:
   Max: 120
   Exclude:
     - spec/**/*.rb
@@ -55,11 +63,11 @@ Metrics/MethodLength:
 Style/PercentLiteralDelimiters:
   PreferredDelimiters:
     default: ()
-    '%i': '[]'
-    '%I': '[]'
-    '%r': '{}'
-    '%w': '()'
-    '%W': '()'
+    "%i": "[]"
+    "%I": "[]"
+    "%r": "{}"
+    "%w": "()"
+    "%W": "()"
 
 Style/RegexpLiteral:
   Enabled: false
@@ -82,13 +90,13 @@ Rails/Date:
 Rails/TimeZone:
   Enabled: false
 
-Documentation:
+Style/Documentation:
   Enabled: false
 
 Rails/SkipsModelValidations:
   Enabled: false
 
-Naming/UncommunicativeMethodParamName:
+Naming/MethodParameterName:
   Enabled: false
 
 Rails/BulkChangeTable:

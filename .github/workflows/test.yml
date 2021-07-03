@@ -29,6 +29,9 @@ jobs:
         with:
           redis version: "5"
 
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+
       - name: Prepare
         env:
           RAILS_ENV: test

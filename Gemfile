@@ -40,11 +40,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'factory_bot_rails'
   gem 'faker'
-  gem 'awesome_print'
-  gem 'hirb'
   gem 'pry'
-  gem 'pry-rescue'
-  gem 'pry-rails'
   gem 'simplecov', require: false
   gem 'timecop'
   gem 'listen'

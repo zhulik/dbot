@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/CristiRazvi/enum_attributes_validation.git
-  revision: 199522b1fdf325073b3eab321aa72ce83ae7d015
+  revision: 8d2a025c553fa7a4aae7062d5718b1bde7d2206a
   specs:
     enum_attributes_validation (0.1.7)
       activerecord

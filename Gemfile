@@ -6,10 +6,11 @@ git_source(:github) do |repo_name|
 end
 
 gem 'rails'
-gem 'pg'
-gem 'puma'
 gem 'telegram-bot', require: false
 gem 'telegram-bot-types', require: false
+
+gem 'pg'
+gem 'puma'
 gem 'tzinfo-data'
 gem 'yandex-dictionary', github: 's-mage/yandex-dictionary', require: 'yandex_dictionary'
 gem 'yandex-translator'
@@ -19,7 +20,7 @@ gem 'language_list'
 gem 'sidekiq'
 gem 'sidekiq-cron'
 gem 'nokogiri'
-gem 'german_numbers'
+gem 'german_numbers', '~>0.5.0'
 gem 'pickup'
 gem 'voicerss2017'
 gem 'carrierwave'

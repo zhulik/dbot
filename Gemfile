@@ -31,9 +31,6 @@ group :development do
   gem 'rubocop', require: false
   gem 'rubocop-performance', require: false
   gem 'rubocop-rails', require: false
-  gem 'capistrano'
-  gem 'capistrano-rails'
-  gem 'capistrano-rvm'
   gem 'solargraph', require: false
   gem 'overcommit', require: false
 end

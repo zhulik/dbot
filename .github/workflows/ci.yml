@@ -51,3 +51,4 @@ jobs:
         run: |
           docker-compose build
           echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u USERNAME --password-stdin
+          docker-compose push

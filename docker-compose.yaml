@@ -2,12 +2,14 @@ version: "3"
 services:
   web:
     build: .
+    image: ghcr.io/zhulik/dbot:${GITHUB_SHA}
     env_file:
       - config.env
     command: bundle exec puma -C config/puma.rb
 
   poller:
     build: .
+    image: ghcr.io/zhulik/dbot:${GITHUB_SHA}
     env_file:
       - config.env
     command: bundle exec rake telegram:bot:poller

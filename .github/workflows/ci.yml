@@ -37,7 +37,6 @@ jobs:
           YANDEX_TRANSLATOR_TOKEN: test
           VOICERSS_TOKEN: test
         run: |
-          mv config/database.ci.yml config/database.yml
           mv config.ci.env config.env
           bundle exec rake db:create db:schema:load
 

@@ -33,6 +33,9 @@ jobs:
       - name: Prepare
         env:
           RAILS_ENV: test
+          YANDEX_DICTIONARY_TOKEN: test
+          YANDEX_TRANSLATOR_TOKEN: test
+          VOICERSS_TOKEN: test
         run: |
           mv config/database.ci.yml config/database.yml
           bundle exec rake db:create db:schema:load

@@ -41,6 +41,7 @@ jobs:
         run: bundle exec rubocop
 
       - name: Test with rspec
-        env:
-          RAILS_ENV: test
         run: bundle exec rspec
+
+      - name: Build containers
+        run: docker-compose build

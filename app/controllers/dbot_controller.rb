@@ -36,13 +36,13 @@ class DbotController < Telegram::Bot::UpdatesController
     respond_message text: t('common.not_authorized')
   end
 
-  def send_error_and_raise(e)
+  def send_error_and_raise(_e)
     if payload.is_a? Telegram::Bot::Types::CallbackQuery
       answer_callback_query t('common.something_went_wrong')
     else
       respond_message text: t('common.something_went_wrong')
     end
-    Airbrake.notify(e)
+    # Airbrake.notify(e)
   end
 
   def authenticate!

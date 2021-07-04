@@ -45,6 +45,10 @@ jobs:
         run: bundle exec rubocop
 
       - name: Test with rspec
+        env:
+          DATABASE_NAME: dbot_test
+          DATABASE_USERNAME: postgres
+          DATABASE_PASSWORD: password
         run: bundle exec rspec
 
       - name: Build containers

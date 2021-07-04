@@ -9,7 +9,7 @@ class TTS::VoiceRSS < TTS::Wrapper
 
   def pronounce
     VoiceRSS.speech(
-      'key' => Rails.application.secrets.voicerss,
+      'key' => ENV.fetch('VOICERSS_TOKEN'),
       'hl' => LANGS[@language],
       'src' => @phrase,
       'r' => '-5',

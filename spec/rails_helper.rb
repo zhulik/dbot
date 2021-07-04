@@ -2,9 +2,6 @@
 
 require 'spec_helper'
 ENV['RAILS_ENV'] ||= 'test'
-ENV['YANDEX_TRANSLATOR_TOKEN'] ||= 'test'
-ENV['YANDEX_DICTIONARY_TOKEN'] ||= 'test'
-ENV['VOICERSS_TOKEN'] ||= 'test'
 
 require 'rails/all'
 require 'telegram/bot'

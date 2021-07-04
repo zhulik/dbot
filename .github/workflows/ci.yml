@@ -33,9 +33,9 @@ jobs:
       - name: Prepare
         env:
           RAILS_ENV: test
-          YANDEX_DICTIONARY_TOKEN: test
-          YANDEX_TRANSLATOR_TOKEN: test
-          VOICERSS_TOKEN: test
+          DATABASE_NAME: dbot_test
+          DATABASE_USERNAME: postgres
+          DATABASE_PASSWORD: password
         run: |
           mv config.ci.env config.env
           bundle exec rake db:create db:schema:load
@@ -48,6 +48,7 @@ jobs:
           DATABASE_NAME: dbot_test
           DATABASE_USERNAME: postgres
           DATABASE_PASSWORD: password
+          SIDEKIQ_REDIS_URL: redis://127.0.0.1:6379/1
         run: bundle exec rspec
 
       - name: Build containers

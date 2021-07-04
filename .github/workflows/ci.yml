@@ -48,4 +48,6 @@ jobs:
         run: bundle exec rspec
 
       - name: Build containers
-        run: docker-compose build
+        run: |
+          docker-compose build
+          echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u USERNAME --password-stdin

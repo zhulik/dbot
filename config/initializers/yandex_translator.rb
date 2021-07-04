@@ -1,3 +1,3 @@
 # frozen_string_literal: true
 
-Yandex::Dictionary.api_key = Rails.application.secrets.yandex_dictionary
+Yandex::Dictionary.api_key = ENV.fetch('YANDEX_DICTIONARY_TOKEN')

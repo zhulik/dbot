@@ -1,5 +1,6 @@
 version: "3"
 services:
+  # TODO: volumes for uploaded files
   web:
     build: .
     image: ghcr.io/zhulik/dbot:${GITHUB_SHA}

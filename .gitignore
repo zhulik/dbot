@@ -15,8 +15,6 @@
 
 /node_modules
 /yarn-error.log
-/config/database.yml
-/config/secrets.yml
 
 .byebug_history
 /.idea
@@ -27,3 +25,6 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+config.env
+
+.env.*.local

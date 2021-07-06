@@ -7,7 +7,7 @@ class DbotController < Telegram::Bot::UpdatesController
 
   include ApplicationHelper
 
-  self.session_store = :redis_store, { expires_in: 1.month }
+  self.session_store = :redis_store, ENV.fetch('SESSION_REDIS_URL'), { expires_in: 1.month }
 
   # rubocop:disable Rails/LexicallyScopedActionFilter
   before_action :authenticate!, except: :start!
@@ -37,12 +37,13 @@ class DbotController < Telegram::Bot::UpdatesController
   end
 
   def send_error_and_raise(e)
-    if payload.is_a? Telegram::Bot::Types::CallbackQuery
+    Rails.logger.error(([e.message] + e.backtrace).join($INPUT_RECORD_SEPARATOR))
+    if payload.is_a?(Telegram::Bot::Types::CallbackQuery)
       answer_callback_query t('common.something_went_wrong')
     else
       respond_message text: t('common.something_went_wrong')
     end
-    Airbrake.notify(e)
+    # Airbrake.notify(e)
   end
 
   def authenticate!

@@ -33,9 +33,16 @@ jobs:
       - name: Prepare
         env:
           RAILS_ENV: test
+          DATABASE_NAME: dbot_test
+          DATABASE_USERNAME: postgres
+          DATABASE_PASSWORD: password
+          SIDEKIQ_REDIS_URL: redis://127.0.0.1:6379/1
+          SESSION_REDIS_URL: redis://127.0.0.1:6379/2
+          YANDEX_DICTIONARY_TOKEN: test
+          YANDEX_TRANSLATOR_TOKEN: test
+          VOICERSS_TOKEN: test
         run: |
-          mv config/database.ci.yml config/database.yml
-          mv config/secrets.ci.yml config/secrets.yml
+          mv config.ci.env config.env
           bundle exec rake db:create db:schema:load
 
       - name: Check with rubocop
@@ -43,5 +50,18 @@ jobs:
 
       - name: Test with rspec
         env:
-          RAILS_ENV: test
+          DATABASE_NAME: dbot_test
+          DATABASE_USERNAME: postgres
+          DATABASE_PASSWORD: password
+          SIDEKIQ_REDIS_URL: redis://127.0.0.1:6379/1
+          SESSION_REDIS_URL: redis://127.0.0.1:6379/2
+          YANDEX_DICTIONARY_TOKEN: test
+          YANDEX_TRANSLATOR_TOKEN: test
+          VOICERSS_TOKEN: test
         run: bundle exec rspec
+
+      - name: Build containers
+        run: |
+          docker-compose build
+          echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u USERNAME --password-stdin
+          docker-compose push

@@ -1,0 +1,16 @@
+default: &default
+  adapter: <%= ENV.fetch('DATABASE_ADAPTER', 'postgresql') %>
+  host: <%= ENV.fetch('DATABASE_HOST', '127.0.0.1') %>
+  database: <%= ENV.fetch('DATABASE_NAME') %>
+  username: <%= ENV.fetch('DATABASE_USERNAME') %>
+  password: <%= ENV.fetch('DATABASE_PASSWORD') %>
+  pool: <%= ENV.fetch('DATABASE_POOL', 5) %>
+
+test:
+  <<: *default
+
+production:
+  <<: *default
+
+development:
+  <<: *default

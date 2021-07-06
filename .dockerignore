@@ -1,0 +1,11 @@
+/tmp/**
+/.git/**
+/.github/**
+/log/**
+/spec/**
+/coverage/
+Dockerfile
+docker-compose.yaml
+*.env
+.env.*.local
+*.local

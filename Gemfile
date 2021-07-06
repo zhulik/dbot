@@ -44,6 +44,7 @@ group :development, :test do
   gem 'simplecov', require: false
   gem 'timecop'
   gem 'listen'
+  gem 'dotenv-rails'
 end
 
 group :test do

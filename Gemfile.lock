@@ -101,6 +101,10 @@ GEM
       thread_safe (~> 0.3, >= 0.3.1)
     diff-lcs (1.4.4)
     docile (1.4.0)
+    dotenv (2.7.6)
+    dotenv-rails (2.7.6)
+      dotenv (= 2.7.6)
+      railties (>= 3.2)
     e2mmap (0.1.0)
     equalizer (0.0.11)
     erubi (1.10.0)
@@ -392,6 +396,7 @@ DEPENDENCIES
   bootsnap
   carrierwave
   database_cleaner
+  dotenv-rails
   enum_attributes_validation!
   factory_bot_rails
   faker

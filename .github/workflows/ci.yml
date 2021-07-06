@@ -60,18 +60,18 @@ jobs:
           VOICERSS_TOKEN: test
         run: bundle exec rspec
 
-      - name: Build containers
-        run: |
-          # TODO: cache
-          docker-compose build
-
       - name: Publish branch containers
         run: |
           echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u USERNAME --password-stdin
 
+          # TODO: cache
+          docker-compose build
           docker-compose push
 
       - name: Publish latest containers
         # if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        env:
+          GITHUB_SHA: latest
         run: |
-          GITHUB_SHA=latest docker-compose push
+          docker-compose build
+          docker-compose push

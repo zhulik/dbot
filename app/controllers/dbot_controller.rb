@@ -7,7 +7,7 @@ class DbotController < Telegram::Bot::UpdatesController
 
   include ApplicationHelper
 
-  self.session_store = :redis_store, { expires_in: 1.month }
+  self.session_store = :redis_store, ENV.fetch('SESSION_REDIS_URL'), { expires_in: 1.month }
 
   # rubocop:disable Rails/LexicallyScopedActionFilter
   before_action :authenticate!, except: :start!

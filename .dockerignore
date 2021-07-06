@@ -7,3 +7,5 @@
 Dockerfile
 docker-compose.yaml
 *.env
+.env.*.local
+*.local

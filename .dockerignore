@@ -4,3 +4,6 @@
 /log/**
 /spec/**
 /coverage/
+Dockerfile
+docker-compose.yaml
+*.env

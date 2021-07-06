@@ -63,5 +63,14 @@ jobs:
       - name: Build containers
         run: |
           docker-compose build
+
+      - name: Publish branch containers
+        run: |
           echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u USERNAME --password-stdin
+
           docker-compose push
+
+      - name: Publish latest containers
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        run: |
+          GITHUB_SHA=latest docker-compose push

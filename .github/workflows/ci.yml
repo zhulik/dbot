@@ -70,8 +70,6 @@ jobs:
 
       - name: Publish latest containers
         # if: github.event_name == 'push' && github.ref == 'refs/heads/master'
-        env:
-          GITHUB_SHA: latest
         run: |
-          docker-compose build
-          docker-compose push
+          GITHUB_SHA=latest docker-compose build
+          GITHUB_SHA=latest docker-compose push

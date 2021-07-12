@@ -11,16 +11,18 @@ class TTS::CachedTTS
     @tts_wrapper = tts_wrapper
   end
 
-  def get(&block)
-    return development_get(&block) if Rails.env.development?
-
+  def get
     tts = existing
-    if tts.nil?
-      io = NamedStringIO.new(data, 'voice.ogg')
+    return yield tts.voice.url if tts.present?
+
+    with_tempfile do |f|
+      f.write(data)
+      f.rewind
+      io = NamedStringIO.new(f.read, 'voice.ogg')
       tts = @language.tts_phrases.create!(phrase: @phrase, voice: io)
+      f.rewind
+      yield f
     end
-    Rails.logger.warn(tts.voice.url)
-    yield tts.voice.url
   end
 
   private
@@ -33,7 +35,6 @@ class TTS::CachedTTS
     @data ||= TTS::OggConverter.new.convert(@tts_wrapper.new(@phrase, @language.code).pronounce)
   end
 
-  #:nocov:
   def with_tempfile
     f = Tempfile.new('voice.ogg')
     f.binmode
@@ -41,13 +42,4 @@ class TTS::CachedTTS
   ensure
     f.close!
   end
-
-  def development_get
-    with_tempfile do |f|
-      f.write(data)
-      f.rewind
-      yield f
-    end
-  end
-  #:nocov:
 end

@@ -19,6 +19,7 @@ class TTS::CachedTTS
       io = NamedStringIO.new(data, 'voice.ogg')
       tts = @language.tts_phrases.create!(phrase: @phrase, voice: io)
     end
+    Rails.logger.warn(tts.voice.url)
     yield tts.voice.url
   end
 
@@ -29,7 +30,7 @@ class TTS::CachedTTS
   end
 
   def data
-    @data ||= TTS::OggConverter.new.convert(TTS::VoiceRSS.new(@phrase, @language.code).pronounce)
+    @data ||= TTS::OggConverter.new.convert(@tts_wrapper.new(@phrase, @language.code).pronounce)
   end
 
   #:nocov:

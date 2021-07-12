@@ -1,5 +1,10 @@
 FROM ruby:2.6.3
 
+RUN apt-get update -y &&\
+  apt-get install -y -q ffmpeg &&\
+  apt-get clean &&\
+  rm -rf /var/lib/apt/lists
+
 ENV WORKDIR /app
 
 WORKDIR ${WORKDIR}

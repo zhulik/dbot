@@ -15,4 +15,11 @@ services:
     image: ghcr.io/zhulik/dbot:${GITHUB_SHA}
     env_file:
       - config.env
-    command: bundle exec rake telegram:bot:poller
+    command: bash -c "bundle exec rake telegram:bot:delete_webhook && bundle exec rake telegram:bot:poller"
+
+  sidekiq:
+    build: .
+    image: ghcr.io/zhulik/dbot:${GITHUB_SHA}
+    env_file:
+      - config.env
+    command: bundle exec sidekiq
